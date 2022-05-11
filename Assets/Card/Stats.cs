@@ -79,12 +79,22 @@ public class Stats
         int x = -33;
         x += pos * 33;
 
-        
-        string statName = "Fire";
-        GameObject statIcon = AddStat(StatEle.Parse<StatEle>(statName));
-        statIcon.transform.SetParent(parentContainer, false);
-        statIcon.transform.localPosition = new Vector3(x, 0, 0);
-        statIcon.transform.localScale = new Vector3(0.6f, 0.6f, 0);
+        for (int i = 0; i < fire; i++)
+        {
+            string statName = "Fire";
+            GameObject statIcon = AddStat(StatEle.Parse<StatEle>(statName));
+            statIcon.transform.SetParent(parentContainer, false);
+            statIcon.transform.localPosition = new Vector3(x, 0, 0);
+            statIcon.transform.localScale = new Vector3(0.6f, 0.6f, 0);
+        }
+        for(int i = 0; i < cold; i++){
+            string statName = "Cold";
+            GameObject statIcon = AddStat(StatEle.Parse<StatEle>(statName));
+            statIcon.transform.SetParent(parentContainer, false);
+            statIcon.transform.localPosition = new Vector3(x, 0, 0);
+            statIcon.transform.localScale = new Vector3(0.6f, 0.6f, 0);
+
+        }
 
         // Debug.Log(card.implicits);
     }
@@ -94,7 +104,7 @@ public class Stats
         RectTransform rt = statIcon.AddComponent<RectTransform>();
         rt.anchorMin = new Vector2(0, 0);
         rt.anchorMax = new Vector2(0, 0);
-        rt.pivot = new Vector2(0.5f, 0.5f); 
+        rt.pivot = new Vector2(0.5f, 0.5f);
         rt.localScale = new Vector2(1.0f, 1.0f);
         Image image = statIcon.AddComponent<Image>();
         image.sprite = CardImageHolder.instance.getStat(StatEle.Fire);
