@@ -21,18 +21,29 @@ public class Hand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject CardPrefab = PrefabHolder.instance.CardPrefab;
+        if (CardDataSystem.instance.cardDataSet.set.Count < 1) { Debug.LogError("instance too short I'll wait"); waitForInstance(); DoHandGen(); }
+        else { DoHandGen(); }
+        // handObject.SetActive(false);
+
+    }
+    IEnumerator waitForInstance()
+    {
+        yield return new WaitForSeconds(500);
+    }
+    private void DoHandGen()
+    {
+        GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
+        GameObject handObject = GameObject.FindGameObjectWithTag("Hand");
         for (int i = 0; i < 20; i++)
         {
             hand.Add(Card.CreateInstance(1, i.ToString()));
             Vector3 position = new Vector3(100, 500, 0);
-            var card = CardPrefab.GetComponent<CardDisplay>();
+            var card = cardPrefab.GetComponent<CardDisplay>();
             card.card = hand[i];
-            Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, GameObject.FindGameObjectWithTag("Hand").transform);
+            Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handObject.transform);
         }
         SortHand();
-    UpdateCardDisplay();
-
+        UpdateCardDisplay();
     }
     public void UpdateScrollIndex(bool moveLeft)
     {

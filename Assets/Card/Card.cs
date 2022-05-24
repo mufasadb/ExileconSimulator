@@ -26,12 +26,36 @@ public class Card : ScriptableObject
     public void Init(int tier, string newname)
     {
         this.rarity = genRarity(tier);
-        this.type = genType(tier);
-        // this.name = genName(this.type);
-        this.name = newname;
+        CardDataObject cardData = CardDataSystem.instance.cardDataSet.GetCardBaseData(tier);
+        this.type = cardData.type;
+
+
+        //Enable this line to name cards by creation (1, 2, 3, etc.)
+        // this.name = newname;
+        this.name = cardData.name;
         this.description = this.name;
-        this.implicits = new Stats(StatsType.Implicits, this.type);
-        this.explicits = new Stats(StatsType.Explicits, this.type);
+
+        this.implicits = new Stats(StatsType.Implicits, this.type, true);
+        this.implicits.DeclareStats(StatStringToIntArray(cardData.implicits));
+        this.explicits = new Stats(StatsType.Explicits, this.type, false);
+    }
+    private int[] StatStringToIntArray(string str)
+    {
+        // int fire, int cold, int lightning, int physical, int life, int armour, int chaos, int wild
+        int[] ints = new int[8];
+        string[] stringArray = str.Split(",");
+        for (int i = 0; i < stringArray.Length; i++)
+        {
+            if (stringArray[i] == "Fire") { ints[0]++; }
+            if (stringArray[i] == "Cold") { ints[1]++; }
+            if (stringArray[i] == "Lightning") { ints[2]++; }
+            if (stringArray[i] == "Physical") { ints[3]++; }
+            if (stringArray[i] == "Life") { ints[4]++; }
+            if (stringArray[i] == "Armour") { ints[5]++; }
+            if (stringArray[i] == "Chaos") { ints[6]++; }
+            if (stringArray[i] == "Wild") { ints[7]++; }
+        }
+        return ints;
     }
     public Rarity genRarity(int tier)
     {
@@ -45,7 +69,6 @@ public class Card : ScriptableObject
     }
     public string genName(Type type) { return "Sword"; }
     public Type genType(int tier) { return Type.OneHandedWeapon; }
-
 }
 public enum Type { OneHandedWeapon, TwoHandedWeapon, Shield, Chest, Amulet, Ring }
 public enum Rarity { Normal, Magic, Rare, Unique }
