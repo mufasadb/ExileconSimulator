@@ -72,4 +72,4 @@ public class Card : ScriptableObject
     public Type genType(int tier) { return Type.OneHandedWeapon; }
 }
 public enum Type { OneHandedWeapon, TwoHandedWeapon, Shield, Chest, Amulet, Ring }
-public enum Rarity { Normal, Magic, Rare, Unique }
+public enum Rarity { Normal, Magic, Rare, Unique, Currency }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     public Card card;
     // Start is called before the first frame update
@@ -16,72 +16,108 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public GameObject implicitContainer;
     private List<Image> implicitList;
     public GameObject explicitContainer;
-    private int horizontalCardSpacing = 150; //positions spacing between cards
+    private int horizontalCardSpacing = 120; //positions spacing between cards
     private int verticalCardSpacing = -10; //positions spacing between cards
     private Vector3 cachedScale;
-    private int cachedSiblingIndex;
     private Canvas canvas;
     private float onHoverCooldown = 0;
     private Renderer rendererObj;
     private Vector3 destination;
+    public int sortedOrderIndex;
+    public bool selected;
+    public GameObject parentContainer;
+    private GameObject selectedContainer;
+    private CardSelection cardselection;
 
     private void Awake()
     {
-    
+        // parentContainer = parentCont;
+        selectedContainer = GameObject.FindGameObjectWithTag("SelectedCardContainer");
         rendererObj = GetComponent<Renderer>();
         baseImage = GetComponent<Image>();
         typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
         itemImage.sprite = CardImageHolder.instance.getItem();
+        baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
         title.text = card.name;
         card.implicits.StatDisplay(implicitContainer.transform);
         card.explicits.StatDisplay(explicitContainer.transform);
         // createImplicits();
         canvas = GetComponent<Canvas>();
     }
+    public void updatePositionScaleCaches(int index)
+    {
+        sortedOrderIndex = index;
+        cachedScale = transform.localScale;
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.SetSiblingIndex(cachedSiblingIndex);
-        transform.localScale = cachedScale;
+
+        transform.SetSiblingIndex(sortedOrderIndex);
+        if (selected)
+        {
+            transform.localScale = new Vector3(0.4f, 0.4f, 1);
+        }
+        else
+        {
+            transform.localScale = cachedScale;
+        }
+    }
+
+    public void OnPointerClick(PointerEventData evendData)
+    {
+        Hand.instance.selectCard(this);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        cachedSiblingIndex = transform.GetSiblingIndex();
-        transform.SetAsLastSibling();
-        cachedScale = transform.localScale;
-        transform.localScale = new Vector3(1.1f, 1.1f, 1);
+        if (Hand.instance.cooldDownHover <= 0)
+        {
+            transform.SetAsLastSibling();
+            transform.localScale = new Vector3(1.2f, 1.2f, 1);
+            Hand.instance.cooldDownHover = 0.1f;
+        }
 
+    }
+    public void DoSelect(Vector3 position)
+    {
+        selected = !selected;
+        transform.localScale = new Vector3(0.4f, 0.4f, 1);
+        transform.SetParent(selectedContainer.transform);
+        transform.localPosition = position;
+        // transform.parent = selectedContainer.transform;
+    }
+    public void DoUnselect()
+    {
+        selected = !selected;
+        transform.localScale = cachedScale;
+        transform.SetParent(parentContainer.transform);
+        Hand.instance.UpdateCardDisplay();
     }
     private void Update()
     {
-        if (onHoverCooldown > 0)
+        if (!selected)
         {
-            onHoverCooldown -= Time.deltaTime;
-        }
-        if (transform.position != destination)
-        {
-            transform.position = Vector3.Lerp(transform.position, destination, Time.deltaTime * 5f);
+            if (onHoverCooldown > 0)
+            {
+                onHoverCooldown -= Time.deltaTime;
+            }
+            if (transform.position != destination)
+            {
+                transform.position = Vector3.Lerp(transform.position, destination, Time.deltaTime * 5f);
+            }
         }
     }
-    // private void Update()
-    // {
-    //     Debug.Log("d");
-    //     // Quaternion lookRotation = Quaternion.LookRotation((transform.position - HandRotationAchor.position), Vector3.forward);
-    //     Quaternion lookRotation = Quaternion.Euler(x, y, z);
-    //     transform.rotation = lookRotation;
-
     public void repositionInHand(int myPositionIndex, int handCount, Vector3 handPosition)
     {
         float halfWay = handCount / 2;
         float position = myPositionIndex - halfWay;
         if (Mathf.Abs(position) > 5) { position = position * 2; }
-        float scale = 1 - Mathf.Abs(position) * 0.05f;
+        float scale = 0.8f - Mathf.Abs(position) * 0.01f;
+        transform.localScale = new Vector3(scale, scale, 1);
         float x = 0;
         if (myPositionIndex != halfWay) { x = position * horizontalCardSpacing; }
         x += (1920 / 2);
-        float y = Mathf.Abs(position) * verticalCardSpacing + 200;
+        float y = Mathf.Abs(position) * verticalCardSpacing + 200 - scale;
         destination = new Vector3(x, y, 0);
-        // transform.position = destination;
-
     }
     private void createImplicits()
     {

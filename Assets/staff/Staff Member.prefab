@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a421272e66a956944aefbf41add6da11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 5
+  radius: 2
   interactionTransform: {fileID: 5015762501684199326}
 --- !u!136 &5015762501684199324
 CapsuleCollider:

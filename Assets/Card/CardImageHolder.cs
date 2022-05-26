@@ -20,9 +20,15 @@ public class CardImageHolder : MonoBehaviour
     public SpriteHolder normal;
     public SpriteHolder normal1Dur;
     public SpriteHolder normal2Dur;
-    public SpriteHolder rare;
     public SpriteHolder magic;
+    public SpriteHolder magic1Dur;
+    public SpriteHolder magic2Dur;
+    public SpriteHolder rare;
+    public SpriteHolder rare1Dur;
+    public SpriteHolder rare2Dur;
     public SpriteHolder unique;
+    public SpriteHolder unique1Dur;
+    public SpriteHolder unique2Dur;
     public SpriteHolder currency;
     public SpriteHolder mace;
     public SpriteHolder physical;
@@ -39,8 +45,56 @@ public class CardImageHolder : MonoBehaviour
     public SpriteHolder amuletTypeIcon;
     public SpriteHolder shieldTypeIcon;
     public SpriteHolder chestTypeIcon;
-    public Sprite getBase()
+    public Sprite getBase(Rarity rarity, int durability)
     {
+        if (durability == 0)
+        {
+            switch (rarity)
+            {
+                case Rarity.Normal:
+                    return normal2Dur.sprite;
+                case Rarity.Magic:
+                    return magic2Dur.sprite;
+                case Rarity.Rare:
+                    return rare2Dur.sprite;
+                case Rarity.Unique:
+                    return unique2Dur.sprite;
+                case Rarity.Currency:
+                    return currency.sprite;
+            }
+        }
+        else if (durability == 1)
+        {
+            switch (rarity)
+            {
+                case Rarity.Normal:
+                    return normal1Dur.sprite;
+                case Rarity.Magic:
+                    return magic1Dur.sprite;
+                case Rarity.Rare:
+                    return rare1Dur.sprite;
+                case Rarity.Unique:
+                    return unique1Dur.sprite;
+                case Rarity.Currency:
+                    return currency.sprite;
+            }
+        }
+        else
+        {
+            switch (rarity)
+            {
+                case Rarity.Normal:
+                    return normal.sprite;
+                case Rarity.Magic:
+                    return magic.sprite;
+                case Rarity.Rare:
+                    return rare.sprite;
+                case Rarity.Unique:
+                    return unique.sprite;
+                case Rarity.Currency:
+                    return currency.sprite;
+            }
+        }
         return normal.sprite;
     }
     public Sprite getItem()

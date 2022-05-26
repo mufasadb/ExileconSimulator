@@ -15,7 +15,7 @@ public class Stats
     public int armour = 0;
     public int life = 0;
     public int statCount = 0;
-    private int seperatingDistance = 30;
+    private int seperatingDistance = 40;
     public Stats()
     {
         // makeExplicit(Type.TwoHandedWeapon);
@@ -156,7 +156,7 @@ public class Stats
         rt.anchorMin = new Vector2(0, 0);
         rt.anchorMax = new Vector2(0, 0);
         rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.localScale = new Vector2(1.0f, 1.0f);
+        rt.localScale = new Vector2(1f, 1f);
         Image image = statIcon.AddComponent<Image>();
         image.sprite = CardImageHolder.instance.getStat(statEle);
         rt.sizeDelta = new Vector2(image.sprite.bounds.size.x * 100, image.sprite.bounds.size.y * 100);
@@ -192,7 +192,7 @@ public class Stats
         GameObject statIcon = AddStat(StatEle.Parse<StatEle>(statName));
         statIcon.transform.SetParent(parentContainer, false);
         statIcon.transform.localPosition = new Vector3(x, y, 0);
-        statIcon.transform.localScale = new Vector3(0.6f, 0.6f, 0);
+        statIcon.transform.localScale = new Vector3(1f, 1f, 0);
         currentPosition = currentPosition + 1;
         return currentPosition;
     }

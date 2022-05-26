@@ -8,6 +8,9 @@ public class Hand : MonoBehaviour
     public static Hand instance;
     public int handScrollIndex = 0;
     private GameObject handContainer;
+    public float cooldDownHover;
+    private CardSelection cardSelection;
+
     void Awake()
     {
         if (instance != null)
@@ -24,16 +27,17 @@ public class Hand : MonoBehaviour
     {
         handContainer = GameObject.FindGameObjectWithTag("Hand");
         DoHandGen();
+        cardSelection = handContainer.GetComponent<CardSelection>();
     }
     private void DoHandGen()
     {
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
-
         for (int i = 0; i < 20; i++)
         {
-            hand.Add(Card.CreateInstance(1, i.ToString()));
+            hand.Add(Card.CreateInstance(Random.Range(1,3), i.ToString()));
             Vector3 position = new Vector3(100, 500, 0);
             var card = cardPrefab.GetComponent<CardDisplay>();
+            card.parentContainer = handContainer;
             card.card = hand[i];
             // Debug.Log(PrefabHolder.instance.CardPrefab);
             Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform);
@@ -55,12 +59,12 @@ public class Hand : MonoBehaviour
     }
     public void UpdateCardDisplay()
     {
-
         for (int i = 0; i < handContainer.transform.childCount; i++)
         {
-
             GameObject card = handContainer.transform.GetChild(i).gameObject;
-            card.GetComponent<CardDisplay>().repositionInHand(i + handScrollIndex, handContainer.transform.childCount, handContainer.transform.position);
+            CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
+            cardDisplay.repositionInHand(i + handScrollIndex, handContainer.transform.childCount, handContainer.transform.position);
+            cardDisplay.updatePositionScaleCaches(i);
         }
     }
     public Card getCard()
@@ -77,5 +81,13 @@ public class Hand : MonoBehaviour
         hand.Sort((c1, c2) => c1.type.CompareTo(c2.type));
         hand.Sort((c1, c2) => c1.durability.CompareTo(c2.durability));
     }
-
+    public void selectCard(CardDisplay card)
+    {
+        cardSelection.Select(card);
+    }
+    private void Update()
+    {
+        //updated in carddisplay, used to prevent weird flicker that happens with raycast in between frmames of card moving
+        if (cooldDownHover > 0) { cooldDownHover -= Time.deltaTime; }
+    }
 }
