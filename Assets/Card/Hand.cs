@@ -7,6 +7,7 @@ public class Hand : MonoBehaviour
     #region Singleton
     public static Hand instance;
     public int handScrollIndex = 0;
+    private GameObject handContainer;
     void Awake()
     {
         if (instance != null)
@@ -21,26 +22,21 @@ public class Hand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (CardDataSystem.instance.cardDataSet.set.Count < 1) { Debug.LogError("instance too short I'll wait"); waitForInstance(); DoHandGen(); }
-        else { DoHandGen(); }
-        // handObject.SetActive(false);
-
-    }
-    IEnumerator waitForInstance()
-    {
-        yield return new WaitForSeconds(500);
+        handContainer = GameObject.FindGameObjectWithTag("Hand");
+        DoHandGen();
     }
     private void DoHandGen()
     {
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
-        GameObject handObject = GameObject.FindGameObjectWithTag("Hand");
+
         for (int i = 0; i < 20; i++)
         {
             hand.Add(Card.CreateInstance(1, i.ToString()));
             Vector3 position = new Vector3(100, 500, 0);
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.card = hand[i];
-            Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handObject.transform);
+            // Debug.Log(PrefabHolder.instance.CardPrefab);
+            Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform);
         }
         SortHand();
         UpdateCardDisplay();
@@ -59,13 +55,12 @@ public class Hand : MonoBehaviour
     }
     public void UpdateCardDisplay()
     {
-        GameObject handcontainer = GameObject.FindGameObjectWithTag("Hand");
 
-        for (int i = 0; i < handcontainer.transform.childCount; i++)
+        for (int i = 0; i < handContainer.transform.childCount; i++)
         {
 
-            GameObject card = handcontainer.transform.GetChild(i).gameObject;
-            card.GetComponent<CardDisplay>().repositionInHand(i + handScrollIndex, handcontainer.transform.childCount, handcontainer.transform.position);
+            GameObject card = handContainer.transform.GetChild(i).gameObject;
+            card.GetComponent<CardDisplay>().repositionInHand(i + handScrollIndex, handContainer.transform.childCount, handContainer.transform.position);
         }
     }
     public Card getCard()

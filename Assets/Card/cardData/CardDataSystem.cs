@@ -16,13 +16,14 @@ public class CardDataSystem : MonoBehaviour
             return;
         }
         instance = this;
+        LoadCardData();
+
     }
     #endregion
     public CardDataSet cardDataSet;
     public TextAsset jsonFile;
     public void Start()
     {
-        LoadCardData();
     }
     public void LoadCardData()
     {

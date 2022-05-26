@@ -65,6 +65,8 @@ public class CardImageHolder : MonoBehaviour
                 return chaos.sprite;
             case StatEle.Wild:
                 return wild.sprite;
+            case StatEle.Armour:
+                return armour.sprite;
             default: return wild.sprite;
         }
     }

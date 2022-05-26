@@ -25,8 +25,9 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private Renderer rendererObj;
     private Vector3 destination;
 
-    void Start()
+    private void Awake()
     {
+    
         rendererObj = GetComponent<Renderer>();
         baseImage = GetComponent<Image>();
         typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
@@ -37,6 +38,11 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         // createImplicits();
         canvas = GetComponent<Canvas>();
     }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        transform.SetSiblingIndex(cachedSiblingIndex);
+        transform.localScale = cachedScale;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         cachedSiblingIndex = transform.GetSiblingIndex();
@@ -44,11 +50,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         cachedScale = transform.localScale;
         transform.localScale = new Vector3(1.1f, 1.1f, 1);
 
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        transform.SetSiblingIndex(cachedSiblingIndex);
-        transform.localScale = cachedScale;
     }
     private void Update()
     {

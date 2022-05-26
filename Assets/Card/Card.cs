@@ -35,9 +35,10 @@ public class Card : ScriptableObject
         this.name = cardData.name;
         this.description = this.name;
 
-        this.implicits = new Stats(StatsType.Implicits, this.type, true);
+        this.implicits = new Stats();
         this.implicits.DeclareStats(StatStringToIntArray(cardData.implicits));
-        this.explicits = new Stats(StatsType.Explicits, this.type, false);
+        this.explicits = new Stats();
+        this.explicits.makeExplicit(this.type);
     }
     private int[] StatStringToIntArray(string str)
     {

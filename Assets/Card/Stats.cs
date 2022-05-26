@@ -16,15 +16,10 @@ public class Stats
     public int life = 0;
     public int statCount = 0;
     private int seperatingDistance = 30;
-    public Stats(StatsType statsType, Type type, bool declaringValues)
+    public Stats()
     {
-        if (declaringValues) { };
-        if (statsType == StatsType.Implicits) { makeImplicit(type); }
-        if (statsType == StatsType.Explicits) { makeExplicit(type); }
-        if (statsType == StatsType.staffAttack)
-        {
-            makeStaffAttack();
-        }
+        // makeExplicit(Type.TwoHandedWeapon);
+
     }
     public Stats DeclareStats(int[] ints)
     {
@@ -39,9 +34,22 @@ public class Stats
         this.wild = ints[7];
         return this;
     }
-    public void makeStaffAttack()
+    public void createStaffAttack(int tier)
     {
+        armour = 3;
+        countStats();
+    }
+    public void createStaffDefence(int tier)
+    {
+        physical = 3;
+        cold = 2;
+        lightning = 2;
+        countStats();
         //make staff
+    }
+    public void countStats()
+    {
+        statCount = physical + armour + life + chaos + wild + cold + fire + lightning;
     }
     public void makeImplicit(Type type)
     {
@@ -54,15 +62,14 @@ public class Stats
         else if (type == Type.Shield || type == Type.Chest)
         {
             life = 2;
-            statCount += 2;
             armour = 2;
-            statCount += 2;
+            countStats();
             // do armour
         }
         else
         {
             wild = 2;
-            statCount += 2;
+            countStats();
             // do jewelery
         }
     }
@@ -74,7 +81,7 @@ public class Stats
             cold = Mathf.RoundToInt(Random.Range(0, 3));
             fire = Mathf.RoundToInt(Random.Range(0, 3));
             lightning = Mathf.RoundToInt(Random.Range(0, 3));
-            statCount = statCount + cold + fire + lightning + physical;
+            countStats();
             // do weapon
         }
         else if (type == Type.Shield || type == Type.Chest)
@@ -82,13 +89,13 @@ public class Stats
 
             life = Mathf.RoundToInt(Random.Range(0, 3));
             armour = Mathf.RoundToInt(Random.Range(0, 3));
-            statCount = statCount + life + armour;
+            countStats();
             // do armour
         }
         else
         {
             wild = 2;
-            statCount += 2;
+            countStats(); 
             // do jewelery
         }
     }
