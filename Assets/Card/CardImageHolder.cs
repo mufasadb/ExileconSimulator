@@ -7,6 +7,7 @@ public class CardImageHolder : MonoBehaviour
 {
     #region Singleton
     public static CardImageHolder instance;
+
     void Awake()
     {
         if (instance != null)
@@ -17,34 +18,66 @@ public class CardImageHolder : MonoBehaviour
         instance = this;
     }
     #endregion
+
+
     public SpriteHolder normal;
+
     public SpriteHolder normal1Dur;
+
     public SpriteHolder normal2Dur;
+
     public SpriteHolder magic;
+
     public SpriteHolder magic1Dur;
+
     public SpriteHolder magic2Dur;
+
     public SpriteHolder rare;
+
     public SpriteHolder rare1Dur;
+
     public SpriteHolder rare2Dur;
+
     public SpriteHolder unique;
+
     public SpriteHolder unique1Dur;
+
     public SpriteHolder unique2Dur;
+
     public SpriteHolder currency;
+
     public SpriteHolder mace;
+
+    public SpriteHolder chest;
+
     public SpriteHolder physical;
+
     public SpriteHolder armour;
+
     public SpriteHolder life;
+
     public SpriteHolder cold;
+
     public SpriteHolder lightning;
+
     public SpriteHolder fire;
+
     public SpriteHolder chaos;
+
     public SpriteHolder wild;
+
     public SpriteHolder oneHandedTypeIcon;
+
     public SpriteHolder twoHandedTypeIcon;
+
     public SpriteHolder ringTypeIcon;
+
     public SpriteHolder amuletTypeIcon;
+
     public SpriteHolder shieldTypeIcon;
+
     public SpriteHolder chestTypeIcon;
+
     public Sprite getBase(Rarity rarity, int durability)
     {
         if (durability == 0)
@@ -97,9 +130,37 @@ public class CardImageHolder : MonoBehaviour
         }
         return normal.sprite;
     }
-    public Sprite getItem()
+
+    public Sprite getItem(string name, Type type)
     {
-        return mace.sprite;
+        // if (name == "Gladiator Armour")
+        // {
+        // string path = "Items/Chest/Gladiator Armour.png";
+        string path = "Items/" + type.ToString() + "/" + name + ".png";
+        // Sprite sprite = LoadSprite("Assets/Card/images/Items/Chest/Gladiator Armour.png");
+        Sprite sprite = LoadSprite(path);
+
+        Debug.Log(sprite);
+        return sprite;
+
+        // }
+        // return mace.sprite;
+    }
+
+    private Sprite LoadSprite(string path)
+    {
+        string fullPath = "Assets/Card/images/" + path;
+        Debug.Log(fullPath);
+        if (string.IsNullOrEmpty(fullPath)) return null;
+        if (System.IO.File.Exists(fullPath))
+        {
+            byte[] bytes = System.IO.File.ReadAllBytes(fullPath);
+            Texture2D texture = new Texture2D(1, 1);
+            texture.LoadImage(bytes);
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            return sprite;
+        }
+        return null;
     }
     public Sprite getStat(StatEle statEle)
     {
@@ -121,9 +182,11 @@ public class CardImageHolder : MonoBehaviour
                 return wild.sprite;
             case StatEle.Armour:
                 return armour.sprite;
-            default: return wild.sprite;
+            default:
+                return wild.sprite;
         }
     }
+
     public Sprite getTypeIcon(Type type)
     {
         switch (type)
@@ -144,5 +207,4 @@ public class CardImageHolder : MonoBehaviour
                 return amuletTypeIcon.sprite;
         }
     }
-
 }

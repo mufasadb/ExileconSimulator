@@ -32,6 +32,7 @@ public class Stats
         this.armour = ints[5];
         this.chaos = ints[6];
         this.wild = ints[7];
+        countStats();
         return this;
     }
     public void createStaffAttack(int tier)

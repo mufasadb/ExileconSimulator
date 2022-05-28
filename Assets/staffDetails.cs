@@ -11,13 +11,10 @@ public class staffDetails : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("staffData" + staffData.attack);
 
         // staffData.attack.StatDisplay(canvas.transform);
         statDisplay(staffData.attack, true);
         statDisplay(staffData.defence, false);
-        Debug.Log("attack phys is " + staffData.attack.physical + ". attack armour is " + staffData.attack.armour);
-        Debug.Log("defense phys is " + staffData.defence.physical + ". defense armour is " + staffData.defence.armour);
     }
 
     // Update is called once per frame
@@ -80,7 +77,7 @@ public class staffDetails : MonoBehaviour
         int workingStatCount = stats.statCount;
         int workingCurrentPosition = currentPosition;
         int y = 19;
-        if (offence) { y = 26;}
+        if (offence) { y = 26; }
         if (workingStatCount > 5)
         {
             evenStats = false;

@@ -8,10 +8,10 @@
         { "name": "Tower Shield", "implicits": "Armour", "tier":1, "isUnique": false , "type": 2},
         { "name": "Round Shield", "implicits": "Armour,Armour", "tier":1, "isUnique": false, "type": 2 },
         { "name": "Gladiator Armour", "implicits": "Life,Life,Life,Life,Life", "tier":2, "isUnique": false , "type": 3},
-        { "name": "Field Plate", "implicits": "Life,Life,Fire", "tier":1, "isUnique": false , "type": 43},
+        { "name": "Field Plate", "implicits": "Life,Life,Fire", "tier":1, "isUnique": false , "type": 3},
         { "name": "Lapis Amulet", "implicits": "Lightning", "tier":2, "isUnique": false , "type": 4},
         { "name": "Jade Amulet", "implicits": "Cold", "tier":3, "isUnique": false , "type": 4},
-        { "name": "Sapphire Ruby Ring", "implicits": "Lightning,Fire", "tier":3, "isUnique": false , "type": 5},
-        { "name": "Sapphire Topaz Ring", "implicits": "Cold,Lightning", "tier":3, "isUnique": false , "type": 5}
+        { "name": "Sapphire Ruby Ring", "implicits": "Lightning,Fire", "tier":2, "isUnique": false , "type": 5},
+        { "name": "Sapphire Topaz Ring", "implicits": "Cold,Lightning", "tier":2, "isUnique": false , "type": 5}
   ]
 }

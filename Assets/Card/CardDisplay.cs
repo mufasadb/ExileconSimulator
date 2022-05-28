@@ -36,13 +36,38 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
         rendererObj = GetComponent<Renderer>();
         baseImage = GetComponent<Image>();
         typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
-        itemImage.sprite = CardImageHolder.instance.getItem();
+        MoveTypeIcon(card.type);
+        itemImage.sprite = CardImageHolder.instance.getItem(card.name, card.type);
         baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
         title.text = card.name;
         card.implicits.StatDisplay(implicitContainer.transform);
         card.explicits.StatDisplay(explicitContainer.transform);
         // createImplicits();
         canvas = GetComponent<Canvas>();
+    }
+    private void MoveTypeIcon(Type type)
+    {
+        if (type == Type.TwoHandedWeapon)
+        {
+            typeIcon.rectTransform.localScale = new Vector3(1.1f, 2.2f, 1);
+            typeIcon.rectTransform.localPosition = new Vector3(-106.8f, -33, 0);
+        }
+        if (type == Type.Shield)
+        {
+            typeIcon.rectTransform.localPosition = new Vector3(-107.2f, -50f, 0);
+        }
+        if (type == Type.Amulet)
+        {
+            typeIcon.rectTransform.localPosition = new Vector3(-107.2f, -111, 0);
+        }
+        if (type == Type.Ring)
+        {
+            typeIcon.rectTransform.localPosition = new Vector3(-107.2f, -141, 0);
+        }
+        if (type == Type.Chest)
+        {
+            typeIcon.rectTransform.localPosition = new Vector3(-107.2f, -79, 0);
+        }
     }
     public void updatePositionScaleCaches(int index)
     {
@@ -79,33 +104,39 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
     }
     public void DoSelect(Vector3 position)
     {
-        selected = !selected;
+        selected = true;
         transform.localScale = new Vector3(0.4f, 0.4f, 1);
         transform.SetParent(selectedContainer.transform);
-        transform.localPosition = position;
+        // transform.localPosition = position;
+        destination = position;
         // transform.parent = selectedContainer.transform;
     }
     public void DoUnselect()
     {
-        selected = !selected;
+        selected = false;
         transform.localScale = cachedScale;
         transform.SetParent(parentContainer.transform);
         Hand.instance.UpdateCardDisplay();
     }
+    public void MoveBy(Vector3 moveAmount)
+    {
+        destination = destination + moveAmount;
+    }
     private void Update()
     {
-        if (!selected)
+        // if (!selected)
+        // {
+        if (onHoverCooldown > 0)
         {
-            if (onHoverCooldown > 0)
-            {
-                onHoverCooldown -= Time.deltaTime;
-            }
-            if (transform.position != destination)
-            {
-                transform.position = Vector3.Lerp(transform.position, destination, Time.deltaTime * 5f);
-            }
+            onHoverCooldown -= Time.deltaTime;
         }
+        if (transform.position != destination)
+        {
+            transform.position = Vector3.Lerp(transform.position, destination, Time.deltaTime * 5f);
+        }
+        // }
     }
+
     public void repositionInHand(int myPositionIndex, int handCount, Vector3 handPosition)
     {
         float halfWay = handCount / 2;

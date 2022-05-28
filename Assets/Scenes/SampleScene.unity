@@ -211,6 +211,7 @@ MonoBehaviour:
   unique2Dur: {fileID: 1455815335}
   currency: {fileID: 1574135703}
   mace: {fileID: 796145058}
+  chest: {fileID: 589069210}
   physical: {fileID: 1936005213}
   armour: {fileID: 221213447}
   life: {fileID: 1012350441}
@@ -1794,7 +1795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8979bb67ac808524cbacbff9445ad8fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 4b6df413a2249704ea55b7a2c53d8e55, type: 3}
+  sprite: {fileID: 21300000, guid: 58dc2cce142a21845acd3512420fa713, type: 3}
 --- !u!1 &591388225
 GameObject:
   m_ObjectHideFlags: 0
