@@ -150,7 +150,6 @@ public class CardImageHolder : MonoBehaviour
     private Sprite LoadSprite(string path)
     {
         string fullPath = "Assets/Card/images/" + path;
-        Debug.Log(fullPath);
         if (string.IsNullOrEmpty(fullPath)) return null;
         if (System.IO.File.Exists(fullPath))
         {

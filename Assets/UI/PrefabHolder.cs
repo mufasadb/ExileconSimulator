@@ -18,4 +18,5 @@ public class PrefabHolder : MonoBehaviour
     #endregion
     public GameObject CardPrefab;
     public GameObject StaffPrefab;
+    public GameObject NerdPrefab;
 }

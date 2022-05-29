@@ -7,11 +7,12 @@ using UnityEngine.AI;
 public class PlayerMotor : MonoBehaviour
 {
     NavMeshAgent agent;
-    Transform target;
-
+    public Transform target;
+    CharacterAnimator characterAnimator;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        characterAnimator = GetComponent<CharacterAnimator>();
     }
     void Update(){
         if(target != null){
@@ -22,6 +23,7 @@ public class PlayerMotor : MonoBehaviour
     public void MoveToPoint(Vector3 point)
     {
         agent.SetDestination(point);
+        characterAnimator.TargetChange(point);
     }
 
     public void FollowTarget(Interactable newTarget)
