@@ -6,15 +6,17 @@ public class staffCreation : MonoBehaviour
 {
     public GameObject staffCollection;
     public GameObject MainCamera;
-    [SerializeField] private Transform[] spawnTransforms;
+    [SerializeField] private GameObject[] spawnObjects;
     private List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
     public List<StaffMember> staffList = new List<StaffMember>();
+    private NerdSpawner nerdSpawner;
     // Start is called before the first frame update
     void Awake()
     {
-        foreach (var trans in spawnTransforms)
+        nerdSpawner = GetComponent<NerdSpawner>();
+        foreach (var objs in spawnObjects)
         {
-            spawnPoints.Add(new SpawnPoint(trans));
+            spawnPoints.Add(new SpawnPoint(objs));
         }
         DoStaffGen();
     }
@@ -28,24 +30,30 @@ public class staffCreation : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             staffList.Add(StaffMember.CreateInstance(1));
-            Transform newPositionTrans = getSpawnPoint();
+            SpawnPoint newPositionObj = getSpawnPoint();
+            Transform newPositionTrans = newPositionObj.transformPoint.transform;
             Vector3 position = new Vector3(newPositionTrans.position.x, newPositionTrans.position.y, newPositionTrans.position.z);
             var staff = staffPrefab.GetComponent<staffDetails>();
             // var card = cardPrefab.GetComponent<CardDisplay>();
             // card.card = hand[i];
             staff.staffData = staffList[i];
 
-            Instantiate(staffPrefab, position, Quaternion.identity, staffCollection.transform);
+            GameObject staffMem = Instantiate(staffPrefab, position, Quaternion.identity, staffCollection.transform);
+            staffMem.transform.LookAt(newPositionObj.direction, Vector3.up);
+
+            nerdSpawner.DoNerdGen(position, newPositionObj.direction.localPosition, staff.staffData.staffQueueSize, staffMem.transform);
+
         }
 
     }
     private void positionStaffMember() { }
-    private Transform getSpawnPoint()
+    private SpawnPoint getSpawnPoint()
     {
+        if (spawnPoints.Count < 1) { Debug.LogError("There are no spawnpoints assigned"); }
         List<SpawnPoint> availableSpawnPoints = spawnPoints.FindAll(spawn => spawn.used == false);
         int choice = Random.Range(0, availableSpawnPoints.Count);
         availableSpawnPoints[choice].used = true;
-        return availableSpawnPoints[choice].transformPoint;
+        return availableSpawnPoints[choice];
     }
     // Update is called once per frame
 }

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnPoint{
-    public Transform transformPoint;
+    public GameObject transformPoint;
+    public Transform direction;
     public bool used;
-    public SpawnPoint(Transform trans){
-        transformPoint = trans;
+    public SpawnPoint(GameObject obj){
+        transformPoint = obj;
         used = false;
+        Debug.Log(transformPoint.GetComponent<SpawnDirection>().spawnDirection);
+        direction = transformPoint.GetComponent<SpawnDirection>().spawnDirection;
     }
 }

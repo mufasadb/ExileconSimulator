@@ -15,7 +15,6 @@ public class CharacterAnimator : MonoBehaviour
     void Start()
     {
         // PlayerMotor playerMotor = GetComponentInParent<PlayerMotor>();
-        Transform target;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
     }
