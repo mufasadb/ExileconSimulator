@@ -49,13 +49,13 @@ public class FightHandler : MonoBehaviour
             GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
 
             Card.CreateInstance(Random.Range(1, 3), "null");
-            Vector3 position = new Vector3(-250, 0, 0);
+            Vector3 position = new Vector3(1920/2,160/2, 0);
             var rewardCard1 = cardPrefab.GetComponent<CardDisplay>();
             rewardCard1.parentContainer = GlobalVariables.instance.RewardContainer;
             // Debug.Log(PrefabHolder.instance.CardPrefab);
             Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, GlobalVariables.instance.RewardContainer.transform);
             Card.CreateInstance(Random.Range(1, 3), "null");
-            position = new Vector3(250, 0, 0);
+            position = new Vector3(1000, 500, 0);
             var rewardCard2 = cardPrefab.GetComponent<CardDisplay>();
             rewardCard1.parentContainer = GlobalVariables.instance.RewardContainer;
             // Debug.Log(PrefabHolder.instance.CardPrefab);
