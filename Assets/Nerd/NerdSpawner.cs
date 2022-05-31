@@ -10,7 +10,7 @@ public class NerdSpawner : MonoBehaviour
 
     public void DoNerdGen(Vector3 startPosition, Vector3 direction, int quant, Transform lookAtTarget)
     {
-        Debug.Log(direction);
+        // Debug.Log(direction);
         GameObject nerdPrefab = PrefabHolder.instance.NerdPrefab;
         for (int i = 0; i < quant; i++)
         {

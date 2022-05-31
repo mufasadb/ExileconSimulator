@@ -23,16 +23,18 @@ public class PlayerController : MonoBehaviour
             return;
         if (Input.GetMouseButton(0))
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100, movementMask))
+            if (!GlobalVariables.instance.currentlyDragging)
             {
-                //move our player to what we hit
-                motor.MoveToPoint(hit.point);
-                removeFocus();
-                // stop focus an item
 
-
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 100, movementMask))
+                {
+                    //move our player to what we hit
+                    motor.MoveToPoint(hit.point);
+                    removeFocus();
+                    // stop focus an item
+                }
             }
         }
         if (Input.GetMouseButton(1))

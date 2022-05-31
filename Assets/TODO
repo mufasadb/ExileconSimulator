@@ -1,3 +1,3 @@
 fix the facing off hoverovers to stay true resolution and actually face you
-fix the left and right shifting of staticons on cards
-fix the case where one statIcon in implicits puts itself higher (like there it's the first of over 5 icons)
+select staff member when you select their queue
+staff member queue selection on their queue not them

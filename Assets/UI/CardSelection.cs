@@ -4,25 +4,117 @@ using UnityEngine;
 
 public class CardSelection : MonoBehaviour
 {
-    private int twoHandedWeaponLimit = 1;
-    private int oneHandedWeaponLimit = 1;
-    private int shieldLimit = 1;
-    private int chestLimit = 1;
-    private int amuletLimit = 1;
-    private int ringLimit = 2;
-    private float verticalGap = 140;
-    private float topCardPosition = 900;
-    private float leftCardPosition = 150;
-    private float horizontalGap = 150;
-    private List<CardDisplay> twoHandedWeapons = new List<CardDisplay>();
-    private List<CardDisplay> shields = new List<CardDisplay>();
-    private List<CardDisplay> amulets = new List<CardDisplay>();
-    private List<CardDisplay> oneHandedWeapons = new List<CardDisplay>();
-    private List<CardDisplay> rings = new List<CardDisplay>();
-    private List<CardDisplay> chests = new List<CardDisplay>();
-    private void Start()
+    public int twoHandedWeaponLimit = 1;
+    public int oneHandedWeaponLimit = 1;
+    public int shieldLimit = 1;
+    public int chestLimit = 1;
+    public int amuletLimit = 1;
+    public int ringLimit = 2;
+    public float verticalGap = 140;
+    public float topCardPosition = 900;
+    public float leftCardPosition = 150;
+    public float horizontalGap = 150;
+    public List<CardDisplay> twoHandedWeapons = new List<CardDisplay>();
+    public List<CardDisplay> shields = new List<CardDisplay>();
+    public List<CardDisplay> amulets = new List<CardDisplay>();
+    public List<CardDisplay> oneHandedWeapons = new List<CardDisplay>();
+    public List<CardDisplay> rings = new List<CardDisplay>();
+    public List<CardDisplay> chests = new List<CardDisplay>(); 
+    public Stats attack = new Stats();
+    public Stats defence = new Stats();
+    public int GetLimit(Type type)
     {
+        int limit;
+        switch (type)
+        {
+            case Type.TwoHandedWeapon:
+                limit = twoHandedWeaponLimit;
+                break;
+            case Type.OneHandedWeapon:
+                limit = oneHandedWeaponLimit;
+                break;
+            case Type.Chest:
+                limit = chestLimit;
+                break;
+            case Type.Amulet:
+                limit = amuletLimit;
+                break;
+            case Type.Ring:
+                limit = ringLimit;
+                break;
+            case Type.Shield:
+                limit = shieldLimit;
+                break;
+            default:
+                Debug.LogError("tried to create a selection locaton without a type");
+                limit = 1;
+                break;
+        }
+        return limit;
 
+    }
+    private void statCalc()
+    {
+        //int fire, int cold, int lightning, int physical, int life, int armour, int chaos, int wild
+
+        //impliment quality
+        int[] attackStats = new int[8];
+        int[] defenceStats = new int[8];
+        (attackStats, defenceStats) = ReadGroupOfCards(attackStats, defenceStats, twoHandedWeapons);
+        (attackStats, defenceStats) = ReadGroupOfCards(attackStats, defenceStats, oneHandedWeapons);
+        (attackStats, defenceStats) = ReadGroupOfCards(attackStats, defenceStats, shields);
+        (attackStats, defenceStats) = ReadGroupOfCards(attackStats, defenceStats, chests);
+        (attackStats, defenceStats) = ReadGroupOfCards(attackStats, defenceStats, amulets);
+        (attackStats, defenceStats) = ReadGroupOfCards(attackStats, defenceStats, rings);
+
+        attack.DeclareStats(attackStats);
+        defence.DeclareStats(defenceStats);
+    }
+    (int[], int[]) ReadGroupOfCards(int[] attackStats, int[] defenceStats, List<CardDisplay> list)
+    {
+        // int[] stats = new int[8];
+        foreach (CardDisplay cardDisplay in list)
+        {
+            if (cardDisplay.asWeapon)
+            {
+                attackStats[0] += cardDisplay.card.implicits.fire;
+                attackStats[0] += cardDisplay.card.explicits.fire;
+                attackStats[1] += cardDisplay.card.implicits.cold;
+                attackStats[1] += cardDisplay.card.explicits.cold;
+                attackStats[2] += cardDisplay.card.implicits.lightning;
+                attackStats[2] += cardDisplay.card.explicits.lightning;
+                attackStats[3] += cardDisplay.card.implicits.physical;
+                attackStats[3] += cardDisplay.card.explicits.physical;
+                defenceStats[4] += cardDisplay.card.implicits.life;
+                defenceStats[4] += cardDisplay.card.explicits.life;
+                defenceStats[5] += cardDisplay.card.implicits.armour;
+                defenceStats[5] += cardDisplay.card.explicits.armour;
+                attackStats[6] += cardDisplay.card.implicits.chaos;
+                attackStats[6] += cardDisplay.card.explicits.chaos;
+                attackStats[7] += cardDisplay.card.implicits.wild;
+                attackStats[7] += cardDisplay.card.explicits.wild;
+            }
+            else
+            {
+                defenceStats[0] += cardDisplay.card.implicits.fire;
+                defenceStats[0] += cardDisplay.card.explicits.fire;
+                defenceStats[1] += cardDisplay.card.implicits.cold;
+                defenceStats[1] += cardDisplay.card.explicits.cold;
+                defenceStats[2] += cardDisplay.card.implicits.lightning;
+                defenceStats[2] += cardDisplay.card.explicits.lightning;
+                attackStats[3] += cardDisplay.card.implicits.physical;
+                attackStats[3] += cardDisplay.card.explicits.physical;
+                defenceStats[4] += cardDisplay.card.implicits.life;
+                defenceStats[4] += cardDisplay.card.explicits.life;
+                defenceStats[5] += cardDisplay.card.implicits.armour;
+                defenceStats[5] += cardDisplay.card.explicits.armour;
+                defenceStats[6] += cardDisplay.card.implicits.chaos;
+                defenceStats[6] += cardDisplay.card.explicits.chaos;
+                defenceStats[7] += cardDisplay.card.implicits.wild;
+                defenceStats[7] += cardDisplay.card.explicits.wild;
+            }
+        }
+        return (attackStats, defenceStats);
     }
     public void Select(CardDisplay card)
     {
@@ -216,7 +308,9 @@ public class CardSelection : MonoBehaviour
 
             }
 
-            card.DoSelect(position);
+            // card.DoSelect(position);
+            statCalc();
+            FightHandler.instance.reCalculateStats();
         }
     }
 }

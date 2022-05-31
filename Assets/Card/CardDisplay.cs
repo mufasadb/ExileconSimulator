@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+public class CardDisplay : MonoBehaviour
 {
     public Card card;
     // Start is called before the first frame update
@@ -22,12 +22,16 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
     private Canvas canvas;
     private float onHoverCooldown = 0;
     private Renderer rendererObj;
-    private Vector3 destination;
+    public Vector3 destination;
     public int sortedOrderIndex;
     public bool selected;
     public GameObject parentContainer;
     private GameObject selectedContainer;
     private CardSelection cardselection;
+    public bool isDragged = false;
+    [SerializeField] private GameObject asWeaponTrue;
+    [SerializeField] private GameObject asDefenceTrue;
+    public bool asWeapon = false;
 
     private void Awake()
     {
@@ -36,6 +40,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
         rendererObj = GetComponent<Renderer>();
         baseImage = GetComponent<Image>();
         typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
+        if (card.type == Type.TwoHandedWeapon || card.type == Type.OneHandedWeapon) { asWeapon = true; }
         MoveTypeIcon(card.type);
         itemImage.sprite = CardImageHolder.instance.getItem(card.name, card.type);
         baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
@@ -44,6 +49,20 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
         card.explicits.StatDisplay(explicitContainer.transform);
         // createImplicits();
         canvas = GetComponent<Canvas>();
+    }
+    public void AsWeaponTrue()
+    {
+        asWeapon = true;
+        asWeaponTrue.SetActive(false);
+        asDefenceTrue.SetActive(true);
+        if (FightHandler.instance.isFighting) { FightHandler.instance.reCalculateStats(); }
+    }
+    public void AsDefenceTrue()
+    {
+        asWeapon = false;
+        asWeaponTrue.SetActive(true);
+        asDefenceTrue.SetActive(false);
+        if (FightHandler.instance.isFighting) { FightHandler.instance.reCalculateStats(); }
     }
     private void MoveTypeIcon(Type type)
     {
@@ -74,9 +93,9 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
         sortedOrderIndex = index;
         cachedScale = transform.localScale;
     }
-    public void OnPointerExit(PointerEventData eventData)
-    {
 
+    public void Smallerise()
+    {
         transform.SetSiblingIndex(sortedOrderIndex);
         if (selected)
         {
@@ -87,20 +106,10 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
             transform.localScale = cachedScale;
         }
     }
-
-    public void OnPointerClick(PointerEventData evendData)
+    public void Biggerise()
     {
-        Hand.instance.selectCard(this);
-    }
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (Hand.instance.cooldDownHover <= 0)
-        {
-            transform.SetAsLastSibling();
-            transform.localScale = new Vector3(1.2f, 1.2f, 1);
-            Hand.instance.cooldDownHover = 0.1f;
-        }
-
+        transform.SetAsLastSibling();
+        transform.localScale = new Vector3(1.2f, 1.2f, 1);
     }
     public void DoSelect(Vector3 position)
     {

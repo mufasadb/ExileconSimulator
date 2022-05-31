@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
-    #region Singleton
-    public static Hand instance;
     public int handScrollIndex = 0;
     private GameObject handContainer;
     public float cooldDownHover;
-    private CardSelection cardSelection;
+    public CardSelection cardSelection;
+    #region Singleton
 
+    public static Hand instance;
     void Awake()
     {
         if (instance != null)
@@ -34,7 +34,7 @@ public class Hand : MonoBehaviour
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         for (int i = 0; i < 20; i++)
         {
-            hand.Add(Card.CreateInstance(Random.Range(1,3), i.ToString()));
+            hand.Add(Card.CreateInstance(Random.Range(1, 3), i.ToString()));
             Vector3 position = new Vector3(100, 500, 0);
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;

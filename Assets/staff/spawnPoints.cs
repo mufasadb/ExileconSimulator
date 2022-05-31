@@ -9,7 +9,7 @@ public class SpawnPoint{
     public SpawnPoint(GameObject obj){
         transformPoint = obj;
         used = false;
-        Debug.Log(transformPoint.GetComponent<SpawnDirection>().spawnDirection);
+        // Debug.Log(transformPoint.GetComponent<SpawnDirection>().spawnDirection);
         direction = transformPoint.GetComponent<SpawnDirection>().spawnDirection;
     }
 }

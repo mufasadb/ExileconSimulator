@@ -19,7 +19,7 @@ public class CardImageHolder : MonoBehaviour
     }
     #endregion
 
-
+    [Header("Bases")]
     public SpriteHolder normal;
 
     public SpriteHolder normal1Dur;
@@ -45,11 +45,7 @@ public class CardImageHolder : MonoBehaviour
     public SpriteHolder unique2Dur;
 
     public SpriteHolder currency;
-
-    public SpriteHolder mace;
-
-    public SpriteHolder chest;
-
+    [Header("Stats")]
     public SpriteHolder physical;
 
     public SpriteHolder armour;
@@ -65,7 +61,22 @@ public class CardImageHolder : MonoBehaviour
     public SpriteHolder chaos;
 
     public SpriteHolder wild;
+    [Header("trippled stats")]
+    public SpriteHolder physicalTriple;
+    public SpriteHolder armourTriple;
 
+    public SpriteHolder lifeTriple;
+
+    public SpriteHolder coldTriple;
+
+    public SpriteHolder lightningTriple;
+
+    public SpriteHolder fireTriple;
+
+    public SpriteHolder chaosTriple;
+
+    public SpriteHolder wildTriple;
+    [Header("Type Icons")]
     public SpriteHolder oneHandedTypeIcon;
 
     public SpriteHolder twoHandedTypeIcon;
@@ -140,7 +151,7 @@ public class CardImageHolder : MonoBehaviour
         // Sprite sprite = LoadSprite("Assets/Card/images/Items/Chest/Gladiator Armour.png");
         Sprite sprite = LoadSprite(path);
 
-        Debug.Log(sprite);
+        // Debug.Log(sprite);
         return sprite;
 
         // }
@@ -160,6 +171,46 @@ public class CardImageHolder : MonoBehaviour
             return sprite;
         }
         return null;
+    }
+    public Sprite getStatImage(string statEle)
+    {
+        switch (statEle)
+        {
+            case "Physical":
+                return physical.sprite;
+            case "Life":
+                return life.sprite;
+            case "Cold":
+                return cold.sprite;
+            case "Fire":
+                return fire.sprite;
+            case "Lightning":
+                return lightning.sprite;
+            case "Chaos":
+                return chaos.sprite;
+            case "Wild":
+                return wild.sprite;
+            case "Armour":
+                return armour.sprite;
+            case "PhysicalTriple":
+                return physicalTriple.sprite;
+            case "LifeTriple":
+                return lifeTriple.sprite;
+            case "ColdTriple":
+                return coldTriple.sprite;
+            case "FireTriple":
+                return fireTriple.sprite;
+            case "LightningTriple":
+                return lightningTriple.sprite;
+            case "ChaosTriple":
+                return chaosTriple.sprite;
+            case "WildTriple":
+                return wildTriple.sprite;
+            case "ArmourTriple":
+                return armourTriple.sprite;
+            default:
+                return wild.sprite;
+        }
     }
     public Sprite getStat(StatEle statEle)
     {

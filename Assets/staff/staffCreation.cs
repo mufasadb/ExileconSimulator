@@ -40,7 +40,10 @@ public class staffCreation : MonoBehaviour
 
             GameObject staffMem = Instantiate(staffPrefab, position, Quaternion.identity, staffCollection.transform);
             staffMem.transform.LookAt(newPositionObj.direction, Vector3.up);
-
+            // Debug.Log("position" + position);
+            // Debug.Log("newPositionObj.direction.localPosition" + newPositionObj.direction.localPosition);
+            // Debug.Log("staffMem.transform " + staffMem.transform);
+            // Debug.Log("qsize" + staff.staffData.staffQueueSize);
             nerdSpawner.DoNerdGen(position, newPositionObj.direction.localPosition, staff.staffData.staffQueueSize, staffMem.transform);
 
         }
