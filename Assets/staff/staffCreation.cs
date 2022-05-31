@@ -23,10 +23,10 @@ public class staffCreation : MonoBehaviour
     private void DoStaffGen()
     {
         GameObject staffPrefab = PrefabHolder.instance.StaffPrefab;
-        Canvas canvas = staffPrefab.GetComponentInChildren<Canvas>();
-        canvas.worldCamera = MainCamera.GetComponent<Camera>();
-        FaceCamera faceCamera = staffPrefab.GetComponentInChildren<FaceCamera>();
-        faceCamera.cameraPos = MainCamera.transform;
+        // Canvas canvas = staffPrefab.GetComponentInChildren<Canvas>();
+        // canvas.worldCamera = MainCamera.GetComponent<Camera>();
+        // FaceCamera faceCamera = staffPrefab.GetComponentInChildren<FaceCamera>();
+        // faceCamera.cameraPos = MainCamera.transform;
         for (int i = 0; i < 5; i++)
         {
             staffList.Add(StaffMember.CreateInstance(1));

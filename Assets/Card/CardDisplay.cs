@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardDisplay : MonoBehaviour
+public class CardDisplay : MonoBehaviour, IDropHandler
 {
     public Card card;
     // Start is called before the first frame update
@@ -32,11 +32,18 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private GameObject asWeaponTrue;
     [SerializeField] private GameObject asDefenceTrue;
     public bool asWeapon = false;
+    public void DoClip(int clipCount)
+    {
 
+        //animate and noise
+        card.durability -= clipCount;
+        destination = new Vector3(1920 / 2, 1080 / 2, 0);
+        baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
+    }
     private void Awake()
     {
         // parentContainer = parentCont;
-        selectedContainer = GameObject.FindGameObjectWithTag("SelectedCardContainer");
+        selectedContainer = GlobalVariables.instance.SelectionContainer;
         rendererObj = GetComponent<Renderer>();
         baseImage = GetComponent<Image>();
         typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
@@ -50,8 +57,17 @@ public class CardDisplay : MonoBehaviour
         // createImplicits();
         canvas = GetComponent<Canvas>();
     }
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (selected)
+        {
+            //tODO 
+            // this.DoUnselect();
+        }
+    }
     public void AsWeaponTrue()
     {
+        Debug.Log("as weapon");
         asWeapon = true;
         asWeaponTrue.SetActive(false);
         asDefenceTrue.SetActive(true);
@@ -59,6 +75,7 @@ public class CardDisplay : MonoBehaviour
     }
     public void AsDefenceTrue()
     {
+        Debug.Log("as defence");
         asWeapon = false;
         asWeaponTrue.SetActive(true);
         asDefenceTrue.SetActive(false);
@@ -125,6 +142,7 @@ public class CardDisplay : MonoBehaviour
         selected = false;
         transform.localScale = cachedScale;
         transform.SetParent(parentContainer.transform);
+        Hand.instance.cardSelection.UnSelect(this);
         Hand.instance.UpdateCardDisplay();
     }
     public void MoveBy(Vector3 moveAmount)

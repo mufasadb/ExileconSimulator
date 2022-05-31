@@ -19,7 +19,7 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
     public void OnDrag(PointerEventData eventData)
     {
         cardDisplay.destination = eventData.position;
-        
+
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -29,20 +29,24 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
         GlobalVariables.instance.currentlyDragging = true;
     }
     public void OnEndDrag(PointerEventData eventData)
-    { 
+    {
         Debug.Log("end drag");
         cardDisplay.Smallerise();
         // canvasGroup.blocksRaycasts = true;
         cardDisplay.isDragged = false;
-        GlobalVariables.instance.currentlyDragging = true;
-        if(!cardDisplay.selected){cardDisplay.DoUnselect();}
+        GlobalVariables.instance.currentlyDragging = false;
+        if (!cardDisplay.selected) { cardDisplay.DoUnselect(); Debug.Log("unselectingAgain"); }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (Hand.instance.cooldDownHover <= 0)
+        if (!GlobalVariables.instance.currentlyDragging)
         {
-            cardDisplay.Biggerise();
-            Hand.instance.cooldDownHover = 0.01f;
+
+            if (Hand.instance.cooldDownHover <= 0)
+            {
+                cardDisplay.Biggerise();
+                Hand.instance.cooldDownHover = 0.01f;
+            }
         }
 
     }

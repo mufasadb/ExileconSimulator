@@ -6,10 +6,12 @@ public class Fight : Interactable
 {
     private Hand hand;
     private CardSelection cardSelection;
+    private StaffMember staffMember;
     public void Start()
     {
         hand = Hand.instance;
         cardSelection = hand.cardSelection;
+        staffMember = GetComponent<staffDetails>().staffData;
     }
     public override void Interact()
     {
@@ -17,10 +19,7 @@ public class Fight : Interactable
     }
     private void checkSelection()
     {
-        // Debug.Log(cardSelection.twoHandedWeapons.Count);
-        Debug.Log(cardSelection.attack.physical);
-        Debug.Log(cardSelection.defence.life);
-        Debug.Log(cardSelection.defence.armour);
-        FightHandler.instance.InitiateFight(gameObject);
+
+        FightHandler.instance.InitiateFight(gameObject, staffMember);
     }
 }

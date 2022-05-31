@@ -11,7 +11,7 @@ public class GlobalVariables : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogWarning("More than one instance of Hand");
+            Debug.LogWarning("More than one instance of GlobalVariables");
             return;
         }
         instance = this;
@@ -19,7 +19,9 @@ public class GlobalVariables : MonoBehaviour
     #endregion
     // Start is called before the first frame update
     public bool currentlyDragging = false;
-
+    public GameObject SelectionContainer;
+    public Transform cameraTrans;
+    public GameObject RewardContainer;
 
     // Update is called once per frame
     void Update()

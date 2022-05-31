@@ -17,11 +17,19 @@ public class SelectionContainer : MonoBehaviour, IDropHandler
     }
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("dropped");
         if (eventData.pointerDrag != null)
         {
-            eventData.pointerDrag.GetComponent<CardDisplay>().DoSelect(GetComponent<Transform>().position);
-            Hand.instance.cardSelection.Select(eventData.pointerDrag.GetComponent<CardDisplay>());
+            CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
+            if (cardDisplay.card.type == Type.TwoHandedWeapon && type == Type.OneHandedWeapon)
+            {
+                cardDisplay.DoSelect(GetComponent<Transform>().position);
+                Hand.instance.cardSelection.Select(cardDisplay);
+            }
+            if (cardDisplay.card.type == type)
+            {
+                cardDisplay.DoSelect(GetComponent<Transform>().position);
+                Hand.instance.cardSelection.Select(cardDisplay);
+            }
         }
     }
 

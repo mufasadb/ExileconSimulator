@@ -1,0 +1,35 @@
+switch (cardDisplay.card.type)
+        {
+            case Type.TwoHandedWeapon:
+                {
+
+                    break;
+                }
+            case Type.OneHandedWeapon:
+                {
+
+                    break;
+                }
+            case Type.Shield:
+                {
+
+                    break;
+                }
+            case Type.Chest:
+                {
+
+                    break;
+                }
+            case Type.Amulet:
+                {
+
+                    break;
+                }
+            case Type.Ring:
+                {
+
+                    break;
+                }
+            default:
+                break;
+        }

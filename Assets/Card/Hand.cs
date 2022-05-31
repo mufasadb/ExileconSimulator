@@ -19,6 +19,8 @@ public class Hand : MonoBehaviour
             return;
         }
         instance = this;
+
+
     }
     #endregion
     public List<Card> hand = new List<Card>();
@@ -26,8 +28,8 @@ public class Hand : MonoBehaviour
     void Start()
     {
         handContainer = GameObject.FindGameObjectWithTag("Hand");
-        DoHandGen();
         cardSelection = handContainer.GetComponent<CardSelection>();
+        DoHandGen();
     }
     private void DoHandGen()
     {
@@ -60,6 +62,7 @@ public class Hand : MonoBehaviour
     public void UpdateCardDisplay()
     {
         for (int i = 0; i < handContainer.transform.childCount; i++)
+        // for (int i = 0; i < handContainer.Count; i++)
         {
             GameObject card = handContainer.transform.GetChild(i).gameObject;
             CardDisplay cardDisplay = card.GetComponent<CardDisplay>();

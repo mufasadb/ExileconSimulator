@@ -1,3 +1,13 @@
 fix the facing off hoverovers to stay true resolution and actually face you
 select staff member when you select their queue
 staff member queue selection on their queue not them
+dropping a card on the selection queue to check if it should replace existing card.
+
+great out the fight button if you can't beat them
+
+
+create player variations
+
+Apprentice Magician
+    occasionally gets away with slightly less damage
+    occasionally gets caught stealing cards (and gets no reward);

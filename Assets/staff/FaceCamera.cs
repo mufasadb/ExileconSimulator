@@ -8,6 +8,7 @@ public class FaceCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cameraPos = GlobalVariables.instance.cameraTrans;
         // Transform cameraPos;
     }
 

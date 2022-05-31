@@ -16,7 +16,11 @@ public class DeckButton : MonoBehaviour
 
     public void ToggleHand()
     {
-        if (showHand) { ShowHand(false); }
+        if (showHand)
+        {
+            ShowHand(false);
+            if (GlobalVariables.instance.SelectionContainer.activeInHierarchy == true) { GlobalVariables.instance.SelectionContainer.SetActive(false); }
+        }
         else { ShowHand(true); }
     }
     public void ShowHand(bool newVal)

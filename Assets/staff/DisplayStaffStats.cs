@@ -9,7 +9,7 @@ public class DisplayStaffStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        outline = GetComponent<Outline>();
+        outline = GetComponentInChildren<Outline>();
         hide();
     }
     private void OnMouseEnter()

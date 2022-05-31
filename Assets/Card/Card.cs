@@ -137,9 +137,9 @@ public enum Type
 
 public enum Rarity
 {
+    Currency,
     Normal,
     Magic,
     Rare,
-    Unique,
-    Currency
+    Unique
 }

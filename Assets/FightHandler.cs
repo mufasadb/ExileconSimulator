@@ -11,8 +11,10 @@ public class FightHandler : MonoBehaviour
     // public GameObject enemyAttack;
     // public GameObject enemyDefence;
     public GameObject FightUI;
+    public GameObject SelectionUI;
     public CardSelection cardSelection;
     private float seperatingDistance = 20;
+    private StaffMember currentFightTarget;
     #region Singleton
 
     public static FightHandler instance;
@@ -26,9 +28,103 @@ public class FightHandler : MonoBehaviour
         instance = this;
     }
     #endregion
+    public void Start()
+    {
+        cardSelection = Hand.instance.cardSelection;
+    }
     public void doFight()
     {
-        Debug.Log("doing fight with");
+        if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, currentFightTarget.attack, currentFightTarget.defence))
+        {
+            Debug.Log("PLAYER WON");
+            List<CardDisplay> allSelectedCards = new List<CardDisplay>();
+            foreach (var card in cardSelection.twoHandedWeapons) { allSelectedCards.Add(card); }
+            foreach (var card in cardSelection.oneHandedWeapons) { allSelectedCards.Add(card); }
+            foreach (var card in cardSelection.shields) { allSelectedCards.Add(card); }
+            foreach (var card in cardSelection.amulets) { allSelectedCards.Add(card); }
+            foreach (var card in cardSelection.rings) { allSelectedCards.Add(card); }
+            foreach (var card in cardSelection.chests) { allSelectedCards.Add(card); }
+            ClipMethodResolver.HandleClip(allSelectedCards, currentFightTarget.clipMethod, currentFightTarget.clipCount);
+
+            GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
+
+            Card.CreateInstance(Random.Range(1, 3), "null");
+            Vector3 position = new Vector3(-250, 0, 0);
+            var rewardCard1 = cardPrefab.GetComponent<CardDisplay>();
+            rewardCard1.parentContainer = GlobalVariables.instance.RewardContainer;
+            // Debug.Log(PrefabHolder.instance.CardPrefab);
+            Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, GlobalVariables.instance.RewardContainer.transform);
+            Card.CreateInstance(Random.Range(1, 3), "null");
+            position = new Vector3(250, 0, 0);
+            var rewardCard2 = cardPrefab.GetComponent<CardDisplay>();
+            rewardCard1.parentContainer = GlobalVariables.instance.RewardContainer;
+            // Debug.Log(PrefabHolder.instance.CardPrefab);
+            Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, GlobalVariables.instance.RewardContainer.transform);
+            //offer cards
+        }
+        else { Debug.LogError("Player Loses"); }
+
+        //clip cards
+
+        //reward cards
+    }
+    public bool ResolveFight(Stats playerAttack, Stats playerDefence, Stats enemyAttack, Stats enemyDefence)
+    {
+        //player Attack vs Enemy Defence.
+        int playerSpare = 0;
+        int playerWild = playerAttack.wild;
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerAttack.fire, enemyDefence.fire);
+        if (playerWild < 0) { announceResults("not enough fire Attack"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerAttack.cold, enemyDefence.cold);
+        if (playerWild < 0) { announceResults("not enough cold Attack"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerAttack.lightning, enemyDefence.lightning);
+        if (playerWild < 0) { announceResults("not enough lightning Attack"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerAttack.physical, enemyDefence.physical);
+        if (playerWild < 0) { announceResults("not enough physical Attack"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerAttack.chaos, enemyDefence.chaos);
+        if (playerWild < 0) { announceResults("not enough chaos Attack"); return false; }
+        playerWild += playerSpare;
+        playerWild -= enemyDefence.wild;
+        if (playerWild < 0) { announceResults("not enough spare stats Attack"); return false; }
+
+        //player Defence vs Enemy Attack
+        playerSpare = 0;
+        playerWild = playerDefence.wild;
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.fire, enemyAttack.fire);
+        if (playerWild < 0) { announceResults("not enough fire Defence"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.cold, enemyAttack.cold);
+        if (playerWild < 0) { announceResults("not enough cold Defence"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.lightning, enemyAttack.lightning);
+        if (playerWild < 0) { announceResults("not enough lightning Defence"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.armour, enemyAttack.armour);
+        if (playerWild < 0) { announceResults("not enough armour Defence"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.life, enemyAttack.life);
+        if (playerWild < 0) { announceResults("not enough armour Life"); return false; }
+        (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.chaos, enemyAttack.chaos);
+        if (playerWild < 0) { announceResults("not enough chaos Defence"); return false; }
+        playerWild += playerSpare;
+        playerWild -= enemyAttack.wild;
+        if (playerWild < 0) { announceResults("not enough spare stats Defence"); return false; }
+
+        return true;
+    }
+    private (int playerWild, int playerSpare) ResolveSingleStat(int playerWild, int playerSpare, int playerVal, int enemyVal)
+    {
+        int remainingVal = playerVal - enemyVal;
+        if (remainingVal < 0)
+        {
+            playerWild += remainingVal;
+        }
+        else if (remainingVal > 0)
+        {
+            playerSpare += remainingVal;
+        }
+        return (playerWild, playerSpare);
+    }
+    private void announceResults(string reason)
+    {
+        // comment out to clean up noise
+        Debug.Log(reason);
     }
     public void reCalculateStats()
     {
@@ -36,27 +132,27 @@ public class FightHandler : MonoBehaviour
         foreach (Transform child in playerDefence.transform) { Destroy(child.gameObject); }
         statDisplay(cardSelection.attack, true, playerAttack.transform);
         statDisplay(cardSelection.defence, true, playerDefence.transform);
+
     }
-    public void InitiateFight(GameObject TargetEnemy)
+    public void InitiateFight(GameObject TargetEnemy, StaffMember staffMember)
     {
         if (!isFighting)
         {
+            currentFightTarget = staffMember;
             isFighting = true;
-            cardSelection = Hand.instance.cardSelection;
             FightUI.SetActive(true);
+            SelectionUI.SetActive(true);
             statDisplay(cardSelection.attack, true, playerAttack.transform);
             statDisplay(cardSelection.defence, true, playerDefence.transform);
         }
-    }
-    private void DrawDefence()
-    {
-
     }
     public void CancelFight()
     {
         isFighting = false;
         FightUI.SetActive(false);
+        SelectionUI.SetActive(false);
         removeChildren();
+        currentFightTarget = null;
     }
     public void removeChildren()
     {
@@ -112,7 +208,6 @@ public class FightHandler : MonoBehaviour
             if (workingStatCount % 2 == 0) { evenStats = true; }
             y = 20;
             workingStatCount = totalStats / 2;
-            // workingStatCount = workingStatCount + 1;
             if (workingCurrentPosition > workingStatCount)
             {
                 workingCurrentPosition = workingCurrentPosition - workingStatCount;
@@ -131,7 +226,7 @@ public class FightHandler : MonoBehaviour
         statIcon.transform.localPosition = new Vector3(x, y, 0);
         // statIcon.transform.localScale = new Vector3(1f, 1f, 0);
         currentPosition = currentPosition + 1;
-        return currentPosition;
+        return currentPosition;     
     }
     public GameObject AddStat(string statEle)
     {

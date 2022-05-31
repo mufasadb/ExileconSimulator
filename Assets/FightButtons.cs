@@ -7,7 +7,7 @@ public class FightButtons : MonoBehaviour
     // Start is called before the first frame update    
     public void Fight()
     {
-        Debug.Log("fight");
+        // Debug.Log("fight");
         FightHandler.instance.doFight();
     }
 
