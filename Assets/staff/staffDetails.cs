@@ -100,7 +100,7 @@ public class staffDetails : MonoBehaviour
         rt.anchorMin = new Vector2(0, 0);
         rt.anchorMax = new Vector2(0, 0);
         // rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.localScale = new Vector2(3f, 3f);
+        rt.localScale = new Vector2(9f, 6f);
         SpriteRenderer spriteRenderer = statIcon.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = CardImageHolder.instance.getStatImage(statEle);
         // rt.sizeDelta = new Vector2(spriteRenderer.sprite.bounds.size.x * 100, spriteRenderer.sprite.bounds.size.y * 100);
