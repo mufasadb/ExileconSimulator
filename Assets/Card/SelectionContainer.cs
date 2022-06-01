@@ -10,7 +10,7 @@ public class SelectionContainer : MonoBehaviour, IDropHandler
     // Start is called before the first frame update
     void Start()
     {
-        Color newColor = new Color(0.3f, 0.3f, 0.3f);
+        Color newColor = new Color(0.3f, 0.3f, 0.3f, 07f);
         GetComponent<Image>().color = newColor;
         GetComponentInChildren<Image>().color = newColor;
 
