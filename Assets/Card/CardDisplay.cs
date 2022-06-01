@@ -52,8 +52,11 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         itemImage.sprite = CardImageHolder.instance.getItem(card.name, card.type);
         baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
         title.text = card.name;
-        card.implicits.StatDisplay(implicitContainer.transform);
-        card.explicits.StatDisplay(explicitContainer.transform);
+        if (card.type != Type.Currency && card.type != Type.Map)
+        {
+            card.implicits.StatDisplay(implicitContainer.transform);
+            card.explicits.StatDisplay(explicitContainer.transform);
+        }
         // createImplicits();
         canvas = GetComponent<Canvas>();
     }
@@ -103,6 +106,14 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         if (type == Type.Chest)
         {
             typeIcon.rectTransform.localPosition = new Vector3(-107.2f, -79, 0);
+        }
+        if (type == Type.Currency)
+        {
+            typeIcon.color = new Color(0,0,0,0);
+        }
+        if (type == Type.Map)
+        {
+            typeIcon.color = new Color(0,0,0,0);
         }
     }
     public void updatePositionScaleCaches(int index)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class NerdSpawner : MonoBehaviour
 {
     public GameObject NerdCollection;
-    public float queueGap = 0.5f;
+    public float queueGap = 0.1f;
     // Start is called before the first frame update
 
     public void DoNerdGen(Vector3 startPosition, Vector3 direction, int quant, Transform lookAtTarget)

@@ -10,6 +10,7 @@ public class StaffMember : ScriptableObject
     public ClipMethod clipMethod;
     public int clipCount;
     public int staffQueueSize;
+    public int tier { get; private set;}
 
     public static StaffMember CreateInstance(int tier)
     {
@@ -20,7 +21,7 @@ public class StaffMember : ScriptableObject
     public void Init(int tier)
     {
         var staffDetails = StaffDataSystem.instance.staffDataSet.GetStaffBaseData(tier);
-        this.staffQueueSize = Random.Range(0, 5);
+        this.staffQueueSize = Random.Range(0, 10);
         this.name = staffDetails.name;
         this.clipCount = staffDetails.clipCount;
         this.clipMethod = (ClipMethod)System.Enum.Parse(typeof(ClipMethod), staffDetails.clipMethod);
@@ -28,6 +29,7 @@ public class StaffMember : ScriptableObject
         this.defence.DeclareStats(StatStringToIntArray(staffDetails.defence));
         this.attack = new Stats();
         this.attack.DeclareStats(StatStringToIntArray(staffDetails.attack));
+        this.tier = staffDetails.tier;
     }
     private int[] StatStringToIntArray(string str)
     {

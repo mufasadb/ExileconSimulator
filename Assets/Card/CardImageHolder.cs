@@ -254,7 +254,7 @@ public class CardImageHolder : MonoBehaviour
             case Type.Amulet:
                 return amuletTypeIcon.sprite;
             default:
-                return amuletTypeIcon.sprite;
+                return null;
         }
     }
 }

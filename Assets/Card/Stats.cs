@@ -52,52 +52,127 @@ public class Stats
     {
         statCount = physical + armour + life + chaos + wild + cold + fire + lightning;
     }
-    public void makeImplicit(Type type)
+    public void makeExplicit(Type type, Rarity rarity)
     {
+        int statCount = 0;
+        if (rarity == Rarity.Rare) { statCount = Random.Range(3, 4); }
+        if (rarity == Rarity.Magic) { statCount = Random.Range(1, 2); }
+
         if (type == Type.OneHandedWeapon || type == Type.TwoHandedWeapon)
         {
-            physical = 2;
-            statCount += 2;
-            // do weapon
-        }
-        else if (type == Type.Shield || type == Type.Chest)
-        {
-            life = 2;
-            armour = 2;
-            countStats();
-            // do armour
-        }
-        else
-        {
-            wild = 2;
-            countStats();
-            // do jewelery
-        }
-    }
-    public void makeExplicit(Type type)
-    {
-        if (type == Type.OneHandedWeapon || type == Type.TwoHandedWeapon)
-        {
-            physical = 2;
-            cold = Mathf.RoundToInt(Random.Range(0, 3));
-            fire = Mathf.RoundToInt(Random.Range(0, 3));
-            lightning = Mathf.RoundToInt(Random.Range(0, 3));
-            countStats();
-            // do weapon
+
+            for (int i = 0; i < statCount; i++)
+            {
+
+                int rand = Random.Range(1, 9);
+                switch (rand)
+                {
+                    case 1: { this.fire++; break; }
+                    case 2: { this.cold++; break; }
+                    case 3: { this.lightning++; break; }
+                    case 4: { this.chaos++; break; }
+                    case 5: { this.wild++; break; }
+                    default:
+                        {
+                            if (i == 0)
+                            {
+                                this.physical++;
+                            }
+                            else { AddStatToHighestStat(); }
+                            break;
+                        }
+                }
+            }
         }
         else if (type == Type.Shield || type == Type.Chest)
         {
 
-            life = Mathf.RoundToInt(Random.Range(0, 3));
-            armour = Mathf.RoundToInt(Random.Range(0, 3));
-            countStats();
-            // do armour
+            for (int i = 0; i < statCount; i++)
+            {
+
+                int rand = Random.Range(1, 10);
+                switch (rand)
+                {
+                    case 1: { this.fire++; break; }
+                    case 2: { this.cold++; break; }
+                    case 3: { this.lightning++; break; }
+                    case 4: { this.chaos++; break; }
+                    case 5: { this.wild++; break; }
+                    default:
+                        {
+                            if (i == 0)
+                            {
+                                int random = Random.Range(0, 1);
+                                if (random > 0)
+                                {
+                                    this.armour++;
+                                }
+                                else { this.life++; }
+                            }
+                            else { AddStatToHighestStat(); }
+                            break;
+                        }
+                }
+            }
         }
-        else
+        else if (type == Type.Amulet || type == Type.Ring)
         {
-            wild = 2;
-            countStats(); 
-            // do jewelery
+            for (int i = 0; i < statCount; i++)
+            {
+                if (i == 0)
+                {
+                    int rand = Random.Range(1, 5);
+                    switch (rand)
+                    {
+                        case 1: { this.fire++; break; }
+                        case 2: { this.cold++; break; }
+                        case 3: { this.lightning++; break; }
+                        case 4: { this.chaos++; break; }
+                        default:
+                            {
+                                this.wild++; break;
+                            }
+                    }
+                }
+                else
+                {
+                    int random = Random.Range(0, 10);
+                    switch (random)
+                    {
+                        case 1: { this.fire++; break; }
+                        case 2: { this.cold++; break; }
+                        case 3: { this.lightning++; break; }
+                        case 4: { this.chaos++; break; }
+                        case 5: { this.wild++; break; }
+                        default: { AddStatToHighestStat(); break; }
+                    }
+                }
+            }
+        }
+        countStats();
+    }
+    private void AddStatToHighestStat()
+    {
+        int[] statArray = new int[7];
+        int highestInt = 0;
+        int highestIntValue = this.fire;
+        if (this.cold > highestIntValue) { highestInt = 1; highestInt = this.cold; }
+        if (this.lightning > highestIntValue) { highestInt = 2; highestInt = this.lightning; }
+        if (this.physical > highestIntValue) { highestInt = 3; highestInt = this.physical; }
+        if (this.life > highestIntValue) { highestInt = 4; highestInt = this.life; }
+        if (this.armour > highestIntValue) { highestInt = 5; highestInt = this.armour; }
+        if (this.chaos > highestIntValue) { highestInt = 6; highestInt = this.chaos; }
+        if (this.wild > highestIntValue) { highestInt = 7; highestInt = this.wild; }
+        switch (highestInt)
+        {
+            case 0: { this.fire++; break; }
+            case 1: { this.cold++; break; }
+            case 2: { this.lightning++; break; }
+            case 3: { this.physical++; break; }
+            case 4: { this.life++; break; }
+            case 5: { this.armour++; break; }
+            case 6: { this.chaos++; break; }
+            case 8: { this.wild++; break; }
         }
     }
     public void StatDisplay(Transform parentContainer)
@@ -168,7 +243,7 @@ public class Stats
         int workingStatCount = statCount;
         int workingCurrentPosition = currentPosition;
         int y = 0;
-        if (workingStatCount > 5)
+        if (workingStatCount > 6)
         {
             evenStats = false;
             if (workingStatCount % 2 == 0) { evenStats = true; }
@@ -193,7 +268,7 @@ public class Stats
         GameObject statIcon = AddStat(StatEle.Parse<StatEle>(statName));
         statIcon.transform.SetParent(parentContainer, false);
         statIcon.transform.localPosition = new Vector3(x, y, 0);
-        statIcon.transform.localScale = new Vector3(1f, 1f, 0);
+        statIcon.transform.localScale = new Vector3(0.9f, 0.9f, 0);
         currentPosition = currentPosition + 1;
         return currentPosition;
     }

@@ -10,7 +10,7 @@ public class CardDataSet
     // }
     public CardDataObject GetCardBaseData(int tier)
     {
-        if (tier > 3) { Debug.LogError("Tried to created a card with tier greater than 3"); return null; }
+        // if (tier > 3) { Debug.LogError("Tried to created a card with tier greater than 3"); return null; }
         List<CardDataObject> specificTierItems = set.FindAll(item => item.tier == tier);
         int choice = Random.Range(0, specificTierItems.Count);
         return specificTierItems[choice];

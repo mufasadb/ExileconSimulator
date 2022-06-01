@@ -23,7 +23,7 @@ public class Card : ScriptableObject
 
     public static Card CreateInstance(int tier, string newname)
     {
-        if (tier > 4) Debug.LogWarning("Tier higher than 4 submitted");
+        // if (tier > ) Debug.LogWarning("Tier higher than 4 submitted");
 
         var data = ScriptableObject.CreateInstance<Card>();
         data.Init(tier, newname);
@@ -36,16 +36,19 @@ public class Card : ScriptableObject
         CardDataObject cardData =
             CardDataSystem.instance.cardDataSet.GetCardBaseData(tier);
         this.type = cardData.type;
-
+        if (this.type == Type.Currency) { this.rarity = Rarity.Currency; }
+        if(cardData.isUnique){this.rarity = Rarity.Unique;}
         //Enable this line to name cards by creation (1, 2, 3, etc.)
         // this.name = newname;
         this.name = cardData.name;
         this.description = this.name;
-
-        this.implicits = new Stats();
-        this.implicits.DeclareStats(StatStringToIntArray(cardData.implicits));
-        this.explicits = new Stats();
-        this.explicits.makeExplicit(this.type);
+        if (cardData.type != Type.Currency && cardData.type != Type.Map)
+        {
+            this.implicits = new Stats();
+            this.implicits.DeclareStats(StatStringToIntArray(cardData.implicits));
+            this.explicits = new Stats();
+            this.explicits.makeExplicit(this.type, this.rarity);
+        }
     }
 
     private int[] StatStringToIntArray(string str)
@@ -99,10 +102,6 @@ public class Card : ScriptableObject
             rarityTotal += val * tier;
         }
         int randNumber = Random.Range(1, rarityTotal);
-        if (randNumber < rarityChances[2] * tier)
-        {
-            return Rarity.Unique;
-        }
         if (randNumber < rarityChances[1] * tier)
         {
             return Rarity.Rare;
@@ -132,7 +131,9 @@ public enum Type
     Shield,
     Chest,
     Amulet,
-    Ring
+    Ring,
+    Currency,
+    Map
 }
 
 public enum Rarity

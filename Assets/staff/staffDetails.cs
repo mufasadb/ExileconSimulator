@@ -10,7 +10,7 @@ public class staffDetails : MonoBehaviour
     public Transform attackCanvas;
     public Transform defenceCanvas;
     public TextMeshPro nameText;
-    private float seperatingDistance = 1f;
+    private float seperatingDistance = 0.5f;
     // Start is called before the first frame update
     void Start()
     {

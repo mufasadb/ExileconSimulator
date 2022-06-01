@@ -36,7 +36,7 @@ public class Hand : MonoBehaviour
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         for (int i = 0; i < 20; i++)
         {
-            hand.Add(Card.CreateInstance(Random.Range(1, 3), i.ToString()));
+            hand.Add(Card.CreateInstance(Random.Range(1, 5), i.ToString()));
             Vector3 position = new Vector3(100, 500, 0);
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;
