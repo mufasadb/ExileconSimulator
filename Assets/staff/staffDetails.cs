@@ -10,7 +10,7 @@ public class staffDetails : MonoBehaviour
     public Transform attackCanvas;
     public Transform defenceCanvas;
     public TextMeshPro nameText;
-    private float seperatingDistance = 0.5f;
+    private float seperatingDistance = 0.75f;
     // Start is called before the first frame update
     void Start()
     {
@@ -100,7 +100,7 @@ public class staffDetails : MonoBehaviour
         rt.anchorMin = new Vector2(0, 0);
         rt.anchorMax = new Vector2(0, 0);
         // rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.localScale = new Vector2(9f, 6f);
+        rt.localScale = new Vector2(2f, 2f);
         SpriteRenderer spriteRenderer = statIcon.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = CardImageHolder.instance.getStatImage(statEle);
         // rt.sizeDelta = new Vector2(spriteRenderer.sprite.bounds.size.x * 100, spriteRenderer.sprite.bounds.size.y * 100);
