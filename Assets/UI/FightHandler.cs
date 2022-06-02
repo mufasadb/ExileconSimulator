@@ -47,9 +47,10 @@ public class FightHandler : MonoBehaviour
             ClipMethodResolver.HandleClip(allSelectedCards, currentFightTarget.clipMethod, currentFightTarget.clipCount);
 
 
-           //offer cards
-           CreateRewardCard(1);
-           CreateRewardCard(2);
+            //offer cards
+            GlobalVariables.instance.RewardContainer.SetActive(true);
+            CreateRewardCard(1);
+            CreateRewardCard(2);
         }
         else { Debug.LogError("Player Loses"); }
 
@@ -61,8 +62,10 @@ public class FightHandler : MonoBehaviour
     {
         Card.CreateInstance(currentFightTarget.tier, "null");
         GameObject newCard = Instantiate(PrefabHolder.instance.CardPrefab, new Vector3(0, 0, 0), Quaternion.identity, GlobalVariables.instance.RewardContainer.transform);
+        newCard.GetComponent<CardDisplay>().destination = GlobalVariables.instance.RewardContainer.transform.position + new Vector3(rewardNumber * 250 - 250, 0, 0);
+        newCard.AddComponent<RewardSelection>();
         newCard.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        newCard.GetComponent<CardDisplay>().destination = GlobalVariables.instance.RewardContainer.transform.position + new Vector3(-500 + rewardNumber * 250, 0, 0);
+        newCard.GetComponent<CardDisplay>().updatePositionScaleCaches(rewardNumber);
     }
     public bool ResolveFight(Stats playerAttack, Stats playerDefence, Stats enemyAttack, Stats enemyDefence)
     {
@@ -81,7 +84,7 @@ public class FightHandler : MonoBehaviour
         if (playerWild < 0) { announceResults("not enough chaos Attack"); return false; }
         playerWild += playerSpare;
         playerWild -= enemyDefence.wild;
-        if (playerWild < 0) { announceResults("not enough spare stats Attack"); return false; }
+        if (playerWild < 0) { announceResults("not enough spare stats Attack " + playerWild + " left over"); return false; }
 
         //player Defence vs Enemy Attack
         playerSpare = 0;
@@ -95,7 +98,7 @@ public class FightHandler : MonoBehaviour
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.armour, enemyAttack.armour);
         if (playerWild < 0) { announceResults("not enough armour Defence"); return false; }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.life, enemyAttack.life);
-        if (playerWild < 0) { announceResults("not enough armour Life"); return false; }
+        if (playerWild < 0) { announceResults("not enough defence Life"); return false; }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.chaos, enemyAttack.chaos);
         if (playerWild < 0) { announceResults("not enough chaos Defence"); return false; }
         playerWild += playerSpare;
@@ -120,6 +123,7 @@ public class FightHandler : MonoBehaviour
     private void announceResults(string reason)
     {
         // comment out to clean up noise
+        GlobalVariables.instance.errorHandler.NewError("You Lost the fight because: " + reason);
         Debug.Log(reason);
     }
     public void reCalculateStats()

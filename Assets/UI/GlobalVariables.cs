@@ -22,6 +22,8 @@ public class GlobalVariables : MonoBehaviour
     public GameObject SelectionContainer;
     public Transform cameraTrans;
     public GameObject RewardContainer;
+    public GameObject CraftingContainer;
+    public ErrorHandler errorHandler;
 
     // Update is called once per frame
     void Update()

@@ -14,8 +14,10 @@ public class PlayerMotor : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         characterAnimator = GetComponent<CharacterAnimator>();
     }
-    void Update(){
-        if(target != null){
+    void Update()
+    {
+        if (target != null)
+        {
             agent.SetDestination(target.position);
             FaceTarget();
         }
@@ -23,13 +25,13 @@ public class PlayerMotor : MonoBehaviour
     public void MoveToPoint(Vector3 point)
     {
         agent.SetDestination(point);
-        characterAnimator.TargetChange(point);
+        if (characterAnimator) { characterAnimator.TargetChange(point); }
     }
 
     public void FollowTarget(Interactable newTarget)
     {
         agent.stoppingDistance = newTarget.radius * .8f;
-        agent.updateRotation =false;
+        agent.updateRotation = false;
         target = newTarget.interactionTransform;
 
     }
@@ -39,9 +41,10 @@ public class PlayerMotor : MonoBehaviour
         agent.updateRotation = true;
         target = null;
     }
-    void FaceTarget(){
+    void FaceTarget()
+    {
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime *  5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 }

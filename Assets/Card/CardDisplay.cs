@@ -14,6 +14,8 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public TMPro.TMP_Text title;
     public GameObject craftingContainer;
     public GameObject implicitContainer;
+    public GameObject craftingSticker;
+    public GameObject qualitySticker;
     private List<Image> implicitList;
     public GameObject explicitContainer;
     private int horizontalCardSpacing = 120; //positions spacing between cards
@@ -109,11 +111,11 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         }
         if (type == Type.Currency)
         {
-            typeIcon.color = new Color(0,0,0,0);
+            typeIcon.color = new Color(0, 0, 0, 0);
         }
         if (type == Type.Map)
         {
-            typeIcon.color = new Color(0,0,0,0);
+            typeIcon.color = new Color(0, 0, 0, 0);
         }
     }
     public void updatePositionScaleCaches(int index)
@@ -139,11 +141,11 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         transform.SetAsLastSibling();
         transform.localScale = new Vector3(1.2f, 1.2f, 1);
     }
-    public void DoSelect(Vector3 position)
+    public void DoSelect(Vector3 position, GameObject newParent)
     {
         selected = true;
         transform.localScale = new Vector3(0.4f, 0.4f, 1);
-        transform.SetParent(selectedContainer.transform);
+        transform.SetParent(newParent.transform);
         // transform.localPosition = position;
         destination = position;
         // transform.parent = selectedContainer.transform;

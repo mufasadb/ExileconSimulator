@@ -15,7 +15,7 @@ public class NerdSpawner : MonoBehaviour
         for (int i = 0; i < quant; i++)
         {
             GameObject clone = 
-            Instantiate(nerdPrefab, startPosition + (direction * queueGap * (i + 1)), Quaternion.identity, NerdCollection.transform);
+            Instantiate(nerdPrefab, startPosition + (direction * queueGap * (i + 2)), Quaternion.identity, NerdCollection.transform);
             clone.transform.LookAt(lookAtTarget, Vector3.up);
         }
 

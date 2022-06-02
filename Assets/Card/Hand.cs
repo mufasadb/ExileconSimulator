@@ -8,6 +8,7 @@ public class Hand : MonoBehaviour
     private GameObject handContainer;
     public float cooldDownHover;
     public CardSelection cardSelection;
+    [SerializeField] private GameObject rewardContainer;
     #region Singleton
 
     public static Hand instance;
@@ -29,7 +30,25 @@ public class Hand : MonoBehaviour
     {
         handContainer = GameObject.FindGameObjectWithTag("Hand");
         cardSelection = handContainer.GetComponent<CardSelection>();
+        rewardContainer = GlobalVariables.instance.RewardContainer;
         DoHandGen();
+    }
+    public void AddCardToHand(GameObject cardObject)
+    {
+        CardDisplay cardDisplay = cardObject.GetComponent<CardDisplay>();
+        hand.Add(cardDisplay.card);
+        cardDisplay.parentContainer = handContainer;
+        cardObject.transform.SetParent(handContainer.transform);
+        SortHand();
+        UpdateCardDisplay();
+        RewardSelection rewardSelection = cardObject.GetComponent<RewardSelection>();
+        Destroy(rewardSelection);
+        for (int i = 0; i < rewardContainer.transform.childCount; i++)
+        // for (int i = 0; i < handContainer.Count; i++)
+        {
+            GameObject card = rewardContainer.transform.GetChild(i).gameObject;
+            Destroy(card);
+        }
     }
     private void DoHandGen()
     {

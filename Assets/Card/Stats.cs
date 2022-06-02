@@ -54,10 +54,20 @@ public class Stats
     }
     public void makeExplicit(Type type, Rarity rarity)
     {
-        int statCount = 0;
-        if (rarity == Rarity.Rare) { statCount = Random.Range(3, 4); }
-        if (rarity == Rarity.Magic) { statCount = Random.Range(1, 2); }
+        physical = 0;
+        life = 0;
+        armour = 0;
+        fire = 0;
+        lightning = 0;
+        cold = 0;
+        chaos = 0;
+        wild = 0;
 
+        int statCount = 0;
+        if (rarity == Rarity.Rare) { statCount = Random.Range(3, 5); }
+        if (rarity == Rarity.Magic) { statCount = Random.Range(1, 3); }
+        Debug.Log("statCount");
+        Debug.Log(statCount);
         if (type == Type.OneHandedWeapon || type == Type.TwoHandedWeapon)
         {
 

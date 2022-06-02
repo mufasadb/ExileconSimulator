@@ -17,14 +17,14 @@ Apprentice Magician
 Major pieces left
 Reward
     - balance rewards
-    - clicking reward adds it to hand
+    # - clicking reward adds it to hand
     
 crafting
-    - cards themselves
-    - stat change
-    - clickable table
-    - interface for selecting them
-    - apply stat change
+    # - cards themselves 
+    # - stat change
+    # - clickable table
+    # - interface for selecting them
+    # - apply stat change
 maps
     - cards themselves
     - stat changes for magic maps
@@ -51,9 +51,9 @@ Timer
 Player 
     - change player stats
 Environemtn
-    - select tieles etc. to use
+    # - select tieles etc. to use
     - map out general layout
-    - place staff and their queues for now
+    # - place staff and their queues for now
 
 Polish
     Sound
