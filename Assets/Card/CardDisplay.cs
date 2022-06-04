@@ -72,7 +72,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     }
     public void AsWeaponTrue()
     {
-        Debug.Log("as weapon");
+        // Debug.Log("as weapon");
         asWeapon = true;
         asWeaponTrue.SetActive(false);
         asDefenceTrue.SetActive(true);
@@ -80,7 +80,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     }
     public void AsDefenceTrue()
     {
-        Debug.Log("as defence");
+        // Debug.Log("as defence");
         asWeapon = false;
         asWeaponTrue.SetActive(true);
         asDefenceTrue.SetActive(false);

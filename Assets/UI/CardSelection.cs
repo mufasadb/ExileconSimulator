@@ -53,7 +53,7 @@ public class CardSelection : MonoBehaviour
         return limit;
 
     }
-    private void statCalc()
+    public void statCalc()
     {
         //int fire, int cold, int lightning, int physical, int life, int armour, int chaos, int wild
 

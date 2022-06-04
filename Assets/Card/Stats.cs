@@ -66,8 +66,7 @@ public class Stats
         int statCount = 0;
         if (rarity == Rarity.Rare) { statCount = Random.Range(3, 5); }
         if (rarity == Rarity.Magic) { statCount = Random.Range(1, 3); }
-        Debug.Log("statCount");
-        Debug.Log(statCount);
+        
         if (type == Type.OneHandedWeapon || type == Type.TwoHandedWeapon)
         {
 

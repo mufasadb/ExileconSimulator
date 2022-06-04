@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SelectionContainer : MonoBehaviour, IDropHandler
 {
     public Type type;
+    [SerializeField] private SelectedJewellery selectedJewellery;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,11 @@ public class SelectionContainer : MonoBehaviour, IDropHandler
             }
             if (cardDisplay.card.type == type)
             {
+                if (selectedJewellery)
+                {
+                    selectedJewellery.cardDisplay = cardDisplay;
+                    selectedJewellery.UpdatePosition();
+                }
                 cardDisplay.DoSelect(GetComponent<Transform>().position, gameObject.transform.parent.gameObject);
                 Hand.instance.cardSelection.Select(cardDisplay);
             }
