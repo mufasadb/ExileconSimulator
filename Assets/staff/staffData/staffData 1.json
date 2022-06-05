@@ -1,0 +1,148 @@
+{
+  "set": [
+    {
+      "name": "Zombie",
+      "defence": "Physical",
+      "attack": "Life,Life",
+      "tier": 1,
+      "clipMethod": "Common",
+      "clipCount": 1
+    },
+    {
+      "name": "Skeleton",
+      "defence": "Physical,Wild,Wild",
+      "attack": "Life",
+      "tier": 1,
+      "clipMethod": "Chest",
+      "clipCount": 1
+    },
+    {
+      "name": "Necromancer",
+      "defence": "",
+      "attack": "Chaos,Wild,Wild",
+      "tier": 2,
+      "clipMethod": "Broken",
+      "clipCount": 1
+    },
+    {
+      "name": "Sea Witch",
+      "defence": "Cold,Wild,Wild",
+      "attack": "Cold,Life",
+      "tier": 2,
+      "clipMethod": "Weapon",
+      "clipCount": 1
+    },
+    {
+      "name": "Flame Totem",
+      "defence": "Fire,Fire,Wild",
+      "attack": "Armour",
+      "tier": 2,
+      "clipMethod": "Shield",
+      "clipCount": 1
+    },
+    {
+      "name": "Solaris",
+      "defence": "Cold,Cold,Wild",
+      "attack": "Fire,Fire,Fire,Wild",
+      "tier": 3,
+      "clipMethod": "Jewellery",
+      "clipCount": 1
+    },
+    {
+      "name": "Lunaris",
+      "defence": "Fire,Fire,Wild",
+      "attack": "Cold,Cold,Cold,Wild",
+      "tier": 2,
+      "clipMethod": "Jewellery",
+      "clipCount": 1
+    },
+    {
+      "name": "Goatman",
+      "defence": "Cold,Cold",
+      "attack": "Wild,Wild",
+      "tier": 1,
+      "clipMethod": "Common",
+      "clipCount": 1
+    },
+    {
+      "name": "The Faun",
+      "defence": "Physical,Physical,Physical",
+      "attack": "Wild,Wild,Wild",
+      "tier": 1,
+      "clipMethod": "Shield",
+      "clipCount": 1
+    },
+    {
+      "name": "Kitava",
+      "defence": "Physical,Physical,Wild,Wild,Wild,Wild",
+      "attack": "Life,Life,Armour,Armour,Wild,Wild,Wild,Wild",
+      "tier": 3,
+      "clipMethod": "All",
+      "clipCount": 1
+    },
+    {
+      "name": "Malachai",
+      "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Wild,Wild,Wild,Wild,Wild",
+      "tier": 4,
+      "clipMethod": "All",
+      "clipCount": 2
+    },
+    {
+      "name": "Dominus",
+      "defence": "Physical,Physical,Wild,Wild,Wild,Wild",
+      "attack": "Lightning,Lightning,Lightning",
+      "tier": 3,
+      "clipMethod": "Rare",
+      "clipCount": 1
+    },
+    {
+      "name": "Guardian of The Hydra",
+      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "tier": 5,
+      "clipMethod": "Shield",
+      "clipCount": 1
+    },
+    {
+      "name": "Guardian of The Pheonix",
+      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "tier": 5,
+      "clipMethod": "Shield",
+      "clipCount": 1
+    },
+    {
+      "name": "Guardian of The Chimera",
+      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "tier": 5,
+      "clipMethod": "Shield",
+      "clipCount": 1
+    },
+    {
+      "name": "Guardian of The Minotaur",
+      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "tier": 5,
+      "clipMethod": "Shield",
+      "clipCount": 1
+    },
+    {
+      "name": "Burning Man",
+      "defence": "Wild,Wild,Wild",
+      "attack": "Fire,Fire,Fire",
+      "tier": 2,
+      "clipMethod": "Chest",
+      "clipCount": 1
+    },
+    {
+      "name": "Templar",
+      "defence": "Wild,Wild,Wild,Wild,Wild",
+      "attack": "Wild,Wild,Wild,Wild,Wild",
+      "tier": 3,
+      "clipMethod": "Rare",
+      "clipCount": 1
+    }
+  ]
+}

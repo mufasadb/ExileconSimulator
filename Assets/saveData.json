@@ -1,1 +1,25 @@
-{"set":[{"name":"not a gun","implicits":"Physical,Life,Life,Life,Life,Armour,Armour,Fire,Cold,","tier":2,"isUnique":true,"type":1},{"name":"MightBeAGun","implicits":"Physical,Life,Armour,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Lightning,Chaos,Wild,","tier":4,"isUnique":false,"type":4},{"name":"Ring","implicits":"Physical,Life,Armour,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Lightning,Chaos,Wild,","tier":1,"isUnique":false,"type":3}]}
+{
+  "set": [
+    {
+      "name": "not a gun",
+      "implicits": "Physical,Life,Life,Life,Life,Armour,Armour,Fire,Cold,",
+      "tier": 2,
+      "isUnique": true,
+      "type": 1
+    },
+    {
+      "name": "MightBeAGun",
+      "implicits": "Physical,Life,Armour,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Lightning,Chaos,Wild,",
+      "tier": 4,
+      "isUnique": false,
+      "type": 4
+    },
+    {
+      "name": "Ring",
+      "implicits": "Physical,Life,Armour,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Fire,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Cold,Lightning,Chaos,Wild,",
+      "tier": 1,
+      "isUnique": false,
+      "type": 3
+    }
+  ]
+}
