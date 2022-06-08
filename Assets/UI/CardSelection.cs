@@ -93,6 +93,7 @@ public class CardSelection : MonoBehaviour
                 attackStats[6] += cardDisplay.card.explicits.chaos;
                 attackStats[7] += cardDisplay.card.implicits.wild;
                 attackStats[7] += cardDisplay.card.explicits.wild;
+                attackStats[3] += cardDisplay.card.quality.physical;
             }
             else
             {
@@ -112,6 +113,7 @@ public class CardSelection : MonoBehaviour
                 defenceStats[6] += cardDisplay.card.explicits.chaos;
                 defenceStats[7] += cardDisplay.card.implicits.wild;
                 defenceStats[7] += cardDisplay.card.explicits.wild;
+                defenceStats[5] += cardDisplay.card.quality.armour;
             }
         }
         return (attackStats, defenceStats);

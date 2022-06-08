@@ -63,10 +63,12 @@ public class Stats
         chaos = 0;
         wild = 0;
 
+        //check how many stats it should add
         int statCount = 0;
         if (rarity == Rarity.Rare) { statCount = Random.Range(3, 5); }
         if (rarity == Rarity.Magic) { statCount = Random.Range(1, 3); }
-        
+
+        //weapons get everything but life/armour favour things you alreaedy have (or physical if nothing)
         if (type == Type.OneHandedWeapon || type == Type.TwoHandedWeapon)
         {
 
@@ -95,6 +97,7 @@ public class Stats
         }
         else if (type == Type.Shield || type == Type.Chest)
         {
+            //shields get everything but physical favour things you alreaedy have (or life/armour if nothing)
 
             for (int i = 0; i < statCount; i++)
             {
@@ -162,6 +165,7 @@ public class Stats
     }
     private void AddStatToHighestStat()
     {
+        //used to calculate the most likely stat to be using
         int[] statArray = new int[7];
         int highestInt = 0;
         int highestIntValue = this.fire;
@@ -189,8 +193,6 @@ public class Stats
         int pos = 0;
         bool evenStats = false;
         if (statCount % 2 == 0) { evenStats = true; }
-
-        // Debug.Log(fire);
 
         for (int i = 0; i < fire; i++)
         {

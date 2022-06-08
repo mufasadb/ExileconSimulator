@@ -20,6 +20,8 @@ public class Card : ScriptableObject
     public int durability = 2;
 
     public Rarity rarity;
+    public Stats quality = new Stats();
+    public bool isCrafted = false;
 
     public static Card CreateInstance(int tier, string newname)
     {
@@ -37,7 +39,7 @@ public class Card : ScriptableObject
             CardDataSystem.instance.cardDataSet.GetCardBaseData(tier);
         this.type = cardData.type;
         if (this.type == Type.Currency) { this.rarity = Rarity.Currency; }
-        if(cardData.isUnique){this.rarity = Rarity.Unique;}
+        if (cardData.isUnique) { this.rarity = Rarity.Unique; }
         //Enable this line to name cards by creation (1, 2, 3, etc.)
         // this.name = newname;
         this.name = cardData.name;

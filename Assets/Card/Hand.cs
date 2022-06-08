@@ -53,9 +53,9 @@ public class Hand : MonoBehaviour
     private void DoHandGen()
     {
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 30; i++)
         {
-            hand.Add(Card.CreateInstance(Random.Range(1, 5), i.ToString()));
+            hand.Add(Card.CreateInstance(Random.Range(1, 3), i.ToString()));
             Vector3 position = new Vector3(100, 500, 0);
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;

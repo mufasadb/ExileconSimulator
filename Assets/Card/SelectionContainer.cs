@@ -28,10 +28,18 @@ public class SelectionContainer : MonoBehaviour, IDropHandler
             }
             if (cardDisplay.card.type == type)
             {
-                if (selectedJewellery)
+                if (cardDisplay.card.durability == 0)
                 {
-                    selectedJewellery.cardDisplay = cardDisplay;
-                    selectedJewellery.UpdatePosition();
+                    GameEventManager.instance.DisplayError("This card cannot be used, as it is out of durability");
+                }
+                else
+                {
+
+                    if (selectedJewellery)
+                    {
+                        selectedJewellery.cardDisplay = cardDisplay;
+                        selectedJewellery.UpdatePosition();
+                    }
                 }
                 cardDisplay.DoSelect(GetComponent<Transform>().position, gameObject.transform.parent.gameObject);
                 Hand.instance.cardSelection.Select(cardDisplay);

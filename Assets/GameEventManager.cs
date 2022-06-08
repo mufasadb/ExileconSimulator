@@ -100,9 +100,7 @@ public class GameEventManager : MonoBehaviour
         CloseUIItem(craftUI);
         CloseUIItem(rewardUI);
         if (staffStats != null) { staffStats.hideNUnlock(); }
-        Debug.Log(GlobalVariables.instance.preventMoving);
         GlobalVariables.instance.preventMoving = false;
-        Debug.Log(GlobalVariables.instance.preventMoving);
         FightHandler.instance.CancelFight();
     }
 
@@ -113,6 +111,10 @@ public class GameEventManager : MonoBehaviour
     private void CloseUIItem(GameObject UIItem)
     {
         if (UIItem.activeSelf) { UIItem.SetActive(false); };
+    }
+    public void DisplayError(string errorString)
+    {
+        GlobalVariables.instance.errorHandler.NewError(errorString);
     }
 
 }

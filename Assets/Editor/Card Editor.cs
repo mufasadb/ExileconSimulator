@@ -134,7 +134,10 @@ public class CardEditor : EditorWindow
         for (int i = 0; i < lightning; i++) { implicitString += "Lightning,"; };
         for (int i = 0; i < chaos; i++) { implicitString += "Chaos,"; };
         for (int i = 0; i < wild; i++) { implicitString += "Wild,"; };
-        implicitString.Remove(implicitString.Length - 1, 1);
+        if (implicitString.Length > 0)
+        {
+            implicitString.Remove(implicitString.Length - 1, 1);
+        }
         return implicitString;
     }
     private void StringToStats(string implicitString)

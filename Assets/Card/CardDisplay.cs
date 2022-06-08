@@ -35,14 +35,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     [SerializeField] private GameObject asWeaponTrue;
     [SerializeField] private GameObject asDefenceTrue;
     public bool asWeapon = false;
-    public void DoClip(int clipCount)
-    {
 
-        //animate and noise
-        card.durability -= clipCount;
-        destination = new Vector3(1920 / 2, 1080 / 2, 0);
-        baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
-    }
     private void Awake()
     {
         // parentContainer = parentCont;
@@ -63,11 +56,19 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         // createImplicits();
         canvas = GetComponent<Canvas>();
     }
+    public void DoClip(int clipCount)
+    {
+
+        //animate and noise
+        card.durability -= clipCount;
+        destination = new Vector3(1920 / 2, 1080 / 2, 0);
+        baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
+    }
     public void OnDrop(PointerEventData eventData)
     {
         if (selected)
         {
-            //tODO 
+            //TODO 
             // this.DoUnselect();
         }
     }
@@ -78,6 +79,20 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         asWeaponTrue.SetActive(false);
         asDefenceTrue.SetActive(true);
         if (FightHandler.instance.isFighting) { FightHandler.instance.reCalculateStats(); }
+    }
+    public void CraftQuality(bool isWeapon)
+    {
+        qualitySticker.SetActive(true);
+        if (isWeapon)
+        {
+            card.quality.physical = 1;
+        }
+        else
+        {
+            card.quality.armour = 1;
+        }
+        card.quality.StatDisplay(qualitySticker.transform);
+        card.isCrafted = true;
     }
     public void AsDefenceTrue()
     {
@@ -169,10 +184,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         Hand.instance.cardSelection.UnSelect(this);
         Hand.instance.UpdateCardDisplay();
     }
-    public void MoveBy(Vector3 moveAmount)
-    {
-        destination = destination + moveAmount;
-    }
+
     private void Update()
     {
         // if (!selected)

@@ -11,6 +11,32 @@ public class CraftHandler : MonoBehaviour
     {
         if (item != null && currency != null)
         {
+            if (currency.card.name == "Blacksmith Whetstone")
+            {
+                if (item.card.type == Type.OneHandedWeapon || item.card.type == Type.TwoHandedWeapon)
+                {
+                    //Craft quality handles the added stat and the images, just send weather or not its an item to dictate stat
+                    item.CraftQuality(true);
+                }
+                else
+                {
+                    ThrowError("Blacksmith Whetstones can only be applied to weapons");
+                }
+                return;
+            }
+            if (currency.card.name == "Armourer Scrap")
+            {
+                if (item.card.type == Type.Chest || item.card.type == Type.Shield)
+                {
+                    //Craft quality handles the added stat and the images, just send weather or not its an item to dictate stat=
+                    item.CraftQuality(false);
+                }
+                else
+                {
+                    ThrowError("Armourer Scraps can only be aplied to chest armour or shields");
+                }
+                return;
+            }
             Rarity newRarity = Rarity.Magic;
             if (currency.card.name == "Alchemy Orb")
             {
@@ -44,6 +70,7 @@ public class CraftHandler : MonoBehaviour
                 }
                 else { ThrowError("The item must be Normal to craft with an Alchemy Orb"); return; }
             }
+
             //do craft
             Hand.instance.hand.Remove(currency.card);
             Destroy(currency.gameObject);
@@ -53,7 +80,7 @@ public class CraftHandler : MonoBehaviour
             item.craftingSticker.SetActive(true);
             for (int i = 0; i < item.explicitContainer.transform.childCount; i++)
             {
-                Destroy(item.explicitContainer.transform.GetChild(i));
+                Destroy(item.explicitContainer.transform.GetChild(i).gameObject);
             }
             item.card.explicits.makeExplicit(item.card.type, newRarity);
             item.card.explicits.StatDisplay(item.explicitContainer.transform);
