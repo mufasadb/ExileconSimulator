@@ -72,6 +72,6 @@ public class CraftHandler : MonoBehaviour
     {
         if (item != null) { item.DoUnselect(); }
         if (currency != null) { currency.DoUnselect(); }
-        gameObject.SetActive(false);
+        GameEventManager.instance.EndCraftScreen();
     }
 }

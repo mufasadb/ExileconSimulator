@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
             return;
         if (Input.GetMouseButton(0))
         {
-            if (!GlobalVariables.instance.currentlyDragging)
+            if (!GlobalVariables.instance.preventMoving && !GlobalVariables.instance.currentlyDragging)
             {
 
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);

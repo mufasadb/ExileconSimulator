@@ -147,7 +147,8 @@ public class CardImageHolder : MonoBehaviour
         // if (name == "Gladiator Armour")
         // {
         // string path = "Items/Chest/Gladiator Armour.png";
-        string path = "Items/" + type.ToString() + "/" + name + ".png";
+        string path = "Items/" + type.ToString() + "/" + name ;
+        // path = name+".png";
         // Sprite sprite = LoadSprite("Assets/Card/images/Items/Chest/Gladiator Armour.png");
         Sprite sprite = LoadSprite(path);
 
@@ -161,16 +162,19 @@ public class CardImageHolder : MonoBehaviour
     private Sprite LoadSprite(string path)
     {
         string fullPath = "Assets/Resources/" + path;
-        if (string.IsNullOrEmpty(fullPath)) return null;
-        if (System.IO.File.Exists(fullPath))
-        {
-            byte[] bytes = System.IO.File.ReadAllBytes(fullPath);
-            Texture2D texture = new Texture2D(1, 1);
-            texture.LoadImage(bytes);
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            return sprite;
-        }
-        return null;
+        // if (string.IsNullOrEmpty(fullPath)) return null;
+        // if (System.IO.File.Exists(fullPath))
+        // {
+        // byte[] bytes = System.IO.File.ReadAllBytes(fullPath);
+        // Texture2D texture = new Texture2D(1, 1);
+        // Debug.Log(path);
+        Sprite sprite = Resources.Load<Sprite>(path);
+        // Debug.Log(sprite);
+        // texture.LoadImage(bytes);
+        // Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        return sprite;
+        // }
+        // return null;
     }
     public Sprite getStatImage(string statEle)
     {

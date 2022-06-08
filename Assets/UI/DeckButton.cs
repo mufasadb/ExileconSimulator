@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DeckButton : MonoBehaviour
 {
-    public bool showHand = true;
     public GameObject leftButton;
     public GameObject rightButton;
     public GameObject handContainer;
@@ -16,18 +15,25 @@ public class DeckButton : MonoBehaviour
 
     public void ToggleHand()
     {
-        if (showHand)
+        if (GameEventManager.instance.handOpen)
         {
             ShowHand(false);
-            if (GlobalVariables.instance.SelectionContainer.activeInHierarchy == true) { GlobalVariables.instance.SelectionContainer.SetActive(false); }
+            // if (GlobalVariables.instance.SelectionContainer.activeInHierarchy == true) { GlobalVariables.instance.SelectionContainer.SetActive(false); }
         }
         else { ShowHand(true); }
     }
     public void ShowHand(bool newVal)
     {
-        showHand = newVal;
-        leftButton.SetActive(showHand);
-        rightButton.SetActive(showHand);
-        handContainer.SetActive(showHand);
+        if (newVal)
+        {
+            GameEventManager.instance.OpenHand();
+        }
+        else
+        {
+            GameEventManager.instance.CloseAllUI();
+        }
+        // leftButton.SetActive(showHand);
+        // rightButton.SetActive(showHand);
+        // handContainer.SetActive(showHand);
     }
 }

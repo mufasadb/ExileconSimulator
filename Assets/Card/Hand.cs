@@ -61,6 +61,7 @@ public class Hand : MonoBehaviour
             card.parentContainer = handContainer;
             card.card = hand[i];
             // Debug.Log(PrefabHolder.instance.CardPrefab);
+            // Debug.Log(PrefabHolder.instance.CardPrefab);
             Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform);
         }
         SortHand();

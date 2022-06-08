@@ -8,7 +8,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
 {
     public Card card;
     // Start is called before the first frame update
-    private Image baseImage;
+    public Image baseImage;
     public Image typeIcon;
     public Image itemImage;
     public TMPro.TMP_Text title;
@@ -31,6 +31,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     private GameObject selectedContainer;
     private CardSelection cardselection;
     public bool isDragged = false;
+    public float speed = 5;
     [SerializeField] private GameObject asWeaponTrue;
     [SerializeField] private GameObject asDefenceTrue;
     public bool asWeapon = false;
@@ -47,7 +48,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         // parentContainer = parentCont;
         selectedContainer = GlobalVariables.instance.SelectionContainer;
         rendererObj = GetComponent<Renderer>();
-        baseImage = GetComponent<Image>();
+        // baseImage = GetComponent<Image>();
         typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
         if (card.type == Type.TwoHandedWeapon || card.type == Type.OneHandedWeapon) { asWeapon = true; }
         MoveTypeIcon(card.type);
@@ -121,7 +122,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public void updatePositionScaleCaches(int index)
     {
         sortedOrderIndex = index;
-        cachedScale = transform.localScale;
+        cachedScale = baseImage.transform.localScale;
     }
 
     public void Smallerise()
@@ -129,23 +130,33 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         transform.SetSiblingIndex(sortedOrderIndex);
         if (selected)
         {
-            transform.localScale = new Vector3(0.4f, 0.4f, 1);
+            baseImage.transform.localScale = new Vector3(1f, 1f, 1);
         }
         else
         {
-            transform.localScale = cachedScale;
+            baseImage.transform.localScale = new Vector3(1f, 1f, 1);
         }
+        baseImage.transform.localPosition = new Vector3(0, 0, 0);
     }
     public void Biggerise()
     {
         transform.SetAsLastSibling();
-        transform.localScale = new Vector3(1.2f, 1.2f, 1);
+        if (selected)
+        {
+            baseImage.transform.localPosition = new Vector3(150, 0, 0);
+            baseImage.transform.localScale = new Vector3(4f, 4f, 1);
+        }
+        else
+        {
+            baseImage.transform.localScale = new Vector3(2f, 2f, 1);
+            baseImage.transform.localPosition = new Vector3(0, 150, 0);
+        }
     }
     public void DoSelect(Vector3 position, GameObject newParent)
     {
         selected = true;
-        transform.localScale = new Vector3(0.4f, 0.4f, 1);
         transform.SetParent(newParent.transform);
+        transform.localScale = new Vector3(0.4f, 0.4f, 1);
         // transform.localPosition = position;
         destination = position;
         // transform.parent = selectedContainer.transform;
@@ -153,8 +164,8 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public void DoUnselect()
     {
         selected = false;
-        transform.localScale = cachedScale;
         transform.SetParent(parentContainer.transform);
+        transform.localScale = new Vector3(0.8f, 0.8f, 1);
         Hand.instance.cardSelection.UnSelect(this);
         Hand.instance.UpdateCardDisplay();
     }
@@ -172,7 +183,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         }
         if (transform.position != destination)
         {
-            transform.position = Vector3.Lerp(transform.position, destination, Time.deltaTime * 5f);
+            transform.position = Vector3.Lerp(transform.position, destination, Time.deltaTime * speed);
         }
         // }
     }
@@ -182,7 +193,8 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         float halfWay = handCount / 2;
         float position = myPositionIndex - halfWay;
         if (Mathf.Abs(position) > 5) { position = position * 2; }
-        float scale = 0.8f - Mathf.Abs(position) * 0.01f;
+        // float scale = 0.8f - Mathf.Abs(position) * 0.01f;
+        float scale = 0.8f;
         transform.localScale = new Vector3(scale, scale, 1);
         float x = 0;
         if (myPositionIndex != halfWay) { x = position * horizontalCardSpacing; }

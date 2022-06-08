@@ -19,7 +19,6 @@ public class Fight : Interactable
     }
     private void checkSelection()
     {
-
-        FightHandler.instance.InitiateFight(gameObject, staffMember);
+        FightHandler.instance.InitiateFight(gameObject, staffMember, gameObject.GetComponent<DisplayStaffStats>());
     }
 }

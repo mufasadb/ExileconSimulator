@@ -27,6 +27,9 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
         cardDisplay.isDragged = true;
         cardDisplay.DoUnselect();
         GlobalVariables.instance.currentlyDragging = true;
+        cardDisplay.Smallerise();
+        cardDisplay.speed = 50f;
+
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -36,6 +39,7 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
         cardDisplay.isDragged = false;
         GlobalVariables.instance.currentlyDragging = false;
         if (!cardDisplay.selected) { cardDisplay.DoUnselect(); }
+        cardDisplay.speed = 5f;
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

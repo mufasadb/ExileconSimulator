@@ -66,17 +66,17 @@ public class staffDetails : MonoBehaviour
     {
         int workingStatCount = totalStats;
         int workingCurrentPosition = currentPosition;
-        int y = 0;
+        float y = 0;
         if (workingStatCount > 5)
         {
             evenStats = false;
             if (workingStatCount % 2 == 0) { evenStats = true; }
-            y = 20;
+            y = 0.3f;
             workingStatCount = totalStats / 2;
             if (workingCurrentPosition > workingStatCount)
             {
                 workingCurrentPosition = workingCurrentPosition - workingStatCount;
-                y = -20;
+                y = -0.3f;
             }
             workingStatCount = workingStatCount + 1;
         }

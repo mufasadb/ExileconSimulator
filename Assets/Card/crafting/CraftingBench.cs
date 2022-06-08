@@ -32,7 +32,7 @@ public class CraftingBench : Interactable
     }
     public override void Interact()
     {
-        GlobalVariables.instance.CraftingContainer.SetActive(true);
+        GameEventManager.instance.BeginCraftScreen();
     }
     // Update is called once per frame
 }

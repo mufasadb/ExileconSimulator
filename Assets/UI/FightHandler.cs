@@ -134,14 +134,13 @@ public class FightHandler : MonoBehaviour
         statDisplay(cardSelection.defence, true, playerDefence.transform);
 
     }
-    public void InitiateFight(GameObject TargetEnemy, StaffMember staffMember)
+    public void InitiateFight(GameObject TargetEnemy, StaffMember staffMember, DisplayStaffStats _displayStaffStats)
     {
         if (!isFighting)
         {
             currentFightTarget = staffMember;
             isFighting = true;
-            FightUI.SetActive(true);
-            SelectionUI.SetActive(true);
+            GameEventManager.instance.BeginFightScreen(_displayStaffStats);
             statDisplay(cardSelection.attack, true, playerAttack.transform);
             statDisplay(cardSelection.defence, true, playerDefence.transform);
         }
@@ -149,10 +148,9 @@ public class FightHandler : MonoBehaviour
     public void CancelFight()
     {
         isFighting = false;
-        FightUI.SetActive(false);
-        SelectionUI.SetActive(false);
         removeChildren();
         currentFightTarget = null;
+        GameEventManager.instance.EndFightScreen();
     }
     public void removeChildren()
     {
