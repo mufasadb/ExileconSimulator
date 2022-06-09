@@ -32,8 +32,6 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     private CardSelection cardselection;
     public bool isDragged = false;
     public float speed = 5;
-    [SerializeField] private GameObject asWeaponTrue;
-    [SerializeField] private GameObject asDefenceTrue;
     public bool asWeapon = false;
 
     private void Awake()
@@ -76,8 +74,6 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     {
         // Debug.Log("as weapon");
         asWeapon = true;
-        asWeaponTrue.SetActive(false);
-        asDefenceTrue.SetActive(true);
         if (FightHandler.instance.isFighting) { FightHandler.instance.reCalculateStats(); }
     }
     public void CraftQuality(bool isWeapon)
@@ -98,8 +94,6 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     {
         // Debug.Log("as defence");
         asWeapon = false;
-        asWeaponTrue.SetActive(true);
-        asDefenceTrue.SetActive(false);
         if (FightHandler.instance.isFighting) { FightHandler.instance.reCalculateStats(); }
     }
     private void MoveTypeIcon(Type type)

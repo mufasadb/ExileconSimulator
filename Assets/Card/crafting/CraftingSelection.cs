@@ -9,7 +9,6 @@ public class CraftingSelection : MonoBehaviour, IDropHandler
     public bool currencySlot;
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("dropping");
         if (eventData.pointerDrag != null)
         {
 
