@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
         {
             if (!GlobalVariables.instance.preventMoving && !GlobalVariables.instance.currentlyDragging)
             {
-
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100, movementMask))

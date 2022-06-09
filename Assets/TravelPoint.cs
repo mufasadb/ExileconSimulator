@@ -12,6 +12,9 @@ public class TravelPoint : Interactable
     public override void Interact()
     {
         NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+        PlayerMotor motor = player.GetComponent<PlayerMotor>();
+        motor.target = destination;
+
         agent.Warp(destination.position);
     }
     private void OnMouseEnter()

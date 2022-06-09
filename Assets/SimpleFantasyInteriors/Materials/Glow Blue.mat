@@ -10,7 +10,7 @@ Material:
   m_Name: Glow Blue
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
-  - _ALPHAPREMULTIPLY_ON
+  - _ALPHABLEND_ON
   - _EMISSION
   m_InvalidKeywords: []
   m_LightmapFlags: 1
@@ -66,16 +66,20 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _EmissionScaleUI: 50
+    - _GlossMapScale: 1
     - _Glossiness: 1
+    - _GlossyReflections: 1
     - _Metallic: 1
-    - _Mode: 3
+    - _Mode: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SrcBlend: 1
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 5
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0, g: 0.11034489, b: 1, a: 1}
+    - _Color: {r: 0, g: 0.11034489, b: 1, a: 0}
     - _EmissionColor: {r: 2.9411764, g: 24.68558, b: 50, a: 50}
     - _EmissionColorUI: {r: 0.058823526, g: 0.4937116, b: 1, a: 1}
   m_BuildTextureStacks: []
