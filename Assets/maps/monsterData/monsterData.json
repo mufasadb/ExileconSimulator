@@ -1,0 +1,82 @@
+{
+  "set": [
+    {
+      "name": "Burning Man",
+      "attack": "Fire,Fire,Fire",
+      "defence": "Wild,Wild,Wild",
+      "tier": 2
+    },
+    {
+      "name": "Dominus",
+      "attack": "Lightning,Lightning,Lightning",
+      "defence": "Physical,Physical,Wild,Wild,Wild,Wild",
+      "tier": 3
+    },
+    {
+      "name": "Flame Totem",
+      "attack": "Armour",
+      "defence": "Fire,Fire,Wild",
+      "tier": 2
+    },
+    {
+      "name": "Goatman",
+      "attack": "Wild,Wild",
+      "defence": "Cold,Cold",
+      "tier": 1
+    },
+    {
+      "name": "Kitava",
+      "attack": "Life,Life,Armour,Armour,Wild,Wild,Wild,Wild",
+      "defence": "Physical,Physical,Wild,Wild,Wild,Wild",
+      "tier": 3
+    },
+    {
+      "name": "Lunaris",
+      "attack": "Cold,Cold,Cold,Wild",
+      "defence": "Fire,Fire,Wild",
+      "tier": 2
+    },
+    {
+      "name": "Necromancer",
+      "attack": "Chaos,Wild,Wild",
+      "defence": "",
+      "tier": 2
+    },
+    {
+      "name": "Sea Witch",
+      "attack": "Cold,Life",
+      "defence": "Cold,Wild,Wild",
+      "tier": 2
+    },
+    {
+      "name": "Skeleton",
+      "attack": "Life",
+      "defence": "Physical,Wild,Wild",
+      "tier": 1
+    },
+    {
+      "name": "Solaris",
+      "attack": "Fire,Fire,Wild,",
+      "defence": "Fire,Fire,Fire,Wild,",
+      "tier": 3
+    },
+    {
+      "name": "Templar",
+      "attack": "Wild,Wild,Wild,Wild,Wild",
+      "defence": "Wild,Wild,Wild,Wild,Wild",
+      "tier": 3
+    },
+    {
+      "name": "The Faun",
+      "attack": "Wild,Wild,Wild",
+      "defence": "Physical,Physical,Physical",
+      "tier": 1
+    },
+    {
+      "name": "Zombie",
+      "attack": "Life,Life",
+      "defence": "Physical",
+      "tier": 1
+    }
+  ]
+}

@@ -13,7 +13,7 @@ public class FightHandler : MonoBehaviour
     public GameObject FightUI;
     public GameObject SelectionUI;
     public CardSelection cardSelection;
-    private float seperatingDistance = 22;
+    private float seperatingDistance = 18;
     private StaffMember currentFightTarget;
     #region Singleton
 
@@ -233,7 +233,7 @@ public class FightHandler : MonoBehaviour
         rt.anchorMin = new Vector2(0, 0);
         rt.anchorMax = new Vector2(0, 0);
         rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.localScale = new Vector2(.5f, .6f);
+        rt.localScale = new Vector2(.4f, .6f);
         Image image = statIcon.AddComponent<Image>();
         image.sprite = CardImageHolder.instance.getStatImage(statEle);
         rt.sizeDelta = new Vector2(image.sprite.bounds.size.x * 100, image.sprite.bounds.size.y * 100);
