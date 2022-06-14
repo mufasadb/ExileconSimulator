@@ -48,9 +48,8 @@ public class FightHandler : MonoBehaviour
 
 
             //offer cards
-            GlobalVariables.instance.RewardContainer.SetActive(true);
-            CreateRewardCard(1);
-            CreateRewardCard(2);
+            GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(2, currentFightTarget.tier);
+
         }
         else { Debug.LogError("Player Loses"); }
 
@@ -58,15 +57,7 @@ public class FightHandler : MonoBehaviour
 
         //reward cards
     }
-    private void CreateRewardCard(int rewardNumber)
-    {
-        Card.CreateInstance(currentFightTarget.tier, "null");
-        GameObject newCard = Instantiate(PrefabHolder.instance.CardPrefab, new Vector3(0, 0, 0), Quaternion.identity, GlobalVariables.instance.RewardContainer.transform);
-        newCard.GetComponent<CardDisplay>().destination = GlobalVariables.instance.RewardContainer.transform.position + new Vector3(rewardNumber * 250 - 250, 0, 0);
-        newCard.AddComponent<RewardSelection>();
-        newCard.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        newCard.GetComponent<CardDisplay>().updatePositionScaleCaches(rewardNumber);
-    }
+
     public bool ResolveFight(Stats playerAttack, Stats playerDefence, Stats enemyAttack, Stats enemyDefence)
     {
         //player Attack vs Enemy Defence.
@@ -147,10 +138,17 @@ public class FightHandler : MonoBehaviour
     }
     public void CancelFight()
     {
+        if (!GlobalVariables.instance.rewardPending)
+        {
+            handleFightEnd();
+            GameEventManager.instance.EndFightScreen();
+        }
+    }
+    public void handleFightEnd()
+    {
         isFighting = false;
         removeChildren();
         currentFightTarget = null;
-        GameEventManager.instance.EndFightScreen();
     }
     public void removeChildren()
     {

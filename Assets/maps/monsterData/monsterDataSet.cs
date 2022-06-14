@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 
-public class monsterDataSet
+public class MonsterDataSet
 {
     public List<MonsterDataObject> set = new List<MonsterDataObject>();
 

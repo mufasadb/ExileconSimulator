@@ -165,8 +165,6 @@ MonoBehaviour:
   parentContainer: {fileID: 0}
   isDragged: 0
   speed: 5
-  asWeaponTrue: {fileID: 0}
-  asDefenceTrue: {fileID: 0}
   asWeapon: 0
 --- !u!1 &4520849145416398236
 GameObject:

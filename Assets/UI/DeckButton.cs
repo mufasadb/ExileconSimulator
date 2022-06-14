@@ -15,12 +15,16 @@ public class DeckButton : MonoBehaviour
 
     public void ToggleHand()
     {
-        if (GameEventManager.instance.handOpen)
+        if (!GlobalVariables.instance.rewardPending)
         {
-            ShowHand(false);
-            // if (GlobalVariables.instance.SelectionContainer.activeInHierarchy == true) { GlobalVariables.instance.SelectionContainer.SetActive(false); }
+
+            if (GameEventManager.instance.handOpen)
+            {
+                ShowHand(false);
+                // if (GlobalVariables.instance.SelectionContainer.activeInHierarchy == true) { GlobalVariables.instance.SelectionContainer.SetActive(false); }
+            }
+            else { ShowHand(true); }
         }
-        else { ShowHand(true); }
     }
     public void ShowHand(bool newVal)
     {

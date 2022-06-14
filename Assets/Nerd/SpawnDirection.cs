@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnDirection : MonoBehaviour
 {
+    public string specifiedFor;
     public Transform spawnDirection;
     // Start is called before the first frame update
 

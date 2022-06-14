@@ -28,7 +28,7 @@ crafting
 maps
     - cards themselves
     - stat changes for magic maps
-    - place to go to rn the maps
+   # - place to go to rn the maps
     - selection of baddies
     - selecting your cards
     - applying clips after
@@ -73,6 +73,7 @@ Polish
         - right/left arrows move deck left and right
         - sort cards with alternate sorting
         - hide broken cards
+        - allowrepositionging cards in hand (creat invisible selection containers and rotate them when you position something there)
     
 Uniques
     - Create List of unique cards

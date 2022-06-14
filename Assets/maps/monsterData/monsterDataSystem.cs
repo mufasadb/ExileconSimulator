@@ -4,10 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
 
-public class monsterDataSystem : MonoBehaviour
+public class MonsterDataSystem : MonoBehaviour
 {
     #region Singleton
-    public static monsterDataSystem instance;
+    public static MonsterDataSystem instance;
     void Awake()
     {
         if (instance != null)
@@ -20,10 +20,10 @@ public class monsterDataSystem : MonoBehaviour
 
     }
     #endregion
-    public monsterDataSet monsterDataSet;
+    public MonsterDataSet monsterDataSet;
     [SerializeField] private TextAsset jsonFile;
     public void LoadMonsterData()
     {
-        monsterDataSet = JsonUtility.FromJson<monsterDataSet>(jsonFile.text);
+        monsterDataSet = JsonUtility.FromJson<MonsterDataSet>(jsonFile.text);
     }
 }

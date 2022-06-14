@@ -10,17 +10,26 @@ public class StaffMember : ScriptableObject
     public ClipMethod clipMethod;
     public int clipCount;
     public int staffQueueSize;
-    public int tier { get; private set;}
+    public int tier { get; private set; }
 
     public static StaffMember CreateInstance(int tier)
     {
         var data = ScriptableObject.CreateInstance<StaffMember>();
-        data.Init(Random.Range(1, 5));
+
+        string name = StaffDataSystem.instance.staffDataSet.GetStaffNameByTier(Random.Range(1, 5));
+        // data.Init(Random.Range(1, 5));
+        data.Init(name);
         return data;
     }
-    public void Init(int tier)
+    public static StaffMember CreateSpecific(string name)
     {
-        var staffDetails = StaffDataSystem.instance.staffDataSet.GetStaffBaseData(tier);
+        var data = ScriptableObject.CreateInstance<StaffMember>();
+        data.Init(name);
+        return data;
+    }
+    public void Init(string name)
+    {
+        var staffDetails = StaffDataSystem.instance.staffDataSet.GetStaffBaseDataByName(name);
         this.staffQueueSize = Random.Range(0, 10);
         this.name = staffDetails.name;
         this.clipCount = staffDetails.clipCount;

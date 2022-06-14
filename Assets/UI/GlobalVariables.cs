@@ -25,6 +25,8 @@ public class GlobalVariables : MonoBehaviour
     public GameObject CraftingContainer;
     public ErrorHandler errorHandler;
     public bool preventMoving = false;
+    public bool rewardPending = false;
+    public GameObject handContainer;
 
     // Update is called once per frame
     void Update()

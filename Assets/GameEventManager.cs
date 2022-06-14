@@ -25,6 +25,8 @@ public class GameEventManager : MonoBehaviour
     [SerializeField] GameObject craftUI;
     [SerializeField] GameObject leftButton;
     [SerializeField] GameObject rightButton;
+    [SerializeField] GameObject mapUI;
+    [SerializeField] MapHandler mapHandler;
     DisplayStaffStats staffStats;
     public bool handOpen = false;
 
@@ -68,18 +70,34 @@ public class GameEventManager : MonoBehaviour
     }
     public void BeginRewardScreen()
     {
-        OpenUIItem(fightUI);
+        // OpenUIItem(fightUI);
         OpenHand();
         OpenUIItem(rewardUI);
         GlobalVariables.instance.preventMoving = true;
     }
     public void EndRewardScreen()
     {
-        CloseUIItem(fightUI);
+        EndFightScreen();
+        FightHandler.instance.handleFightEnd();
         CloseUIItem(selectionUI);
         CloseHand();
         CloseUIItem(craftUI);
-        GlobalVariables.instance.preventMoving = false;
+        CloseUIItem(rewardUI);
+
+    }
+    public void BeginMapScreen()
+    {
+        // OpenUIItem(fightUI);
+        // OpenUIItem(selectionUI);
+        OpenHand();
+        OpenUIItem(mapUI);
+    }
+    public void EndMapScreen()
+    {
+        // CloseUIItem(fightUI);
+        CloseHand();
+        // CloseUIItem(selectionUI);
+        CloseUIItem(mapUI);
     }
     public void BeginCraftScreen()
     {
@@ -102,6 +120,24 @@ public class GameEventManager : MonoBehaviour
         if (staffStats != null) { staffStats.hideNUnlock(); }
         GlobalVariables.instance.preventMoving = false;
         FightHandler.instance.CancelFight();
+    }
+    public void StepToNextFight()
+    {
+        if (mapHandler.isInMap)
+        {
+            if (mapHandler.fightsRemaining > 0)
+            {
+                mapHandler.NextFight();
+            }
+            else
+            {
+                EndRewardScreen();
+            }
+        }
+        else
+        {
+            EndRewardScreen();
+        }
     }
 
     private void OpenUIItem(GameObject UIItem)

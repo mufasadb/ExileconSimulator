@@ -72,6 +72,7 @@ public class StaffEditor : EditorWindow
 
             if (GUILayout.Button("Save")) { SaveCard(); SaveIntoJson(); }
             if (GUILayout.Button("Cancel")) { Cancel(); }
+            if (GUILayout.Button("Update In Monster Set")) { SaveInMonsterSet(); }
         }
         else
         {
@@ -119,6 +120,11 @@ public class StaffEditor : EditorWindow
         StringToStats(singleStaffMember.attack, true);
         StringToStats(singleStaffMember.defence, false);
     }
+    private void SaveInMonsterSet()
+    {
+        // TODO : Add to monster sete
+        Debug.LogError("not implimented yet");
+    }
     private void SaveCard()
     {
         singleStaffMember.attack = StatsToString(false);
@@ -149,6 +155,9 @@ public class StaffEditor : EditorWindow
         Debug.Log("is saving");
         string saveData = JsonUtility.ToJson(data);
         System.IO.File.WriteAllText(Application.dataPath + "/staff/staffData/staffData.json", saveData);
+    }
+    private void SaveIntoMonsterJSON(){
+
     }
     private string StatsToString(bool isAttack)
     {

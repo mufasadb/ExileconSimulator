@@ -6,11 +6,11 @@ public class CraftingBench : Interactable
 {
 
     // Start is called before the first frame update
-    private Outline outline;
+    [SerializeField]private Outline outline;
     // Start is called before the first frame update
     void Start()
     {
-        outline = GetComponentInParent<Outline>();
+        // outline = GetComponentInParent<Outline>();
         hide();
     }
     private void OnMouseEnter()

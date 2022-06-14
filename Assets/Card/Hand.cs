@@ -43,12 +43,7 @@ public class Hand : MonoBehaviour
         UpdateCardDisplay();
         RewardSelection rewardSelection = cardObject.GetComponent<RewardSelection>();
         Destroy(rewardSelection);
-        for (int i = 0; i < rewardContainer.transform.childCount; i++)
-        // for (int i = 0; i < handContainer.Count; i++)
-        {
-            GameObject card = rewardContainer.transform.GetChild(i).gameObject;
-            Destroy(card);
-        }
+
     }
     private void DoHandGen()
     {

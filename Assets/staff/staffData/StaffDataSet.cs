@@ -8,11 +8,16 @@ public class StaffDataSet
     // public void AddCard(){
     //     set.Add(new CardDataObject());
     // }
-    public StaffDataObject GetStaffBaseData(int tier)
+    public string GetStaffNameByTier(int tier)
     {
         // if (tier > 3) { Debug.LogError("Tried to get a card with tier greater than 3"); return null; }
         List<StaffDataObject> specificTierItems = set.FindAll(item => item.tier == tier);
         int choice = Random.Range(0, specificTierItems.Count);
-        return specificTierItems[choice];
+        return specificTierItems[choice].name;
+    }
+    public StaffDataObject GetStaffBaseDataByName(string name)
+    {
+        StaffDataObject staffDataObject = set.Find(item => item.name == name);
+        return staffDataObject;
     }
 }

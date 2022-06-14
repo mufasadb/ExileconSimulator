@@ -9,7 +9,6 @@ public class RewardSelection : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         Hand.instance.AddCardToHand(this.gameObject);
-        // GlobalVariables.instance.RewardContainer.SetActive(false);
-        GameEventManager.instance.EndRewardScreen();
+        GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().TakeReward();
     }
 }

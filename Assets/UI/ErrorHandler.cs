@@ -20,6 +20,6 @@ public class ErrorHandler : MonoBehaviour
     }
     public void CloseError()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
