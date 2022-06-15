@@ -14,7 +14,10 @@ public class FightHandler : MonoBehaviour
     public GameObject SelectionUI;
     public CardSelection cardSelection;
     private float seperatingDistance = 18;
-    private StaffMember currentFightTarget;
+    // private StaffMember currentFightTarget;
+    private Stats currentFightTargetAttack;
+    private Stats currentFightTargetDefence;
+    private int currentFightTargetTier;
     #region Singleton
 
     public static FightHandler instance;
@@ -34,6 +37,7 @@ public class FightHandler : MonoBehaviour
     }
     public void doFight()
     {
+
         if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, currentFightTarget.attack, currentFightTarget.defence))
         {
             Debug.Log("PLAYER WON");
@@ -132,6 +136,18 @@ public class FightHandler : MonoBehaviour
             currentFightTarget = staffMember;
             isFighting = true;
             GameEventManager.instance.BeginFightScreen(_displayStaffStats);
+            statDisplay(cardSelection.attack, true, playerAttack.transform);
+            statDisplay(cardSelection.defence, true, playerDefence.transform);
+        }
+    }
+    public void InitiateFight(MonsterDataObject monster)
+    {
+        if (!isFighting)
+        {
+            // currentFightTarget = staffMember;
+            isFighting = true;
+            Debug.Log(monster.name);
+            GameEventManager.instance.BeginFightScreen(true);
             statDisplay(cardSelection.attack, true, playerAttack.transform);
             statDisplay(cardSelection.defence, true, playerDefence.transform);
         }

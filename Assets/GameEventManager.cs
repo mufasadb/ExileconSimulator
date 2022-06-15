@@ -56,6 +56,19 @@ public class GameEventManager : MonoBehaviour
             staffStats.showNLock();
         }
     }
+    public void BeginFightScreen(bool isMapFight)
+    {
+        if (!isMapFight) { Debug.LogError("tried to initiate fight not in a map, but without a staff member (check fight handler initiate fight"); }
+        OpenUIItem(fightUI);
+        OpenUIItem(selectionUI);
+        OpenHand();
+        GlobalVariables.instance.preventMoving = true;
+        // if (_staffStats != null)
+        // {
+        //     staffStats = _staffStats;
+        //     staffStats.showNLock();
+        // }
+    }
     public void EndFightScreen()
     {
         CloseUIItem(fightUI);
@@ -91,6 +104,7 @@ public class GameEventManager : MonoBehaviour
         // OpenUIItem(selectionUI);
         OpenHand();
         OpenUIItem(mapUI);
+        GlobalVariables.instance.preventMoving = true;
     }
     public void EndMapScreen()
     {
@@ -98,6 +112,7 @@ public class GameEventManager : MonoBehaviour
         CloseHand();
         // CloseUIItem(selectionUI);
         CloseUIItem(mapUI);
+        GlobalVariables.instance.preventMoving = false;
     }
     public void BeginCraftScreen()
     {

@@ -27,6 +27,7 @@ public class GlobalVariables : MonoBehaviour
     public bool preventMoving = false;
     public bool rewardPending = false;
     public GameObject handContainer;
+    public MapSelection mapSelection;
 
     // Update is called once per frame
     void Update()

@@ -153,6 +153,11 @@ public class CardSelection : MonoBehaviour
                     rings.Remove(cardDisplay);
                     break;
                 }
+            case Type.Map:
+                {
+                    GlobalVariables.instance.mapSelection.cardDisplay = null;
+                    break;
+                }
             default:
                 Debug.Log("didn't have a type");
                 break;
