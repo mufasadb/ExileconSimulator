@@ -14,6 +14,7 @@ public static class ClipMethodResolver
                 if (card.card.type == Type.Amulet || card.card.type == Type.Ring)
                 {
                     card.DoClip(clipCount);
+                    GlobalVariables.instance.clipPendingCount++;
                 }
                 else
                 {
@@ -25,6 +26,7 @@ public static class ClipMethodResolver
         {
             CardDisplay selectedCard = Comparer(cardList, clipMethod);
             selectedCard.DoClip(clipCount);
+            GlobalVariables.instance.clipPendingCount++;
             foreach (CardDisplay card in cardList)
             {
                 if (card != selectedCard) { card.DoUnselect(); }

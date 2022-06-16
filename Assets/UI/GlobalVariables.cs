@@ -28,10 +28,18 @@ public class GlobalVariables : MonoBehaviour
     public bool rewardPending = false;
     public GameObject handContainer;
     public MapSelection mapSelection;
+    public MapHandler mapHandler;
+    public int clipPendingCount = 0;
+    public float cardsMovingCooldown = 0;
+    public SelectionState selectionState = SelectionState.Fight;
 
     // Update is called once per frame
     void Update()
     {
-
+        if (cardsMovingCooldown > 0)
+        {
+            cardsMovingCooldown -= Time.deltaTime;
+        }
     }
 }
+public enum SelectionState { Fight, EnteringMaps, InMaps }

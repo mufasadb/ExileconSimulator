@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hand : MonoBehaviour
 {
     public int handScrollIndex = 0;
-    private GameObject handContainer;
+    [SerializeField] public GameObject handContainer;
     public float cooldDownHover;
     public CardSelection cardSelection;
     [SerializeField] private GameObject rewardContainer;
@@ -28,7 +28,7 @@ public class Hand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        handContainer = GameObject.FindGameObjectWithTag("Hand");
+        // handContainer = GameObject.FindGameObjectWithTag("Hand");
         cardSelection = handContainer.GetComponent<CardSelection>();
         rewardContainer = GlobalVariables.instance.RewardContainer;
         DoHandGen();
@@ -45,20 +45,44 @@ public class Hand : MonoBehaviour
         Destroy(rewardSelection);
 
     }
+    public void CardsIntoDeck()
+    {
+        for (int i = 0; i < handContainer.transform.childCount; i++)
+        // for (int i = 0; i < handContainer.Count; i++)
+        {
+            GameObject card = handContainer.transform.GetChild(i).gameObject;
+            CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
+            // cardDisplay.transform.position = new Vector3(1920 - 100, 1080 - 100);
+            cardDisplay.destination = new Vector3(1920 - 150, 1080 - 100);
+            // cardDisplay.HideBack();
+            cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", false);
+        }
+    }
+    // public void CardOutOfDeck()
+    // {
+    //     for (int i = 0; i < handContainer.transform.childCount; i++)
+    //     // for (int i = 0; i < handContainer.Count; i++)
+    //     {
+    //         GameObject card = handContainer.transform.GetChild(i).gameObject;
+    //         CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
+    //         cardDisplay.
+    //     }
+    // }
+
     private void DoHandGen()
     {
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         for (int i = 0; i < 30; i++)
         {
             hand.Add(Card.CreateInstance(Random.Range(1, 5), i.ToString()));
-            Vector3 position = new Vector3(100, 500, 0);
+            Vector3 position = new Vector3(1920 - 150, 1080 - 50);
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;
             card.card = hand[i];
-            // Debug.Log(PrefabHolder.instance.CardPrefab);
-            // Debug.Log(PrefabHolder.instance.CardPrefab);
             Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform);
+
         }
+        CardsIntoDeck();
         SortHand();
         UpdateCardDisplay();
     }
@@ -77,7 +101,6 @@ public class Hand : MonoBehaviour
     public void UpdateCardDisplay()
     {
         for (int i = 0; i < handContainer.transform.childCount; i++)
-        // for (int i = 0; i < handContainer.Count; i++)
         {
             GameObject card = handContainer.transform.GetChild(i).gameObject;
             CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
@@ -107,5 +130,23 @@ public class Hand : MonoBehaviour
     {
         //updated in carddisplay, used to prevent weird flicker that happens with raycast in between frmames of card moving
         if (cooldDownHover > 0) { cooldDownHover -= Time.deltaTime; }
+        if (Input.GetButton("Test"))
+        {
+            for (int i = 0; i < handContainer.transform.childCount; i++)
+            {
+                GameObject card = handContainer.transform.GetChild(i).gameObject;
+                CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
+                cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", false);
+            }
+        }
+        if (Input.GetButton("Test2"))
+        {
+            for (int i = 0; i < handContainer.transform.childCount; i++)
+            {
+                GameObject card = handContainer.transform.GetChild(i).gameObject;
+                CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
+                cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", true);
+            }
+        }
     }
 }

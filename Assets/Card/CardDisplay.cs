@@ -20,7 +20,6 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public GameObject explicitContainer;
     private int horizontalCardSpacing = 120; //positions spacing between cards
     private int verticalCardSpacing = -10; //positions spacing between cards
-    private Vector3 cachedScale;
     private Canvas canvas;
     private float onHoverCooldown = 0;
     private Renderer rendererObj;
@@ -33,6 +32,8 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public bool isDragged = false;
     public float speed = 5;
     public bool asWeapon = false;
+    private float soundCoolDown = 0;
+    [SerializeField] GameObject back;
 
     private void Awake()
     {
@@ -56,7 +57,12 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     }
     public void DoClip(int clipCount)
     {
-
+        DoUnselect();
+        // GlobalVariables.instance.clipPendingCount = true;
+        // transform.SetParent(parentContainer.transform);
+        // transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        transform.SetParent(GlobalVariables.instance.RewardContainer.transform);
+        gameObject.AddComponent<ClipAcceptance>();
         //animate and noise
         card.durability -= clipCount;
         destination = new Vector3(1920 / 2, 1080 / 2, 0);
@@ -131,7 +137,6 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public void updatePositionScaleCaches(int index)
     {
         sortedOrderIndex = index;
-        cachedScale = baseImage.transform.localScale;
     }
 
     public void Smallerise()
@@ -139,7 +144,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         transform.SetSiblingIndex(sortedOrderIndex);
         if (selected)
         {
-            baseImage.transform.localScale = new Vector3(1f, 1f, 1);
+            baseImage.transform.localScale = new Vector3(0.65f, 0.65f, 1);
         }
         else
         {
@@ -150,15 +155,38 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public void Biggerise()
     {
         transform.SetAsLastSibling();
-        if (selected)
+        if (GlobalVariables.instance.rewardPending)
         {
-            baseImage.transform.localPosition = new Vector3(150, 0, 0);
-            baseImage.transform.localScale = new Vector3(4f, 4f, 1);
-        }
-        else
-        {
-            baseImage.transform.localScale = new Vector3(2f, 2f, 1);
-            baseImage.transform.localPosition = new Vector3(0, 150, 0);
+            baseImage.transform.localScale = new Vector3(1.2f, 1.2f, 1);
+
+            if (selected)
+            {
+                if (card.type == Type.Ring || card.type == Type.Amulet)
+                {
+                    baseImage.transform.localPosition = new Vector3(200, 150, 0);
+                }
+                else if (card.type == Type.Ring || card.type == Type.Chest)
+                {
+                    baseImage.transform.localPosition = new Vector3(200, 0, 0);
+                }
+                else if (card.type == Type.Map)
+                {
+                    // baseImage.transform.localPosition = new Vector3()
+                }
+                else
+                {
+                    baseImage.transform.localPosition = new Vector3(200, -150, 0);
+                }
+                if (card.type != Type.Map)
+                {
+                    baseImage.transform.localScale = new Vector3(2f, 2f, 1);
+                }
+            }
+            else
+            {
+                baseImage.transform.localScale = new Vector3(2f, 2f, 1);
+                baseImage.transform.localPosition = new Vector3(0, 150, 0);
+            }
         }
     }
     public void DoSelect(Vector3 position, GameObject newParent)
@@ -168,7 +196,16 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         transform.localScale = new Vector3(0.4f, 0.4f, 1);
         // transform.localPosition = position;
         destination = position;
+
         // transform.parent = selectedContainer.transform;
+    }
+    public void ShowBack()
+    {
+        back.SetActive(true);
+    }
+    public void HideBack()
+    {
+        back.SetActive(false);
     }
     public void DoUnselect()
     {
@@ -177,6 +214,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         transform.localScale = new Vector3(0.8f, 0.8f, 1);
         Hand.instance.cardSelection.UnSelect(this);
         Hand.instance.UpdateCardDisplay();
+        AudioManager.instance.Play("cardSwipe");
     }
 
     private void Update()
@@ -187,9 +225,14 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         {
             onHoverCooldown -= Time.deltaTime;
         }
+        if (soundCoolDown > 0)
+        {
+            soundCoolDown -= Time.deltaTime;
+        }
         if (transform.position != destination)
         {
             transform.position = Vector3.Lerp(transform.position, destination, Time.deltaTime * speed);
+
         }
         // }
     }
@@ -207,6 +250,10 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         x += (1920 / 2);
         float y = Mathf.Abs(position) * verticalCardSpacing + 200 - scale;
         destination = new Vector3(x, y, 0);
+        if (GetComponent<Animator>() != null)
+        {
+            GetComponent<Animator>().SetBool("facingForward", true);
+        }
     }
     private void createImplicits()
     {

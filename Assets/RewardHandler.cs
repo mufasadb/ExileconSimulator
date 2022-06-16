@@ -30,11 +30,14 @@ public class RewardHandler : MonoBehaviour
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         CardDisplay cardDisplay = cardPrefab.GetComponent<CardDisplay>();
         cardDisplay.card = Card.CreateInstance(tier, "null");
-        GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, GlobalVariables.instance.handContainer.transform);
+        GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, Hand.instance.handContainer.transform);
+
+        //tell it where to go (to the hand container roughly)
+        newCard.GetComponent<CardDisplay>().parentContainer = Hand.instance.handContainer;
+        newCard.GetComponent<CardDisplay>().DoUnselect();
         newCard.GetComponent<CardDisplay>().destination = GlobalVariables.instance.RewardContainer.transform.position + new Vector3(rewardNumber * 250 - 250, 0, 0);
-        newCard.AddComponent<RewardSelection>();
-        newCard.GetComponent<CardDisplay>().updatePositionScaleCaches(rewardNumber);
-        newCard.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         newCard.transform.SetParent(GlobalVariables.instance.RewardContainer.transform);
+        newCard.AddComponent<RewardSelection>();
+        newCard.GetComponent<Animator>().SetBool("facingForward", true);
     }
 }

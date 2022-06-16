@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class GameEventManager : MonoBehaviour
 {
@@ -27,65 +29,82 @@ public class GameEventManager : MonoBehaviour
     [SerializeField] GameObject rightButton;
     [SerializeField] GameObject mapUI;
     [SerializeField] MapHandler mapHandler;
-    DisplayStaffStats staffStats;
-    public bool handOpen = false;
+    [SerializeField] GameObject enemyUI;
+    [SerializeField] TextMeshProUGUI cancelFightText;
+    public bool handOpen = true;
 
     public void OpenHand()
     {
-        OpenUIItem(handUI);
-        OpenUIItem(leftButton);
-        OpenUIItem(rightButton);
-        handOpen = true;
+        if (GlobalVariables.instance.cardsMovingCooldown <= 0)
+        {
+
+            OpenUIItem(handUI);
+            OpenUIItem(leftButton);
+            OpenUIItem(rightButton);
+            if (handOpen != true)
+            {
+                Hand.instance.UpdateCardDisplay();
+                AudioManager.instance.Play("cardSwipe");
+                // StartCoroutine(ExecuteAfterTime(0.05f, () => { AudioManager.instance.Play("cardSwipe"); }));
+                // StartCoroutine(ExecuteAfterTime(0.1f, () => { AudioManager.instance.Play("cardSwipe"); }));
+                // StartCoroutine(ExecuteAfterTime(0.15f, () => { AudioManager.instance.Play("cardSwipe"); }));
+                // StartCoroutine(ExecuteAfterTime(0.2f, () => { AudioManager.instance.Play("cardSwipe"); }));
+                // StartCoroutine(ExecuteAfterTime(0.25f, () => { AudioManager.instance.Play("cardSwipe"); }));
+
+            }
+            handOpen = true;
+            GlobalVariables.instance.cardsMovingCooldown = 1.5f;
+        }
     }
     public void CloseHand()
     {
-        CloseUIItem(handUI);
-        CloseUIItem(leftButton);
-        CloseUIItem(rightButton);
-        handOpen = false;
-    }
-    public void BeginFightScreen(DisplayStaffStats _staffStats)
-    {
-        OpenUIItem(fightUI);
-        OpenUIItem(selectionUI);
-        OpenHand();
-        GlobalVariables.instance.preventMoving = true;
-        if (_staffStats != null)
+        if (GlobalVariables.instance.cardsMovingCooldown <= 0)
         {
-            staffStats = _staffStats;
-            staffStats.showNLock();
+            CloseUIItem(leftButton);
+            CloseUIItem(rightButton);
+            if (handOpen != false)
+            {
+                Hand.instance.CardsIntoDeck();
+                StartCoroutine(ExecuteAfterTime(1.3f, () => { CloseUIItem(handUI); }));
+            }
+
+            handOpen = false;
+            GlobalVariables.instance.cardsMovingCooldown = 1.5f;
         }
     }
-    public void BeginFightScreen(bool isMapFight)
+    IEnumerator ExecuteAfterTime(float time, Action func)
     {
-        if (!isMapFight) { Debug.LogError("tried to initiate fight not in a map, but without a staff member (check fight handler initiate fight"); }
+
+        yield return new WaitForSeconds(time);
+        CloseUIItem(handUI);
+        // task();
+    }
+
+    public void BeginFightScreen()
+    {
+        // if (!isMapFight) { Debug.LogError("tried to initiate fight not in a map, but without a staff member (check fight handler initiate fight"); }
         OpenUIItem(fightUI);
         OpenUIItem(selectionUI);
+        OpenUIItem(enemyUI);
         OpenHand();
         GlobalVariables.instance.preventMoving = true;
-        // if (_staffStats != null)
-        // {
-        //     staffStats = _staffStats;
-        //     staffStats.showNLock();
-        // }
     }
     public void EndFightScreen()
     {
         CloseUIItem(fightUI);
         CloseUIItem(selectionUI);
         CloseHand();
+        CloseUIItem(enemyUI);
         GlobalVariables.instance.preventMoving = false;
-        if (staffStats)
-        {
-            staffStats.hideNUnlock();
-        }
-        staffStats = null;
     }
     public void BeginRewardScreen()
     {
         // OpenUIItem(fightUI);
         OpenHand();
         OpenUIItem(rewardUI);
+        CloseUIItem(selectionUI);
+        CloseUIItem(fightUI);
+        CloseUIItem(enemyUI);
         GlobalVariables.instance.preventMoving = true;
     }
     public void EndRewardScreen()
@@ -93,15 +112,14 @@ public class GameEventManager : MonoBehaviour
         EndFightScreen();
         FightHandler.instance.handleFightEnd();
         CloseUIItem(selectionUI);
-        CloseHand();
+        // CloseHand();
         CloseUIItem(craftUI);
         CloseUIItem(rewardUI);
 
     }
     public void BeginMapScreen()
     {
-        // OpenUIItem(fightUI);
-        // OpenUIItem(selectionUI);
+        mapHandler.ShowMapButtons();
         OpenHand();
         OpenUIItem(mapUI);
         GlobalVariables.instance.preventMoving = true;
@@ -132,7 +150,7 @@ public class GameEventManager : MonoBehaviour
         CloseHand();
         CloseUIItem(craftUI);
         CloseUIItem(rewardUI);
-        if (staffStats != null) { staffStats.hideNUnlock(); }
+        CloseUIItem(enemyUI);
         GlobalVariables.instance.preventMoving = false;
         FightHandler.instance.CancelFight();
     }
@@ -146,7 +164,8 @@ public class GameEventManager : MonoBehaviour
             }
             else
             {
-                EndRewardScreen();
+                EndRewardScreen();  
+                mapHandler.endMapInteraction();
             }
         }
         else
@@ -167,5 +186,11 @@ public class GameEventManager : MonoBehaviour
     {
         GlobalVariables.instance.errorHandler.NewError(errorString);
     }
-
+    public void MapWeaponSelection()
+    {
+        OpenUIItem(selectionUI);
+        GlobalVariables.instance.selectionState = SelectionState.EnteringMaps;
+    }
+    public void SetFightCancelButtonToCancel() { cancelFightText.text = "Cancel"; }
+    public void SetFightCancelButtonToLeaveMap() { cancelFightText.text = "Leave Map"; }
 }

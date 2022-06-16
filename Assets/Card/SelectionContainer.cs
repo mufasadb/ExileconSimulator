@@ -23,8 +23,11 @@ public class SelectionContainer : MonoBehaviour, IDropHandler
             CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
             if (cardDisplay.card.type == Type.TwoHandedWeapon && type == Type.OneHandedWeapon)
             {
-                cardDisplay.DoSelect(GetComponent<Transform>().position, gameObject.transform.parent.gameObject);
-                Hand.instance.cardSelection.Select(cardDisplay);
+                if (cardDisplay.card.durability > 0)
+                {
+                    cardDisplay.DoSelect(GetComponent<Transform>().position, gameObject.transform.parent.gameObject);
+                    Hand.instance.cardSelection.Select(cardDisplay);
+                }
             }
             if (cardDisplay.card.type == type)
             {

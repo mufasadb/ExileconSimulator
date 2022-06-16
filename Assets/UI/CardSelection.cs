@@ -234,6 +234,11 @@ public class CardSelection : MonoBehaviour
         }
         statCalc();
         FightHandler.instance.reCalculateStats();
+
+        if (GlobalVariables.instance.selectionState == SelectionState.EnteringMaps)
+        {
+            GlobalVariables.instance.mapHandler.CheckCanEnterMap();
+        }
     }
     private void RemoveAllType(Type type)
     {

@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class FightHandler : MonoBehaviour
 {
     public bool isFighting;
     public GameObject playerAttack;
     public GameObject playerDefence;
-    // public GameObject enemyAttack;
-    // public GameObject enemyDefence;
+    public GameObject enemyAttack;
+    public GameObject enemyDefence;
     public GameObject FightUI;
+    public TextMeshProUGUI text;
     public GameObject SelectionUI;
     public CardSelection cardSelection;
     private float seperatingDistance = 18;
     // private StaffMember currentFightTarget;
-    private Stats currentFightTargetAttack;
-    private Stats currentFightTargetDefence;
-    private int currentFightTargetTier;
+    private Stats fightTargetAttack;
+    private Stats fightTargetDefence;
+    private int fightTargetTier;
+    ClipMethod fightTargetClipMethod;
+    int fightTargetClipCount;
     #region Singleton
 
     public static FightHandler instance;
@@ -38,7 +42,7 @@ public class FightHandler : MonoBehaviour
     public void doFight()
     {
 
-        if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, currentFightTarget.attack, currentFightTarget.defence))
+        if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, fightTargetAttack, fightTargetDefence))
         {
             Debug.Log("PLAYER WON");
             List<CardDisplay> allSelectedCards = new List<CardDisplay>();
@@ -48,11 +52,11 @@ public class FightHandler : MonoBehaviour
             foreach (var card in cardSelection.amulets) { allSelectedCards.Add(card); }
             foreach (var card in cardSelection.rings) { allSelectedCards.Add(card); }
             foreach (var card in cardSelection.chests) { allSelectedCards.Add(card); }
-            ClipMethodResolver.HandleClip(allSelectedCards, currentFightTarget.clipMethod, currentFightTarget.clipCount);
+            ClipMethodResolver.HandleClip(allSelectedCards, fightTargetClipMethod, fightTargetClipCount);
 
 
             //offer cards
-            GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(2, currentFightTarget.tier);
+            GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(2, fightTargetTier);
 
         }
         else { Debug.LogError("Player Loses"); }
@@ -125,31 +129,58 @@ public class FightHandler : MonoBehaviour
     {
         foreach (Transform child in playerAttack.transform) { Destroy(child.gameObject); }
         foreach (Transform child in playerDefence.transform) { Destroy(child.gameObject); }
-        statDisplay(cardSelection.attack, true, playerAttack.transform);
-        statDisplay(cardSelection.defence, true, playerDefence.transform);
-
-    }
-    public void InitiateFight(GameObject TargetEnemy, StaffMember staffMember, DisplayStaffStats _displayStaffStats)
-    {
-        if (!isFighting)
+        foreach (Transform child in enemyAttack.transform) { Destroy(child.gameObject); }
+        foreach (Transform child in enemyDefence.transform) { Destroy(child.gameObject); }
+        if (cardSelection.attack != null)
         {
-            currentFightTarget = staffMember;
-            isFighting = true;
-            GameEventManager.instance.BeginFightScreen(_displayStaffStats);
             statDisplay(cardSelection.attack, true, playerAttack.transform);
+        }
+        if (cardSelection.defence != null)
+        {
             statDisplay(cardSelection.defence, true, playerDefence.transform);
         }
+        if (fightTargetAttack != null)
+        {
+            statDisplay(fightTargetAttack, true, enemyAttack.transform);
+        }
+        if (fightTargetDefence != null)
+        {
+            statDisplay(fightTargetDefence, true, enemyDefence.transform);
+        }
+
     }
-    public void InitiateFight(MonsterDataObject monster)
+    public void InitiateFight(GameObject TargetEnemy, StaffMember staffMember)
     {
         if (!isFighting)
         {
             // currentFightTarget = staffMember;
-            isFighting = true;
-            Debug.Log(monster.name);
-            GameEventManager.instance.BeginFightScreen(true);
-            statDisplay(cardSelection.attack, true, playerAttack.transform);
-            statDisplay(cardSelection.defence, true, playerDefence.transform);
+            fightTargetAttack = staffMember.attack;
+            fightTargetDefence = staffMember.defence;
+            fightTargetClipMethod = staffMember.clipMethod;
+            fightTargetClipCount = staffMember.clipCount;
+            fightTargetTier = staffMember.tier;
+            text.text = staffMember.name;
+            SetupStatsAndDisplaysForFight();
+        }
+    }
+    private void SetupStatsAndDisplaysForFight()
+    {
+        isFighting = true;
+        GameEventManager.instance.BeginFightScreen();
+        reCalculateStats();
+    }
+    public void InitiateFight(Monster monster)
+    {
+        if (!isFighting)
+        {
+            // currentFightTarget = staffMember;
+            fightTargetAttack = monster.attack;
+            fightTargetDefence = monster.defence;
+            fightTargetClipMethod = monster.clipMethod;
+            fightTargetClipCount = monster.clipCount;
+            fightTargetTier = monster.tier;
+            text.text = monster.name;
+            SetupStatsAndDisplaysForFight();
         }
     }
     public void CancelFight()
@@ -164,7 +195,13 @@ public class FightHandler : MonoBehaviour
     {
         isFighting = false;
         removeChildren();
-        currentFightTarget = null;
+        fightTargetAttack = null;
+        fightTargetDefence = null;
+        fightTargetClipCount = 0;
+        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+        {
+            MapHandler.instance.endMapInteraction();
+        }
     }
     public void removeChildren()
     {

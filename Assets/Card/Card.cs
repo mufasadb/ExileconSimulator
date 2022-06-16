@@ -22,6 +22,7 @@ public class Card : ScriptableObject
     public Rarity rarity;
     public Stats quality = new Stats();
     public bool isCrafted = false;
+    public int mapTier;
 
     public static Card CreateInstance(int tier, string newname)
     {
@@ -44,6 +45,7 @@ public class Card : ScriptableObject
         // this.name = newname;
         this.name = cardData.name;
         this.description = this.name;
+        this.mapTier = cardData.mapTier;
         if (cardData.type != Type.Currency && cardData.type != Type.Map)
         {
             this.implicits = new Stats();
