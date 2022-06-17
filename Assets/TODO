@@ -26,15 +26,15 @@ crafting
     # - interface for selecting them
     # - apply stat change
 maps
-    - cards themselves
+   # - cards themselves
     - stat changes for magic maps
    # - place to go to rn the maps
-    - selection of baddies
-    - selecting your cards
-    - applying clips after
-    - showing rewards
+   # - selection of baddies
+   # - selecting your cards
+   # - applying clips after
+   # - showing rewards
     - balance
-    - combat logic
+   # - combat logic
 questing
     - display quest
     - capture quest completion
@@ -45,20 +45,32 @@ Win Condition
     - fight shaper
     - win screen
 Timer 
-    - make one exist
+   # - make one exist
     - balance
     - capture times beaten
 Player 
     - change player stats
+Balance
+    - Timer
+    - player stats
+    - card frequency
+    - card implicits
+    - card explicits
+    - uniques
+    - monsters from maps
+    - rewards from monsters
+    - rewards from monsters
+    - clipping from monstesr
+
 Environemtn
     # - select tieles etc. to use
-    - map out general layout
+    # - map out general layout
     # - place staff and their queues for now
 
 Polish
     Sound
         - music
-        - sound on cards played
+    #   - sound on cards played
         - sound on card selected
         - sound on card crunched
     Animations
@@ -68,7 +80,7 @@ Polish
         - add moving players
     Controls
         - right click card goes to slot
-        - drop new cord on old card in selection overrides
+    #    - drop new cord on old card in selection overrides
         - right click item in selection window undoes
         - right/left arrows move deck left and right
         - sort cards with alternate sorting

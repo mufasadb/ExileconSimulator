@@ -10,7 +10,7 @@
       "name": "Dominus",
       "attack": "Lightning,Lightning,Lightning",
       "defence": "Physical,Physical,Wild,Wild,Wild,Wild",
-      "tier": 3
+      "tier": 4
     },
     {
       "name": "Flame Totem",
@@ -28,7 +28,7 @@
       "name": "Kitava",
       "attack": "Life,Life,Armour,Armour,Wild,Wild,Wild,Wild",
       "defence": "Physical,Physical,Wild,Wild,Wild,Wild",
-      "tier": 3
+      "tier": 5
     },
     {
       "name": "Lunaris",

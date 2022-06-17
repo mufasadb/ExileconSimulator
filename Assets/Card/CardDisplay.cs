@@ -34,6 +34,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public bool asWeapon = false;
     private float soundCoolDown = 0;
     [SerializeField] GameObject back;
+    public CardActionHandler cardActionHandler;
 
     private void Awake()
     {
@@ -57,7 +58,9 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     }
     public void DoClip(int clipCount)
     {
+        int homeID = cardActionHandler.homeContainerID;
         DoUnselect();
+        cardActionHandler.AttachToSelectionContainer(homeID);
         // GlobalVariables.instance.clipPendingCount = true;
         // transform.SetParent(parentContainer.transform);
         // transform.localScale = new Vector3(1.5f, 1.5f, 1);
@@ -138,24 +141,22 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     {
         sortedOrderIndex = index;
     }
-
     public void Smallerise()
     {
-        transform.SetSiblingIndex(sortedOrderIndex);
         if (selected)
         {
-            baseImage.transform.localScale = new Vector3(0.65f, 0.65f, 1);
+            baseImage.transform.localScale = new Vector3(1f, 1f, 1);
         }
         else
         {
+            transform.SetSiblingIndex(sortedOrderIndex);
             baseImage.transform.localScale = new Vector3(1f, 1f, 1);
         }
         baseImage.transform.localPosition = new Vector3(0, 0, 0);
     }
     public void Biggerise()
     {
-        transform.SetAsLastSibling();
-        if (GlobalVariables.instance.rewardPending)
+        if (!GlobalVariables.instance.rewardPending)
         {
             baseImage.transform.localScale = new Vector3(1.2f, 1.2f, 1);
 
@@ -179,11 +180,12 @@ public class CardDisplay : MonoBehaviour, IDropHandler
                 }
                 if (card.type != Type.Map)
                 {
-                    baseImage.transform.localScale = new Vector3(2f, 2f, 1);
+                    baseImage.transform.localScale = new Vector3(3f, 3f, 1);
                 }
             }
             else
             {
+                transform.SetAsLastSibling();
                 baseImage.transform.localScale = new Vector3(2f, 2f, 1);
                 baseImage.transform.localPosition = new Vector3(0, 150, 0);
             }
@@ -193,7 +195,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     {
         selected = true;
         transform.SetParent(newParent.transform);
-        transform.localScale = new Vector3(0.4f, 0.4f, 1);
+        transform.localScale = new Vector3(0.5f, 0.5f, 1);
         // transform.localPosition = position;
         destination = position;
 
@@ -215,6 +217,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         Hand.instance.cardSelection.UnSelect(this);
         Hand.instance.UpdateCardDisplay();
         AudioManager.instance.Play("cardSwipe");
+        cardActionHandler.DetachSelectionContainer();
     }
 
     private void Update()

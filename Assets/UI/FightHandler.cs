@@ -171,8 +171,10 @@ public class FightHandler : MonoBehaviour
     }
     public void InitiateFight(Monster monster)
     {
+        Debug.Log("initiate fight was called");
         if (!isFighting)
         {
+            Debug.Log("we got in here because we're not fighting yet");
             // currentFightTarget = staffMember;
             fightTargetAttack = monster.attack;
             fightTargetDefence = monster.defence;
@@ -189,6 +191,10 @@ public class FightHandler : MonoBehaviour
         {
             handleFightEnd();
             GameEventManager.instance.EndFightScreen();
+            if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+            {
+                MapHandler.instance.endMapInteraction();
+            }
         }
     }
     public void handleFightEnd()
@@ -198,17 +204,14 @@ public class FightHandler : MonoBehaviour
         fightTargetAttack = null;
         fightTargetDefence = null;
         fightTargetClipCount = 0;
-        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
-        {
-            MapHandler.instance.endMapInteraction();
-        }
+
     }
     public void removeChildren()
     {
         foreach (Transform child in playerAttack.transform) { Destroy(child.gameObject); }
         foreach (Transform child in playerDefence.transform) { Destroy(child.gameObject); }
-        // foreach (Transform child in enemyAttack.transform) { Destroy(child.gameObject); }
-        // foreach (Transform child in enemyDefence.transform) { Destroy(child.gameObject); }
+        foreach (Transform child in enemyAttack.transform) { Destroy(child.gameObject); }
+        foreach (Transform child in enemyDefence.transform) { Destroy(child.gameObject); }
     }
     void statDisplay(Stats stats, bool offence, Transform canvas)
     {

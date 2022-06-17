@@ -134,9 +134,7 @@ public class Hand : MonoBehaviour
         {
             for (int i = 0; i < handContainer.transform.childCount; i++)
             {
-                GameObject card = handContainer.transform.GetChild(i).gameObject;
-                CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
-                cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", false);
+                
             }
         }
         if (Input.GetButton("Test2"))
@@ -145,7 +143,7 @@ public class Hand : MonoBehaviour
             {
                 GameObject card = handContainer.transform.GetChild(i).gameObject;
                 CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
-                cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", true);
+                Debug.Log(cardDisplay.cardActionHandler.homeContainerID);
             }
         }
     }

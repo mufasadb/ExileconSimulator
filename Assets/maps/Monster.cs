@@ -16,6 +16,9 @@ public class Monster : ScriptableObject
         var data = ScriptableObject.CreateInstance<Monster>();
 
         MonsterDataObject monsterDataObject = MonsterDataSystem.instance.monsterDataSet.GetMonsterBaseData(tier);
+        if(monsterDataObject == null){
+            Debug.LogError("couldnt find amonster with tier " + tier);
+        }
         // data.Init(Random.Range(1, 5));
         data.Init(monsterDataObject);
         return data;

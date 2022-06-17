@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 1097880142}
   - component: {fileID: 5821356012172213557}
   - component: {fileID: 2561687068674683073}
+  - component: {fileID: 6038386350520030510}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -169,6 +170,7 @@ MonoBehaviour:
   speed: 5
   asWeapon: 0
   back: {fileID: 7891220539856480393}
+  cardActionHandler: {fileID: 6038386350520030510}
 --- !u!225 &5821356012172213557
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -201,6 +203,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6038386350520030510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179462038083204170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc95c54dcea39d49a2b77663c035f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4520849145416398236
 GameObject:
   m_ObjectHideFlags: 0
