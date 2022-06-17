@@ -13,25 +13,39 @@ public static class ClipMethodResolver
             {
                 if (card.card.type == Type.Amulet || card.card.type == Type.Ring)
                 {
-                    card.DoClip(clipCount);
-                    GlobalVariables.instance.clipPendingCount++;
+                    DoClip(card, clipCount);
                 }
                 else
                 {
-                    card.DoUnselect();
+                    DontClip(card);
                 }
             }
         }
         else
         {
             CardDisplay selectedCard = Comparer(cardList, clipMethod);
-            selectedCard.DoClip(clipCount);
-            GlobalVariables.instance.clipPendingCount++;
+            DoClip(selectedCard, clipCount);
             foreach (CardDisplay card in cardList)
             {
-                if (card != selectedCard) { card.DoUnselect(); }
+                if (card != selectedCard) { DontClip(card); }
             }
         }
+    }
+    private static void DontClip(CardDisplay card)
+    {
+        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+        {
+
+        }
+        else
+        {
+            card.DoUnselect();
+        }
+    }
+    private static void DoClip(CardDisplay card, int clipCount)
+    {
+        card.DoClip(clipCount);
+        GlobalVariables.instance.clipPendingCount++;
     }
     // Start is called before the first frame update
     public static CardDisplay Comparer(List<CardDisplay> cardList, ClipMethod clipMethod)

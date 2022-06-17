@@ -9,7 +9,14 @@ public class ClipAcceptance : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         GlobalVariables.instance.clipPendingCount -= 1;
-        GetComponentInParent<CardDisplay>().DoUnselect();
+        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+        {
+            GetComponentInParent<CardActionHandler>().GoToHomeContainer();
+        }
+        else
+        {
+            GetComponentInParent<CardDisplay>().DoUnselect();
+        }
         Destroy(this);
     }
 
