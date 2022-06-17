@@ -6,6 +6,9 @@ public class CraftHandler : MonoBehaviour
 {
     public CardDisplay item;
     public CardDisplay currency;
+    [SerializeField] GameObject acceptReward;
+    [SerializeField] GameObject cantAcceptReward;
+    [SerializeField] QuestHandler questHandler;
     // Start is called before the first frame update
     public void DoCraft()
     {
@@ -72,9 +75,9 @@ public class CraftHandler : MonoBehaviour
             }
 
             //do craft
-            Hand.instance.hand.Remove(currency.card);
+            Hand.instance.hand.Remove(currency.gameObject);
             Destroy(currency.gameObject);
-
+            CheckQuest();
 
             item.card.rarity = newRarity;
             item.craftingSticker.SetActive(true);
@@ -91,6 +94,10 @@ public class CraftHandler : MonoBehaviour
             return;
         }
     }
+    void CheckQuest()
+    {
+        questHandler.MarkCraftQuestComplete(item.card.name, currency.card.name);
+    }
     private void ThrowError(string error)
     {
         GlobalVariables.instance.errorHandler.NewError(error);
@@ -100,5 +107,10 @@ public class CraftHandler : MonoBehaviour
         if (item != null) { item.DoUnselect(); }
         if (currency != null) { currency.DoUnselect(); }
         GameEventManager.instance.EndCraftScreen();
+    }
+    public void DisplayAcceptRewardButton(bool show)
+    {
+        acceptReward.SetActive(show);
+        acceptReward.SetActive(!show);
     }
 }

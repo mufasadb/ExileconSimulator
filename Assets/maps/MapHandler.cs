@@ -95,7 +95,7 @@ public class MapHandler : MonoBehaviour
     {
         if (isInMap)
         {
-            Hand.instance.hand.Remove(map.card);
+            Hand.instance.hand.Remove(map.gameObject);
             Destroy(map.gameObject);
 
 

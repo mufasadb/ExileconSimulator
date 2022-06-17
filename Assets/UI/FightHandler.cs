@@ -16,12 +16,14 @@ public class FightHandler : MonoBehaviour
     public GameObject SelectionUI;
     public CardSelection cardSelection;
     private float seperatingDistance = 18;
+    string targetName;
     // private StaffMember currentFightTarget;
     private Stats fightTargetAttack;
     private Stats fightTargetDefence;
     private int fightTargetTier;
     ClipMethod fightTargetClipMethod;
     int fightTargetClipCount;
+    [SerializeField] QuestHandler questHandler;
     #region Singleton
 
     public static FightHandler instance;
@@ -45,6 +47,7 @@ public class FightHandler : MonoBehaviour
         if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, fightTargetAttack, fightTargetDefence))
         {
             Debug.Log("PLAYER WON");
+            questHandler.MarkDefeatQuestcomplete(targetName);
             List<CardDisplay> allSelectedCards = new List<CardDisplay>();
             foreach (var card in cardSelection.twoHandedWeapons) { allSelectedCards.Add(card); }
             foreach (var card in cardSelection.oneHandedWeapons) { allSelectedCards.Add(card); }
@@ -160,6 +163,7 @@ public class FightHandler : MonoBehaviour
             fightTargetClipCount = staffMember.clipCount;
             fightTargetTier = staffMember.tier;
             text.text = staffMember.name;
+            targetName = staffMember.name;
             SetupStatsAndDisplaysForFight();
         }
     }

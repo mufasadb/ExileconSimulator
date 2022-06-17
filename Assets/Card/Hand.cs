@@ -24,7 +24,9 @@ public class Hand : MonoBehaviour
 
     }
     #endregion
-    public List<Card> hand = new List<Card>();
+    float timePressed = 0;
+    float pressCooldown = 0;
+    public List<GameObject> hand = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +38,7 @@ public class Hand : MonoBehaviour
     public void AddCardToHand(GameObject cardObject)
     {
         CardDisplay cardDisplay = cardObject.GetComponent<CardDisplay>();
-        hand.Add(cardDisplay.card);
+        hand.Add(cardDisplay.gameObject);
         cardDisplay.parentContainer = handContainer;
         cardObject.transform.SetParent(handContainer.transform);
         SortHand();
@@ -74,12 +76,12 @@ public class Hand : MonoBehaviour
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         for (int i = 0; i < 30; i++)
         {
-            hand.Add(Card.CreateInstance(Random.Range(1, 5), i.ToString()));
+            Card newCard = Card.CreateInstance(Random.Range(1, 5), i.ToString());
             Vector3 position = new Vector3(1920 - 150, 1080 - 50);
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;
-            card.card = hand[i];
-            Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform);
+            card.card = newCard;
+            hand.Add(Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform));
 
         }
         CardsIntoDeck();
@@ -90,11 +92,17 @@ public class Hand : MonoBehaviour
     {
         if (moveLeft)
         {
-            handScrollIndex -= 1;
+            if (handScrollIndex > -hand.Count / 2)
+            {
+                handScrollIndex -= 1;
+            }
         }
         else
         {
-            handScrollIndex += 1;
+            if (handScrollIndex < hand.Count / 2)
+            {
+                handScrollIndex += 1;
+            }
         }
         UpdateCardDisplay();
     }
@@ -108,19 +116,15 @@ public class Hand : MonoBehaviour
             cardDisplay.updatePositionScaleCaches(i);
         }
     }
-    public Card getCard()
-    {
-        if (hand.Count == 0)
-        {
-            Debug.LogWarning("hand length is 0");
-        }
-        return hand[0];
-    }
     public void SortHand()
     {
-        hand.Sort((c1, c2) => c1.rarity.CompareTo(c2.rarity));
-        hand.Sort((c1, c2) => c1.type.CompareTo(c2.type));
-        hand.Sort((c1, c2) => c1.durability.CompareTo(c2.durability));
+        hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.rarity.CompareTo(c2.GetComponent<CardDisplay>().card.rarity));
+        hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.type.CompareTo(c2.GetComponent<CardDisplay>().card.type));
+        hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.durability.CompareTo(c2.GetComponent<CardDisplay>().card.durability));
+        for (int i = 0; i < hand.Count; i++)
+        {
+            hand[i].transform.SetSiblingIndex(i);
+        }
     }
     public void selectCard(CardDisplay card)
     {
@@ -134,7 +138,7 @@ public class Hand : MonoBehaviour
         {
             for (int i = 0; i < handContainer.transform.childCount; i++)
             {
-                
+
             }
         }
         if (Input.GetButton("Test2"))
@@ -146,5 +150,24 @@ public class Hand : MonoBehaviour
                 Debug.Log(cardDisplay.cardActionHandler.homeContainerID);
             }
         }
+        if (Input.GetButton("CardsRight")) { PressingDirectionLeft(true); }
+        if (Input.GetButton("CardsLeft")) { PressingDirectionLeft(false); }
+
+        pressCooldown -= Time.deltaTime;
+        timePressed -= Time.deltaTime;
+    }
+    private void PressingDirectionLeft(bool left)
+    {
+        if (pressCooldown <= 0)
+        {
+            UpdateScrollIndex(left);
+            pressCooldown = 0.2f;
+        }
+        timePressed += Time.deltaTime * 2;
+        if (timePressed > 1f)
+        {
+            UpdateScrollIndex(left);
+        }
+
     }
 }
