@@ -41,6 +41,8 @@ public class GameEventManager : MonoBehaviour
             OpenUIItem(handUI);
             OpenUIItem(leftButton);
             OpenUIItem(rightButton);
+
+            GlobalVariables.instance.cardAnimation = false;
             if (handOpen != true)
             {
                 Hand.instance.UpdateCardDisplay();
@@ -65,6 +67,7 @@ public class GameEventManager : MonoBehaviour
             if (handOpen != false)
             {
                 Hand.instance.CardsIntoDeck();
+                GlobalVariables.instance.cardAnimation = true;
                 StartCoroutine(ExecuteAfterTime(1.3f, () => { CloseUIItem(handUI); }));
             }
 

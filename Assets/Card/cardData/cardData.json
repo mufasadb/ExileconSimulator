@@ -6,7 +6,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 6,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Alteration Orb",
@@ -14,7 +15,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 6,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Armourer Scrap",
@@ -22,7 +24,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 6,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Bastard Sword",
@@ -30,7 +33,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 1,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Blacksmith Whetstone",
@@ -38,7 +42,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 6,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Blue Pearl Amulet",
@@ -46,7 +51,8 @@
       "tier": 5,
       "isUnique": false,
       "type": 4,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Bone Armour",
@@ -54,7 +60,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 3,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Broad Axe",
@@ -62,7 +69,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Brush Axe",
@@ -70,7 +78,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 1,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Chaos Orb",
@@ -78,7 +87,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 6,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 100000
     },
     {
       "name": "Corroded Blade",
@@ -86,7 +96,8 @@
       "tier": 1,
       "isUnique": false,
       "type": 1,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Corroded Tower Shield",
@@ -94,7 +105,8 @@
       "tier": 1,
       "isUnique": false,
       "type": 2,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Field Plate",
@@ -102,7 +114,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 3,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Gladiator Armour",
@@ -110,7 +123,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 3,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Holy Chainmail",
@@ -118,7 +132,8 @@
       "tier": 5,
       "isUnique": false,
       "type": 3,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Iron Hammer",
@@ -126,7 +141,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Iron Knuckles",
@@ -134,7 +150,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Iron Staff",
@@ -142,7 +159,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 1,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Jade Amulet",
@@ -150,7 +168,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 4,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Katar",
@@ -158,7 +177,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Knife",
@@ -166,7 +186,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Lapis Amulet",
@@ -174,7 +195,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 4,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Mages Vestment",
@@ -182,7 +204,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 3,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Mallet",
@@ -190,7 +213,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 1,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Nailed Fist",
@@ -198,7 +222,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Painted Tower Shield",
@@ -206,7 +231,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 2,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Primitive Staff",
@@ -214,7 +240,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 1,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Reach of The Council",
@@ -222,7 +249,8 @@
       "tier": 4,
       "isUnique": true,
       "type": 1,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Reaver Axe",
@@ -230,7 +258,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Round Shield",
@@ -238,7 +267,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 2,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Ruby Ring",
@@ -246,7 +276,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 5,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Sapphire Ring",
@@ -254,7 +285,8 @@
       "tier": 0,
       "isUnique": false,
       "type": 5,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Sapphire Ruby Ring",
@@ -262,7 +294,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 5,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Sapphire Topaz Ring",
@@ -270,7 +303,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 5,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Scale Armour",
@@ -278,7 +312,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 3,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Scour Orb",
@@ -286,7 +321,8 @@
       "tier": 5,
       "isUnique": false,
       "type": 6,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Scythe",
@@ -294,7 +330,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 1,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Short Sword",
@@ -302,7 +339,8 @@
       "tier": 1,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Skinning Knife",
@@ -310,7 +348,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Spiked Club",
@@ -318,7 +357,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Splendid Round Shield",
@@ -326,7 +366,8 @@
       "tier": 2,
       "isUnique": false,
       "type": 2,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Topaz Ring",
@@ -334,15 +375,8 @@
       "tier": 3,
       "isUnique": false,
       "type": 5,
-      "mapTier": 0
-    },
-    {
-      "name": "Tower Shield",
-      "implicits": "Armour",
-      "tier": 1,
-      "isUnique": false,
-      "type": 2,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Transmutation Orb",
@@ -350,7 +384,17 @@
       "tier": 2,
       "isUnique": false,
       "type": 6,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
+    },
+    {
+      "name": "Tower Shield",
+      "implicits": "Armour",
+      "tier": 1,
+      "isUnique": false,
+      "type": 2,
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "War Hammer",
@@ -358,7 +402,8 @@
       "tier": 4,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Wooden Hammer",
@@ -366,7 +411,8 @@
       "tier": 1,
       "isUnique": false,
       "type": 0,
-      "mapTier": 0
+      "mapTier": 0,
+      "rate": 1000
     },
     {
       "name": "Tier 1 Map",
@@ -374,7 +420,8 @@
       "tier": 1,
       "isUnique": false,
       "type": 7,
-      "mapTier": 1
+      "mapTier": 1,
+      "rate": 1000
     },
     {
       "name": "Tier 2 Map",
@@ -382,7 +429,8 @@
       "tier": 1,
       "isUnique": false,
       "type": 7,
-      "mapTier": 2
+      "mapTier": 2,
+      "rate": 1000
     },
     {
       "name": "Tier 3 Map",
@@ -390,7 +438,8 @@
       "tier": 1,
       "isUnique": false,
       "type": 7,
-      "mapTier": 3
+      "mapTier": 3,
+      "rate": 1000
     }
   ]
 }

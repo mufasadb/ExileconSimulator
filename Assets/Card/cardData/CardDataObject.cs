@@ -12,6 +12,7 @@ public class CardDataObject
     public bool isUnique;
     public Type type;
     public int mapTier;
+    public int rate;
     // public CardDataObject(){
     //     // name = cardDataObject.name;
     //     // implicits = cardDataObject.implicits;

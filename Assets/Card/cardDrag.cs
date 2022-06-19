@@ -18,7 +18,7 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
     // Start is called before the first frame update
     public void OnDrag(PointerEventData eventData)
     {
-        if (GlobalVariables.instance.clipPendingCount == 0 && GlobalVariables.instance.selectionState != SelectionState.InMaps)
+        if (GlobalVariables.instance.clipPendingCount == 0 && GlobalVariables.instance.selectionState != SelectionState.InMaps && !GlobalVariables.instance.cardAnimation)
         {
             cardDisplay.destination = eventData.position;
         }
@@ -58,7 +58,7 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (GlobalVariables.instance.clipPendingCount == 0 && GlobalVariables.instance.selectionState != SelectionState.InMaps)
+        if (GlobalVariables.instance.clipPendingCount == 0 && GlobalVariables.instance.selectionState != SelectionState.InMaps && !GlobalVariables.instance.cardAnimation)
         {
             canvasGroup.blocksRaycasts = false;
             cardDisplay.isDragged = true;
@@ -75,7 +75,7 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (GlobalVariables.instance.clipPendingCount == 0 && GlobalVariables.instance.selectionState != SelectionState.InMaps)
+        if (GlobalVariables.instance.clipPendingCount == 0 && GlobalVariables.instance.selectionState != SelectionState.InMaps && !GlobalVariables.instance.cardAnimation)
         {
 
             // Debug.Log("end drag");
@@ -89,7 +89,7 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!GlobalVariables.instance.currentlyDragging && GlobalVariables.instance.clipPendingCount == 0)
+        if (!GlobalVariables.instance.currentlyDragging && GlobalVariables.instance.clipPendingCount == 0 && !GlobalVariables.instance.cardAnimation)
         {
 
             if (Hand.instance.cooldDownHover <= 0)

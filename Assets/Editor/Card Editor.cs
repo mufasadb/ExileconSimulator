@@ -40,6 +40,7 @@ public class CardEditor : EditorWindow
             singleCard.name = EditorGUILayout.TextField("name", singleCard.name);
             singleCard.type = (Type)EditorGUILayout.EnumFlagsField("Type", singleCard.type);
             singleCard.tier = EditorGUILayout.IntField("Tier", singleCard.tier);
+            singleCard.rate = EditorGUILayout.IntField("rate", singleCard.rate);
             singleCard.isUnique = EditorGUILayout.Toggle("Is Unique", singleCard.isUnique);
             GUILayout.Label("", EditorStyles.boldLabel);
             GUILayout.Label("Implicit String", EditorStyles.boldLabel);

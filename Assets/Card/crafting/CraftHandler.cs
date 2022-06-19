@@ -111,6 +111,10 @@ public class CraftHandler : MonoBehaviour
     public void DisplayAcceptRewardButton(bool show)
     {
         acceptReward.SetActive(show);
-        acceptReward.SetActive(!show);
+        cantAcceptReward.SetActive(!show);
+    }
+    public void Start()
+    {
+        DisplayAcceptRewardButton(false);
     }
 }

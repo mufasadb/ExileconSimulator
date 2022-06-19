@@ -27,6 +27,15 @@ public class Hand : MonoBehaviour
     float timePressed = 0;
     float pressCooldown = 0;
     public List<GameObject> hand = new List<GameObject>();
+
+
+    //remove for test
+    float testCooldown = 0;
+    float xOffset;
+    float yOffset;
+    public int seed;
+    [SerializeField] float scale;
+    float timesPressed;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +43,13 @@ public class Hand : MonoBehaviour
         cardSelection = handContainer.GetComponent<CardSelection>();
         rewardContainer = GlobalVariables.instance.RewardContainer;
         DoHandGen();
+
+
+
+        //remove for test
+        Random.InitState(seed);
+        xOffset = Random.value;
+        yOffset = Random.value;
     }
     public void AddCardToHand(GameObject cardObject)
     {
@@ -76,7 +92,7 @@ public class Hand : MonoBehaviour
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         for (int i = 0; i < 30; i++)
         {
-            Card newCard = Card.CreateInstance(Random.Range(1, 5), i.ToString());
+            Card newCard = Card.CreateInstance(Random.Range(2, 3), i.ToString());
             Vector3 position = new Vector3(1920 - 150, 1080 - 50);
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;
@@ -118,9 +134,9 @@ public class Hand : MonoBehaviour
     }
     public void SortHand()
     {
-        hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.rarity.CompareTo(c2.GetComponent<CardDisplay>().card.rarity));
-        hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.type.CompareTo(c2.GetComponent<CardDisplay>().card.type));
-        hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.durability.CompareTo(c2.GetComponent<CardDisplay>().card.durability));
+        if (Settings.instance.sortBy == SortBy.Rarity) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.rarity.CompareTo(c2.GetComponent<CardDisplay>().card.rarity));
+        if (Settings.instance.sortBy == SortBy.Type) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.type.CompareTo(c2.GetComponent<CardDisplay>().card.type));
+        if (Settings.instance.sortBy == SortBy.Durability) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.durability.CompareTo(c2.GetComponent<CardDisplay>().card.durability));
         for (int i = 0; i < hand.Count; i++)
         {
             hand[i].transform.SetSiblingIndex(i);
@@ -136,38 +152,55 @@ public class Hand : MonoBehaviour
         if (cooldDownHover > 0) { cooldDownHover -= Time.deltaTime; }
         if (Input.GetButton("Test"))
         {
-            for (int i = 0; i < handContainer.transform.childCount; i++)
+            if (testCooldown <= 0)
             {
 
+                // GetPerlin();
+                testCooldown = 0.3f;
             }
+            // for (int i = 0; i < handContainer.transform.childCount; i++)
+            // {
+
+            // }
         }
         if (Input.GetButton("Test2"))
         {
-            for (int i = 0; i < handContainer.transform.childCount; i++)
+            if (testCooldown <= 0)
             {
-                GameObject card = handContainer.transform.GetChild(i).gameObject;
-                CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
-                Debug.Log(cardDisplay.cardActionHandler.homeContainerID);
+                SortHand();
+                UpdateCardDisplay();
+                testCooldown = 0.3f;
             }
+            // for (int i = 0; i < handContainer.transform.childCount; i++)
+            // {
+            //     GameObject card = handContainer.transform.GetChild(i).gameObject;
+            //     CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
+            //     Debug.Log(cardDisplay.cardActionHandler.homeContainerID);
+            // }
         }
         if (Input.GetButton("CardsRight")) { PressingDirectionLeft(true); }
         if (Input.GetButton("CardsLeft")) { PressingDirectionLeft(false); }
-
-        pressCooldown -= Time.deltaTime;
-        timePressed -= Time.deltaTime;
+        if (pressCooldown > 0)
+            pressCooldown -= Time.deltaTime;
+        if (timePressed > 0)
+            timePressed -= Time.deltaTime;
+        if (testCooldown > 0)
+            testCooldown -= Time.deltaTime;
     }
+
     private void PressingDirectionLeft(bool left)
     {
         if (pressCooldown <= 0)
         {
             UpdateScrollIndex(left);
             pressCooldown = 0.2f;
+            if (timePressed > 1.6f)
+            {
+                UpdateScrollIndex(left);
+                UpdateScrollIndex(left);
+            }
         }
-        timePressed += Time.deltaTime * 2;
-        if (timePressed > 1f)
-        {
-            UpdateScrollIndex(left);
-        }
+        timePressed += Time.deltaTime * 1.3f;
 
     }
 }
