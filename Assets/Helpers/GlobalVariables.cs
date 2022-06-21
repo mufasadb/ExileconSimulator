@@ -25,7 +25,7 @@ public class GlobalVariables : MonoBehaviour
     public float timer = 960;
     public bool currentlyDragging = false;
     public bool preventMoving = false;
-    public bool rewardPending = false;
+    public int rewardPendingCount = 0;
     public int clipPendingCount = 0;
     public float cardsMovingCooldown = 0;
     public bool cardAnimation = false;

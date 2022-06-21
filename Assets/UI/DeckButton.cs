@@ -15,7 +15,7 @@ public class DeckButton : MonoBehaviour
 
     public void ToggleHand()
     {
-        if (!GlobalVariables.instance.rewardPending)
+        if (GlobalVariables.instance.rewardPendingCount == 0 && GlobalVariables.instance.clipPendingCount == 0)
         {
 
             if (GameEventManager.instance.handOpen)

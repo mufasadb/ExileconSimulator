@@ -89,7 +89,7 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!GlobalVariables.instance.currentlyDragging && GlobalVariables.instance.clipPendingCount == 0 && !GlobalVariables.instance.cardAnimation)
+        if (!GlobalVariables.instance.currentlyDragging && !GlobalVariables.instance.cardAnimation)
         {
 
             if (Hand.instance.cooldDownHover <= 0)

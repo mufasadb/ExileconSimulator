@@ -129,6 +129,8 @@ public class StaffEditor : EditorWindow
     {
         singleStaffMember.attack = StatsToString(false);
         singleStaffMember.defence = StatsToString(true);
+        if (singleStaffMember.clipCount == 0) { singleStaffMember.clipCount = 1; }
+        if (singleStaffMember.clipMethod == "") { singleStaffMember.clipMethod = "Broken"; }
         if (newCard)
         {
             Debug.Log("added new card");
@@ -156,7 +158,8 @@ public class StaffEditor : EditorWindow
         string saveData = JsonUtility.ToJson(data);
         System.IO.File.WriteAllText(Application.dataPath + "/staff/staffData/staffData.json", saveData);
     }
-    private void SaveIntoMonsterJSON(){
+    private void SaveIntoMonsterJSON()
+    {
 
     }
     private string StatsToString(bool isAttack)

@@ -8,6 +8,7 @@ public class CardDataSystem : MonoBehaviour
 {
     #region Singleton
     public static CardDataSystem instance;
+
     void Awake()
     {
         if (instance != null)
@@ -21,7 +22,9 @@ public class CardDataSystem : MonoBehaviour
     }
     #endregion
     public CardDataSet cardDataSet;
-    public TextAsset jsonFile;
+    public UniqueDataSet uniqueDataSet;
+    public TextAsset cardJsonFile;
+    public TextAsset uniqueJsonFile;
     public void Start()
     {
     }
@@ -39,7 +42,8 @@ public class CardDataSystem : MonoBehaviour
         // string json = JsonUtility.ToJson(cardDataSet);
 
         // File.WriteAllText(Application.dataPath + "/ItemObjects.json", json);
-        cardDataSet = JsonUtility.FromJson<CardDataSet>(jsonFile.text);
+        cardDataSet = JsonUtility.FromJson<CardDataSet>(cardJsonFile.text);
+        uniqueDataSet = JsonUtility.FromJson<UniqueDataSet>(uniqueJsonFile.text);
         // string json = JsonUtility.ToJson(cardDataSet.GetCardBaseData(2));
         // File.WriteAllText(path, json);
         // Debug.Log(json);

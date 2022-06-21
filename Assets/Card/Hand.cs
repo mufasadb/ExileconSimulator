@@ -73,7 +73,8 @@ public class Hand : MonoBehaviour
             // cardDisplay.transform.position = new Vector3(1920 - 100, 1080 - 100);
             cardDisplay.destination = new Vector3(1920 - 150, 1080 - 100);
             // cardDisplay.HideBack();
-            cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", false);
+            if (handContainer.activeSelf)
+                cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", false);
         }
     }
     // public void CardOutOfDeck()
@@ -98,7 +99,7 @@ public class Hand : MonoBehaviour
             card.parentContainer = handContainer;
             card.card = newCard;
             hand.Add(Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform));
-
+            hand[hand.Count - 1].name = card.card.name;
         }
         CardsIntoDeck();
         SortHand();

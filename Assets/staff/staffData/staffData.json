@@ -143,6 +143,14 @@
       "clipMethod": "Common",
       "clipCount": 1,
       "tier": 1
+    },
+    {
+      "name": "Avarius",
+      "attack": "Physical,Wild,Wild,Wild,",
+      "defence": "Armour,Armour,Wild,Wild,",
+      "clipMethod": "Common",
+      "clipCount": 1,
+      "tier": 2
     }
   ]
 }

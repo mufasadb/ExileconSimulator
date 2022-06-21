@@ -20,6 +20,8 @@ public class FightHandler : MonoBehaviour
     // private StaffMember currentFightTarget;
     private Stats fightTargetAttack;
     private Stats fightTargetDefence;
+    private Stats storedFightTargetAttack;
+    private Stats storedFightTargetDefence;
     private int fightTargetTier;
     ClipMethod fightTargetClipMethod;
     int fightTargetClipCount;
@@ -46,6 +48,9 @@ public class FightHandler : MonoBehaviour
 
         if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, fightTargetAttack, fightTargetDefence))
         {
+
+            GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(cardSelection.extraDraw + 2, fightTargetTier, cardSelection.extraDraw + 1);
+
             Debug.Log("PLAYER WON");
             questHandler.MarkDefeatQuestcomplete(targetName);
             List<CardDisplay> allSelectedCards = new List<CardDisplay>();
@@ -59,7 +64,7 @@ public class FightHandler : MonoBehaviour
 
 
             //offer cards
-            GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(2, fightTargetTier);
+
 
         }
         else { Debug.LogError("Player Loses"); }
@@ -75,7 +80,27 @@ public class FightHandler : MonoBehaviour
         int playerSpare = 0;
         int playerWild = playerAttack.wild;
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerAttack.fire, enemyDefence.fire);
-        if (playerWild < 0) { announceResults("not enough fire Attack"); return false; }
+        #region "Hrimburn"
+        if (playerWild < 0)
+        {
+            Debug.Log("before using cold my wild attack is " + playerWild);
+            if (cardSelection.chests.Find(c => c.name == "Hrimburn"))
+            {
+                Debug.Log("my attack cold is " + playerAttack.cold);
+                playerAttack.cold += playerWild;
+                playerWild = 0;
+                Debug.Log("my new attack cold is " + playerAttack.cold);
+                if (playerAttack.cold < 0)
+                {
+                    announceResults("not enough Fire attack even with Hrimburn using cold"); return false;
+                }
+            }
+            else
+            {
+                #endregion
+                announceResults("not enough fire Attack"); return false;
+            }
+        }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerAttack.cold, enemyDefence.cold);
         if (playerWild < 0) { announceResults("not enough cold Attack"); return false; }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerAttack.lightning, enemyDefence.lightning);
@@ -92,13 +117,46 @@ public class FightHandler : MonoBehaviour
         playerSpare = 0;
         playerWild = playerDefence.wild;
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.fire, enemyAttack.fire);
-        if (playerWild < 0) { announceResults("not enough fire Defence"); return false; }
+        if (playerWild < 0)
+        {
+            #region "Hrimburn"
+
+            if (cardSelection.chests.Find(c => c.name == "Hrimburn"))
+            {
+                playerDefence.cold += playerWild;
+                if (playerDefence.cold < 0)
+                {
+                    announceResults("not enough Fire defence even with Hrimburn using cold"); return false;
+                }
+            }
+            else
+            {
+                #endregion
+                announceResults("not enough fire Defence"); return false;
+            }
+        }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.cold, enemyAttack.cold);
         if (playerWild < 0) { announceResults("not enough cold Defence"); return false; }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.lightning, enemyAttack.lightning);
         if (playerWild < 0) { announceResults("not enough lightning Defence"); return false; }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.armour, enemyAttack.armour);
-        if (playerWild < 0) { announceResults("not enough armour Defence"); return false; }
+        if (playerWild < 0)
+        {
+            #region Atziris disfavour   
+            if (cardSelection.twoHandedWeapons.Find(c => c.name == "Atziris Disfavour"))
+            {
+                playerDefence.life += playerWild;
+                if (playerDefence.life < 0)
+                {
+                    announceResults("not enough Armour defence despite using Atizirs favour's 'life for armour'"); return false;
+                }
+            }
+            else
+            {
+                #endregion
+                announceResults("not enough armour Defence"); return false;
+            }
+        }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.life, enemyAttack.life);
         if (playerWild < 0) { announceResults("not enough defence Life"); return false; }
         (playerWild, playerSpare) = ResolveSingleStat(playerWild, playerSpare, playerDefence.chaos, enemyAttack.chaos);
@@ -130,6 +188,83 @@ public class FightHandler : MonoBehaviour
     }
     public void reCalculateStats()
     {
+        fightTargetAttack = new Stats();
+        fightTargetDefence = new Stats();
+        CopyStats(storedFightTargetAttack, storedFightTargetDefence);
+
+        //Handle Unique Card Shavronnes Wrappings
+        #region Handle Unique Edits to Stats
+        if (cardSelection.chests.Find(c => c.name == "Shavronnes Wrappings"))
+        {
+            fightTargetAttack.chaos = 0;
+            fightTargetDefence.chaos = 0;
+        }
+        if (cardSelection.chests.Find(c => c.name == "The Eternity Shroud"))
+        {
+            fightTargetDefence.chaos = 0;
+        }
+        if (cardSelection.oneHandedWeapons.Find(c => c.name == "Mjolner"))
+        {
+            cardSelection.attack.wild = cardSelection.attack.wild * 2;
+            cardSelection.defence.wild = cardSelection.defence.wild * 2;
+        }
+        if (cardSelection.chests.Find(c => c.name == "Cloak of Defiance"))
+        {
+            fightTargetAttack.wild = 0;
+        }
+        if (cardSelection.oneHandedWeapons.Find(c => c.name == "Soul Taker"))
+        {
+            fightTargetAttack.wild += 2;
+            fightTargetDefence.physical = 0;
+            fightTargetDefence.cold = 0;
+            fightTargetDefence.lightning = 0;
+            fightTargetDefence.chaos = 0;
+            fightTargetDefence.fire = 0;
+            fightTargetDefence.life = 0;
+            fightTargetDefence.armour = 0;
+        }
+        if (cardSelection.chests.Find(c => c.name == "Tombfist"))
+        {
+            foreach (var card in cardSelection.oneHandedWeapons)
+            {
+                cardSelection.attack.physical += card.card.implicits.physical;
+                cardSelection.attack.physical += card.card.explicits.physical;
+                cardSelection.attack.physical += card.card.implicits.life;
+                cardSelection.attack.physical += card.card.explicits.life;
+                cardSelection.attack.physical += card.card.implicits.armour;
+                cardSelection.attack.physical += card.card.explicits.armour;
+                cardSelection.attack.physical += card.card.implicits.chaos;
+                cardSelection.attack.physical += card.card.explicits.chaos;
+                cardSelection.attack.physical += card.card.implicits.wild;
+                cardSelection.attack.physical += card.card.explicits.wild;
+                cardSelection.attack.physical += card.card.implicits.cold;
+                cardSelection.attack.physical += card.card.explicits.cold;
+                cardSelection.attack.physical += card.card.implicits.fire;
+                cardSelection.attack.physical += card.card.explicits.fire;
+                cardSelection.attack.physical += card.card.implicits.lightning;
+                cardSelection.attack.physical += card.card.explicits.lightning;
+            }
+            foreach (var card in cardSelection.twoHandedWeapons)
+            {
+                cardSelection.attack.physical += card.card.implicits.physical;
+                cardSelection.attack.physical += card.card.explicits.physical;
+                cardSelection.attack.physical += card.card.implicits.life;
+                cardSelection.attack.physical += card.card.explicits.life;
+                cardSelection.attack.physical += card.card.implicits.armour;
+                cardSelection.attack.physical += card.card.explicits.armour;
+                cardSelection.attack.physical += card.card.implicits.chaos;
+                cardSelection.attack.physical += card.card.explicits.chaos;
+                cardSelection.attack.physical += card.card.implicits.wild;
+                cardSelection.attack.physical += card.card.explicits.wild;
+                cardSelection.attack.physical += card.card.implicits.cold;
+                cardSelection.attack.physical += card.card.explicits.cold;
+                cardSelection.attack.physical += card.card.implicits.fire;
+                cardSelection.attack.physical += card.card.explicits.fire;
+                cardSelection.attack.physical += card.card.implicits.lightning;
+                cardSelection.attack.physical += card.card.explicits.lightning;
+            }
+        }
+        #endregion
         foreach (Transform child in playerAttack.transform) { Destroy(child.gameObject); }
         foreach (Transform child in playerDefence.transform) { Destroy(child.gameObject); }
         foreach (Transform child in enemyAttack.transform) { Destroy(child.gameObject); }
@@ -157,8 +292,11 @@ public class FightHandler : MonoBehaviour
         if (!isFighting)
         {
             // currentFightTarget = staffMember;
-            fightTargetAttack = staffMember.attack;
-            fightTargetDefence = staffMember.defence;
+            storedFightTargetAttack = staffMember.attack;
+            storedFightTargetDefence = staffMember.defence;
+            fightTargetAttack = new Stats();
+            fightTargetDefence = new Stats();
+            CopyStats(storedFightTargetAttack, storedFightTargetDefence);
             fightTargetClipMethod = staffMember.clipMethod;
             fightTargetClipCount = staffMember.clipCount;
             fightTargetTier = staffMember.tier;
@@ -167,12 +305,6 @@ public class FightHandler : MonoBehaviour
             SetupStatsAndDisplaysForFight();
         }
     }
-    private void SetupStatsAndDisplaysForFight()
-    {
-        isFighting = true;
-        GameEventManager.instance.BeginFightScreen();
-        reCalculateStats();
-    }
     public void InitiateFight(Monster monster)
     {
         Debug.Log("initiate fight was called");
@@ -180,8 +312,11 @@ public class FightHandler : MonoBehaviour
         {
             Debug.Log("we got in here because we're not fighting yet");
             // currentFightTarget = staffMember;
-            fightTargetAttack = monster.attack;
-            fightTargetDefence = monster.defence;
+            storedFightTargetAttack = monster.attack;
+            storedFightTargetDefence = monster.defence;
+            fightTargetAttack = new Stats();
+            fightTargetDefence = new Stats();
+            CopyStats(storedFightTargetAttack, storedFightTargetDefence);
             fightTargetClipMethod = monster.clipMethod;
             fightTargetClipCount = monster.clipCount;
             fightTargetTier = monster.tier;
@@ -189,9 +324,39 @@ public class FightHandler : MonoBehaviour
             SetupStatsAndDisplaysForFight();
         }
     }
+    private void CopyStats(Stats staffAttack, Stats staffDefence)
+    {
+        fightTargetAttack.physical = staffAttack.physical;
+        fightTargetAttack.life = staffAttack.life;
+        fightTargetAttack.armour = staffAttack.armour;
+        fightTargetAttack.cold = staffAttack.cold;
+        fightTargetAttack.lightning = staffAttack.lightning;
+        fightTargetAttack.fire = staffAttack.fire;
+        fightTargetAttack.chaos = staffAttack.chaos;
+        fightTargetAttack.wild = staffAttack.wild;
+
+        fightTargetDefence.physical = staffDefence.physical;
+        fightTargetDefence.life = staffDefence.life;
+        fightTargetDefence.armour = staffDefence.armour;
+        fightTargetDefence.cold = staffDefence.cold;
+        fightTargetDefence.lightning = staffDefence.lightning;
+        fightTargetDefence.fire = staffDefence.fire;
+        fightTargetDefence.chaos = staffDefence.chaos;
+        fightTargetDefence.wild = staffDefence.wild;
+        //had to impliment a copy of stats otherwise updating stats with uniques would overwrite staff member original stats
+
+    }
+
+    private void SetupStatsAndDisplaysForFight()
+    {
+        isFighting = true;
+        GameEventManager.instance.BeginFightScreen();
+        reCalculateStats();
+    }
+
     public void CancelFight()
     {
-        if (!GlobalVariables.instance.rewardPending)
+        if (GlobalVariables.instance.rewardPendingCount == 0)
         {
             handleFightEnd();
             GameEventManager.instance.EndFightScreen();

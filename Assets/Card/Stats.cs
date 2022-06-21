@@ -243,35 +243,40 @@ public class Stats
         rt.anchorMin = new Vector2(0, 0);
         rt.anchorMax = new Vector2(0, 0);
         rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.localScale = new Vector2(1f, 1f);
+        rt.localScale = new Vector2(0.85f, 0.85f);
         Image image = statIcon.AddComponent<Image>();
         image.sprite = CardImageHolder.instance.getStat(statEle);
-        rt.sizeDelta = new Vector2(image.sprite.bounds.size.x * 100, image.sprite.bounds.size.y * 100);
+        rt.sizeDelta = new Vector2(image.sprite.bounds.size.x * 90, image.sprite.bounds.size.y * 90);
         return statIcon;
     }
     private int PositionAndCallStat(string statName, int currentPosition, Transform parentContainer, bool evenStats)
     {
         int workingStatCount = statCount;
         int workingCurrentPosition = currentPosition;
-        int y = 0;
-        if (workingStatCount > 6)
+        int y = -3;
+        if (workingStatCount > 5)
         {
-            evenStats = false;
-            if (workingStatCount % 2 == 0) { evenStats = true; }
-            y = 20;
-            workingStatCount = statCount / 2;
+            seperatingDistance -= 5;
+            // evenStats = false;
+            // if (workingStatCount % 2 == 0) { evenStats = true; }
+            // y = 20;
+            // workingStatCount = statCount / 2;
+            // // workingStatCount = workingStatCount + 1;
+            // if (workingCurrentPosition > workingStatCount)
+            // {
+            //     workingCurrentPosition = workingCurrentPosition - workingStatCount;
+            //     y = -20;
+            // }
             // workingStatCount = workingStatCount + 1;
-            if (workingCurrentPosition > workingStatCount)
-            {
-                workingCurrentPosition = workingCurrentPosition - workingStatCount;
-                y = -20;
-            }
-            workingStatCount = workingStatCount + 1;
         }
         float x = (-(workingStatCount / 2) + workingCurrentPosition) * seperatingDistance;
         if (evenStats)
         {
             x = (-(workingStatCount / 2) + 0.5f + workingCurrentPosition) * seperatingDistance;
+        }
+        if (workingStatCount > 5)
+        {
+            seperatingDistance += 5;
         }
         // x = x - (statCount / 2 * seperatingDistance);
 

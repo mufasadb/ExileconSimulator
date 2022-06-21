@@ -6,6 +6,15 @@ public static class ClipMethodResolver
 {
     public static void HandleClip(List<CardDisplay> cardList, ClipMethod clipMethod, int clipCount)
     {
+        //Handle Unique Card Atiziris Acuity and Lioneyes defence. forces clipping on these cards
+        foreach (CardDisplay card in cardList)
+        {
+            if (card.name == "Atziris Acuity" || card.name == "Lioneeyes Defence")
+            {
+                DoClip(card, clipCount);
+                return;
+            }
+        }
         if (clipMethod == ClipMethod.All) { foreach (CardDisplay card in cardList) { card.DoClip(clipCount); } }
         else if (clipMethod == ClipMethod.Jewellery)
         {

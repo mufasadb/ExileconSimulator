@@ -22,6 +22,8 @@ public class CardSelection : MonoBehaviour
     public List<CardDisplay> chests = new List<CardDisplay>();
     public Stats attack = new Stats();
     public Stats defence = new Stats();
+    public int extraDraw = 0;
+    public int extraTakes = 0;
     public int GetLimit(Type type)
     {
         int limit;
@@ -58,6 +60,8 @@ public class CardSelection : MonoBehaviour
         //int fire, int cold, int lightning, int physical, int life, int armour, int chaos, int wild
 
         //impliment quality
+        extraTakes = 0;
+        extraDraw = 0;
         int[] attackStats = new int[8];
         int[] defenceStats = new int[8];
         (attackStats, defenceStats) = ReadGroupOfCards(attackStats, defenceStats, twoHandedWeapons);
@@ -115,6 +119,8 @@ public class CardSelection : MonoBehaviour
                 defenceStats[7] += cardDisplay.card.explicits.wild;
                 defenceStats[5] += cardDisplay.card.quality.armour;
             }
+            extraTakes += cardDisplay.card.extraTakes;
+            extraDraw += cardDisplay.card.extraDraw;
         }
         return (attackStats, defenceStats);
     }

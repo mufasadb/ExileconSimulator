@@ -4,28 +4,34 @@ using UnityEngine;
 
 public class RewardHandler : MonoBehaviour
 {
-    public void DoReward(int numberOfCardsOffered, int tier)
+    public void DoReward(int numberOfCardsOffered, int tier, int takeCount)
     {
         GameEventManager.instance.BeginRewardScreen();
+
         for (int i = 0; i < numberOfCardsOffered; i++)
         {
-            CreateRewardCard(i, tier);
+            CreateRewardCard(i, tier, takeCount);
         }
-        GlobalVariables.instance.rewardPending = false;
+        GlobalVariables.instance.rewardPendingCount = takeCount;
 
     }
     public void TakeReward()
     {
-        for (int i = 0; i < transform.childCount; i++)
+
+        GlobalVariables.instance.rewardPendingCount -= 1;
+        if (GlobalVariables.instance.rewardPendingCount == 0)
         {
-            GameObject card = transform.GetChild(i).gameObject;
-            Destroy(card);
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                GameObject card = transform.GetChild(i).gameObject;
+                Destroy(card);
+            }
+            GameEventManager.instance.StepToNextFight();
         }
-        GlobalVariables.instance.rewardPending = false;
-        GameEventManager.instance.StepToNextFight();
 
     }
-    private void CreateRewardCard(int rewardNumber, int tier)
+    private void CreateRewardCard(int rewardNumber, int tier, int takeCount)
     {
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         CardDisplay cardDisplay = cardPrefab.GetComponent<CardDisplay>();

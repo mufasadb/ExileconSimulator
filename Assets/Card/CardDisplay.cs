@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardDisplay : MonoBehaviour, IDropHandler
+public class CardDisplay : MonoBehaviour
 {
     public Card card;
     // Start is called before the first frame update
@@ -18,6 +18,7 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     public GameObject qualitySticker;
     private List<Image> implicitList;
     public GameObject explicitContainer;
+    [SerializeField] TMPro.TMP_Text descriptiveText;
     private int horizontalCardSpacing = 120; //positions spacing between cards
     private int verticalCardSpacing = -10; //positions spacing between cards
     private Canvas canvas;
@@ -38,10 +39,8 @@ public class CardDisplay : MonoBehaviour, IDropHandler
 
     private void Awake()
     {
-        // parentContainer = parentCont;
         selectedContainer = GlobalVariables.instance.SelectionContainer;
         rendererObj = GetComponent<Renderer>();
-        // baseImage = GetComponent<Image>();
         typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
         if (card.type == Type.TwoHandedWeapon || card.type == Type.OneHandedWeapon) { asWeapon = true; }
         MoveTypeIcon(card.type);
@@ -53,17 +52,15 @@ public class CardDisplay : MonoBehaviour, IDropHandler
             card.implicits.StatDisplay(implicitContainer.transform);
             card.explicits.StatDisplay(explicitContainer.transform);
         }
-        // createImplicits();
         canvas = GetComponent<Canvas>();
+        descriptiveText.text = card.extraDescription;
+        if (card.type == Type.Currency) descriptiveText.transform.localPosition = new Vector3(0, 85, 0);
     }
     public void DoClip(int clipCount)
     {
         int homeID = cardActionHandler.homeContainerID;
         DoUnselect();
         cardActionHandler.AttachToSelectionContainer(homeID);
-        // GlobalVariables.instance.clipPendingCount = true;
-        // transform.SetParent(parentContainer.transform);
-        // transform.localScale = new Vector3(1.5f, 1.5f, 1);
         transform.SetParent(GlobalVariables.instance.RewardContainer.transform);
         gameObject.AddComponent<ClipAcceptance>();
         //animate and noise
@@ -71,17 +68,8 @@ public class CardDisplay : MonoBehaviour, IDropHandler
         destination = new Vector3(1920 / 2, 1080 / 2, 0);
         baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
     }
-    public void OnDrop(PointerEventData eventData)
-    {
-        if (selected)
-        {
-            //TODO 
-            // this.DoUnselect();
-        }
-    }
     public void AsWeaponTrue()
     {
-        // Debug.Log("as weapon");
         asWeapon = true;
         if (FightHandler.instance.isFighting) { FightHandler.instance.reCalculateStats(); }
     }
@@ -101,7 +89,6 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     }
     public void AsDefenceTrue()
     {
-        // Debug.Log("as defence");
         asWeapon = false;
         if (FightHandler.instance.isFighting) { FightHandler.instance.reCalculateStats(); }
     }
@@ -156,40 +143,39 @@ public class CardDisplay : MonoBehaviour, IDropHandler
     }
     public void Biggerise()
     {
-        if (!GlobalVariables.instance.rewardPending)
-        {
-            baseImage.transform.localScale = new Vector3(1.2f, 1.2f, 1);
 
-            if (selected)
+        baseImage.transform.localScale = new Vector3(1.2f, 1.2f, 1);
+
+        if (selected)
+        {
+            if (card.type == Type.Ring || card.type == Type.Amulet)
             {
-                if (card.type == Type.Ring || card.type == Type.Amulet)
-                {
-                    baseImage.transform.localPosition = new Vector3(200, 150, 0);
-                }
-                else if (card.type == Type.Ring || card.type == Type.Chest)
-                {
-                    baseImage.transform.localPosition = new Vector3(200, 0, 0);
-                }
-                else if (card.type == Type.Map)
-                {
-                    // baseImage.transform.localPosition = new Vector3()
-                }
-                else
-                {
-                    baseImage.transform.localPosition = new Vector3(200, -150, 0);
-                }
-                if (card.type != Type.Map)
-                {
-                    baseImage.transform.localScale = new Vector3(3f, 3f, 1);
-                }
+                baseImage.transform.localPosition = new Vector3(200, 150, 0);
+            }
+            else if (card.type == Type.Ring || card.type == Type.Chest)
+            {
+                baseImage.transform.localPosition = new Vector3(200, 0, 0);
+            }
+            else if (card.type == Type.Map)
+            {
+                // baseImage.transform.localPosition = new Vector3()
             }
             else
             {
-                transform.SetAsLastSibling();
-                baseImage.transform.localScale = new Vector3(2f, 2f, 1);
-                baseImage.transform.localPosition = new Vector3(0, 150, 0);
+                baseImage.transform.localPosition = new Vector3(200, -150, 0);
+            }
+            if (card.type != Type.Map)
+            {
+                baseImage.transform.localScale = new Vector3(3f, 3f, 1);
             }
         }
+        else
+        {
+            transform.SetAsLastSibling();
+            baseImage.transform.localScale = new Vector3(2f, 2f, 1);
+            baseImage.transform.localPosition = new Vector3(0, 150, 0);
+        }
+
     }
     public void DoSelect(Vector3 position, GameObject newParent)
     {

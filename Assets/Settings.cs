@@ -19,6 +19,9 @@ public class Settings : MonoBehaviour
         {
             Random.InitState(seed);
         }
+
+
+        // for some reason random.range seems to behave better after you smash it a few 1000 times. so .. I did that
         int[] count = new int[10];
         for (int i = 0; i < 10000; i++)
         {
@@ -35,10 +38,10 @@ public class Settings : MonoBehaviour
             if (val > 900 && val < 1000) count[9]++;
             if (val == 1000) count[10]++;
         }
-        for (int i = 0; i < count.Length; i++)
-        {
-            Debug.Log(count[i] + " for " + i);
-        }
+        // for (int i = 0; i < count.Length; i++)
+        // {
+        //     Debug.Log(count[i] + " for " + i);
+        // }
 
     }
     #endregion

@@ -14,6 +14,8 @@ public class Card : ScriptableObject
     public Stats implicits;
 
     public Stats explicits;
+    public int extraDraw;
+    public int extraTakes;
 
     public Type type;
 
@@ -23,6 +25,7 @@ public class Card : ScriptableObject
     public Stats quality = new Stats();
     public bool isCrafted = false;
     public int mapTier;
+    public string extraDescription;
 
     public static Card CreateInstance(int tier, string newname)
     {
@@ -45,6 +48,7 @@ public class Card : ScriptableObject
         // this.name = newname;
         this.name = cardData.name;
         this.description = this.name;
+        this.extraDescription = cardData.extraDescription;
         this.mapTier = cardData.mapTier;
         if (cardData.type != Type.Currency && cardData.type != Type.Map)
         {
@@ -52,6 +56,13 @@ public class Card : ScriptableObject
             this.implicits.DeclareStats(StatStringToIntArray(cardData.implicits));
             this.explicits = new Stats();
             this.explicits.makeExplicit(this.type, this.rarity);
+        }
+        if (cardData.isUnique)
+        {
+            UniqueDataObject uniqueDataObject = CardDataSystem.instance.uniqueDataSet.GetExplicitStringByUniqueName(cardData.name);
+            this.explicits.DeclareStats(StatStringToIntArray(uniqueDataObject.explicits));
+            this.extraDraw = uniqueDataObject.extraDraws;
+            this.extraTakes = uniqueDataObject.extraTakes;
         }
     }
 

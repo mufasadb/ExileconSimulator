@@ -23,6 +23,8 @@ public class staffCreation : MonoBehaviour
     }
     private void DoStaffGen()
     {
+        //there is a specific spawner close left which is always there whatever name is in the 
+        // "create staff member" section will specifically spawn that mob in the close left position
         SpawnPoint zombieSpawner = spawnPoints.Find(spawn => spawn.specifiedFor == "Zombie");
         zombieSpawner.used = true;
         GameObject staffPrefab = PrefabHolder.instance.StaffPrefab;
