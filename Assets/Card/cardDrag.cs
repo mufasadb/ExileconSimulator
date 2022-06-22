@@ -94,6 +94,7 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
 
             if (Hand.instance.cooldDownHover <= 0)
             {
+                AudioManager.instance.Play("cardSlide");
                 cardDisplay.Biggerise();
                 Hand.instance.cooldDownHover = 0.01f;
             }

@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public AudioMixer audoMixer;
     public AudioMixerGroup music;
     public AudioMixerGroup soundFX;
+    public bool musicStop;
     public static AudioManager instance;
     int currentTrack;
 
@@ -69,6 +70,16 @@ public class AudioManager : MonoBehaviour
         if (currentTrack > musicBox.Length - 1) currentTrack = 0;
         musicBox[currentTrack].source.Play();
     }
+    public void SwitchToEndMusic()
+    {
+        musicStop = true;
+        if (musicBox[currentTrack].source.isPlaying) musicBox[currentTrack].source.Stop();
+    }
+    public void switchOutOfEndMusic()
+    {
+        musicStop = false;
+        PlayNextSong();
+    }
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -81,7 +92,8 @@ public class AudioManager : MonoBehaviour
     }
     private void Update()
     {
-        if (!musicBox[currentTrack].source.isPlaying) PlayNextSong();
+        if (!musicStop)
+            if (!musicBox[currentTrack].source.isPlaying) PlayNextSong();
     }
 
 }

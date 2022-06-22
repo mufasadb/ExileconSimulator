@@ -23,6 +23,7 @@ public class FightHandler : MonoBehaviour
     private Stats storedFightTargetAttack;
     private Stats storedFightTargetDefence;
     private int fightTargetTier;
+    private bool isChrisFight = false;
     ClipMethod fightTargetClipMethod;
     int fightTargetClipCount;
     [SerializeField] QuestHandler questHandler;
@@ -48,13 +49,13 @@ public class FightHandler : MonoBehaviour
 
         if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, fightTargetAttack, fightTargetDefence))
         {
+            if (isChrisFight) GameEventManager.instance.WinGame();
             if (targetName == "Guardian of The Hydra") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Hydra");
             else if (targetName == "Guardian of The Phoenix") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Phoneix");
             else if (targetName == "Guardian of The Chimera") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Chimera");
             else if (targetName == "Guardian of The Minotaur") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Minotaur");
             else GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(cardSelection.extraDraw + 2, fightTargetTier, cardSelection.extraDraw + 1);
 
-            Debug.Log("PLAYER WON");
             questHandler.MarkDefeatQuestcomplete(targetName);
             List<CardDisplay> allSelectedCards = new List<CardDisplay>();
             foreach (var card in cardSelection.twoHandedWeapons) { allSelectedCards.Add(card); }
@@ -290,11 +291,15 @@ public class FightHandler : MonoBehaviour
         }
 
     }
+    public void ChrisFight(GameObject TargetEnemy, StaffMember staffMember)
+    {
+        isChrisFight = true;
+        InitiateFight(TargetEnemy, staffMember);
+    }
     public void InitiateFight(GameObject TargetEnemy, StaffMember staffMember)
     {
         if (!isFighting)
         {
-            // currentFightTarget = staffMember;
             storedFightTargetAttack = staffMember.attack;
             storedFightTargetDefence = staffMember.defence;
             fightTargetAttack = new Stats();
@@ -310,11 +315,8 @@ public class FightHandler : MonoBehaviour
     }
     public void InitiateFight(Monster monster)
     {
-        Debug.Log("initiate fight was called");
         if (!isFighting)
         {
-            Debug.Log("we got in here because we're not fighting yet");
-            // currentFightTarget = staffMember;
             storedFightTargetAttack = monster.attack;
             storedFightTargetDefence = monster.defence;
             fightTargetAttack = new Stats();
@@ -347,7 +349,6 @@ public class FightHandler : MonoBehaviour
         fightTargetDefence.chaos = staffDefence.chaos;
         fightTargetDefence.wild = staffDefence.wild;
         //had to impliment a copy of stats otherwise updating stats with uniques would overwrite staff member original stats
-
     }
 
     private void SetupStatsAndDisplaysForFight()
@@ -376,7 +377,6 @@ public class FightHandler : MonoBehaviour
         fightTargetAttack = null;
         fightTargetDefence = null;
         fightTargetClipCount = 0;
-
     }
     public void removeChildren()
     {
@@ -387,8 +387,6 @@ public class FightHandler : MonoBehaviour
     }
     void statDisplay(Stats stats, bool offence, Transform canvas)
     {
-        // int pos = 0;
-        // bool evenStats = false;
         List<string> statEleList = new List<string>();
 
         statEleList = CalculateAndAddStringsFromStatEle("Fire", stats.fire, statEleList);
@@ -404,8 +402,6 @@ public class FightHandler : MonoBehaviour
         {
             PositionAndCallStat(statEleList[i], i, canvas, statEleList.Count % 2 == 0, statEleList.Count, true);
         }
-
-
     }
     private List<string> CalculateAndAddStringsFromStatEle(string baseEleName, int statVal, List<string> statEleList)
     {
@@ -448,7 +444,6 @@ public class FightHandler : MonoBehaviour
         GameObject statIcon = AddStat(statEle);
         statIcon.transform.SetParent(canvas, false);
         statIcon.transform.localPosition = new Vector3(x, y, 0);
-        // statIcon.transform.localScale = new Vector3(1f, 1f, 0);
         currentPosition = currentPosition + 1;
         return currentPosition;
     }

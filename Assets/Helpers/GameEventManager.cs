@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameEventManager : MonoBehaviour
 {
@@ -165,8 +166,6 @@ public class GameEventManager : MonoBehaviour
             if (mapHandler.fightsRemaining > 0)
             {
                 FightHandler.instance.handleFightEnd();
-                Debug.Log("weve handled the old fight");
-                Debug.Log("is fighting is set to " + FightHandler.instance.isFighting);
                 CloseUIItem(rewardUI);
                 OpenUIItem(selectionUI);
                 OpenUIItem(fightUI);
@@ -205,4 +204,14 @@ public class GameEventManager : MonoBehaviour
     }
     public void SetFightCancelButtonToCancel() { cancelFightText.text = "Cancel"; }
     public void SetFightCancelButtonToLeaveMap() { cancelFightText.text = "Leave Map"; }
+    public void WinGame()
+    {
+        PlayerPrefs.SetFloat("WonAt", GlobalVariables.instance.timer);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+    public void LoseGame()
+    {
+        PlayerPrefs.SetFloat("WonAt", -1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
 }

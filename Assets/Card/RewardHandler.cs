@@ -53,13 +53,16 @@ public class RewardHandler : MonoBehaviour
     }
     public void DoSpecificReward(string reward)
     {
+        GameEventManager.instance.BeginRewardScreen();
+
         GlobalVariables.instance.rewardPendingCount = 1;
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         CardDisplay cardDisplay = cardPrefab.GetComponent<CardDisplay>();
         if (reward == "Fragment of Hydra") cardDisplay.card = hydraFrag;
-        if (reward == "Fragment of Phoenix") cardDisplay.card = hydraFrag;
-        if (reward == "Fragment of Chimera") cardDisplay.card = hydraFrag;
-        if (reward == "Fragment of Minotaur") cardDisplay.card = hydraFrag;
+        if (reward == "Fragment of Phoenix") cardDisplay.card = PhoenixFrag;
+        if (reward == "Fragment of Chimera") cardDisplay.card = chimeraFrag;
+        if (reward == "Fragment of Minotaur") cardDisplay.card = MinotaurFrag;
+        if (reward == "map") cardDisplay.card = Level1Map;
         GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, Hand.instance.handContainer.transform);
         newCard.GetComponent<CardDisplay>().parentContainer = Hand.instance.handContainer;
         newCard.GetComponent<CardDisplay>().DoUnselect();

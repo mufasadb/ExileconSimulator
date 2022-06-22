@@ -147,15 +147,19 @@ public class Hand : MonoBehaviour
     public void SortHand()
     {
 
-
-        // if (Settings.instance.sortBy == SortBy.Durability) hand.Sort(
-        //     (c1, c2) => c1.GetComponent<CardDisplay>().card.durability == c2.GetComponent<CardDisplay>().card.durability ?
-        //     c1.GetComponent<CardDisplay>().card.type.CompareTo(c2.GetComponent<CardDisplay>().card.type) :
-        //     c1.GetComponent<CardDisplay>().card.durability.CompareTo(c2.GetComponent<CardDisplay>().card.durability));
-        if (Settings.instance.sortBy == SortBy.Rarity) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.rarity).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID());
-        if (Settings.instance.sortBy == SortBy.Type) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID());
-        if (Settings.instance.sortBy == SortBy.Name) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.name).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID());
-        if (Settings.instance.sortBy == SortBy.Durability) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetInstanceID());
+        // List<GameObject> sortedHand = new List<GameObject>();
+        // if (Settings.instance.sortBy == SortBy.Name) hand.Sort(
+        // (c1, c2) => c1.GetComponent<CardDisplay>().card.durability == c2.GetComponent<CardDisplay>().card.durability ?
+        // c1.GetComponent<CardDisplay>().card.type.CompareTo(c2.GetComponent<CardDisplay>().card.type) :
+        // c1.GetComponent<CardDisplay>().card.durability.CompareTo(c2.GetComponent<CardDisplay>().card.durability));
+        if (Settings.instance.sortBy == SortBy.Rarity) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.rarity).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
+        if (Settings.instance.sortBy == SortBy.Type) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
+        // if (Settings.instance.sortBy == SortBy.Type) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.type);
+        if (Settings.instance.sortBy == SortBy.Name) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.name).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
+        if (Settings.instance.sortBy == SortBy.Durability) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetInstanceID()).ToList();
+        // if (Settings.instance.sortBy == SortBy.Name) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetComponent<CardDisplay>().card.type).ToList();
+        // if (Settings.instance.sortBy == SortBy.Durability) Debug.Log("dura");
+        // if (Settings.instance.sortBy == SortBy.Name) Debug.Log("name");
 
         for (int i = 0; i < hand.Count; i++)
         {

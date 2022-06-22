@@ -33,6 +33,10 @@ public class EventSet : MonoBehaviour
     public void Update()
     {
         float time = GlobalVariables.instance.timer;
+        if (time <= 0)
+        {
+            GameEventManager.instance.LoseGame();
+        }
         foreach (TimedEvent tevent in timedEvents)
         {
             if (time < tevent.nextTimedEvent)

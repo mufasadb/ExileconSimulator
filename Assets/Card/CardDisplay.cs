@@ -257,7 +257,7 @@ public class CardDisplay : MonoBehaviour
         x += (1920 / 2);
         float y = Mathf.Abs(position) * verticalCardSpacing + 200 - scale;
         destination = new Vector3(x, y, 0);
-        if (GetComponent<Animator>() != null)
+        if (gameObject.transform.parent.gameObject.activeSelf)
         {
             GetComponent<Animator>().SetBool("facingForward", true);
         }
