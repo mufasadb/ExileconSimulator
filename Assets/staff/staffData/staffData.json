@@ -1,6 +1,22 @@
 {
   "set": [
     {
+      "name": "Avarius",
+      "attack": "Physical,Wild,Wild,Wild,",
+      "defence": "Armour,Armour,Wild,Wild,",
+      "clipMethod": "Common",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "Brutus",
+      "attack": "Wild,Wild,",
+      "defence": "Wild,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
       "name": "Burning Man",
       "attack": "Fire,Fire,Fire",
       "defence": "Wild,Wild,Wild",
@@ -34,33 +50,41 @@
     },
     {
       "name": "Guardian of The Chimera",
-      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
-      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Chaos,Chaos,Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Chaos,Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
       "clipMethod": "Shield",
       "clipCount": 1,
       "tier": 5
     },
     {
       "name": "Guardian of The Hydra",
-      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
-      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
       "clipMethod": "Shield",
       "clipCount": 1,
       "tier": 5
     },
     {
       "name": "Guardian of The Minotaur",
-      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
-      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Physical,Physical,Physical,Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
       "clipMethod": "Shield",
       "clipCount": 1,
       "tier": 5
     },
     {
       "name": "Guardian of The Pheonix",
-      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
-      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "attack": "Fire,Fire,Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
       "clipMethod": "Shield",
+      "clipCount": 1,
+      "tier": 5
+    },
+    {
+      "name": "Izaro",
+      "attack": "Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Life,Life,Armour,Armour,Fire,Cold,Lightning,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Rare",
       "clipCount": 1,
       "tier": 5
     },
@@ -129,6 +153,14 @@
       "tier": 3
     },
     {
+      "name": "The Elder",
+      "attack": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Life,Life,Life,Life,Armour,Armour,Armour,Armour,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 5
+    },
+    {
       "name": "The Faun",
       "attack": "Wild,Wild,Wild",
       "defence": "Physical,Physical,Physical",
@@ -137,20 +169,28 @@
       "tier": 1
     },
     {
+      "name": "The Orion",
+      "attack": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Life,Life,Armour,Armour,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Broken",
+      "clipCount": 1,
+      "tier": 4
+    },
+    {
+      "name": "The Shaper",
+      "attack": "Physical,Physical,Physical,Physical,Fire,Fire,Cold,Cold,Lightning,Lightning,Chaos,Chaos,",
+      "defence": "Life,Life,Life,Armour,Fire,Fire,Cold,Cold,Cold,Cold,Lightning,Lightning,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 5
+    },
+    {
       "name": "Zombie",
       "attack": "Life,Life",
       "defence": "Physical",
       "clipMethod": "Common",
       "clipCount": 1,
       "tier": 1
-    },
-    {
-      "name": "Avarius",
-      "attack": "Physical,Wild,Wild,Wild,",
-      "defence": "Armour,Armour,Wild,Wild,",
-      "clipMethod": "Common",
-      "clipCount": 1,
-      "tier": 2
     }
   ]
 }

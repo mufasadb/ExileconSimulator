@@ -1,7 +1,7 @@
 fix the facing off hoverovers to stay true resolution and actually face you
 select staff member when you select their queue
 staff member queue selection on their queue not them
-dropping a card on the selection queue to check if it should replace existing card.
+need to read the settings menu into the options on scene change
 
 great out the fight button if you can't beat them
 
@@ -68,6 +68,8 @@ Sound - music # - sound on cards played - sound on card selected - sound on card
 Animations - animate card played - animate card crunched
 Movement - add moving players
 Controls - right click card goes to slot # - drop new cord on old card in selection overrides - right click item in selection window undoes - right/left arrows move deck left and right - sort cards with alternate sorting - hide broken cards - allowrepositionging cards in hand (creat invisible selection containers and rotate them when you position something there)
+Allow proper hiding of where the dead cards go
+
 
 Uniques - Create List of unique cards - Add calculations fo runiques
 

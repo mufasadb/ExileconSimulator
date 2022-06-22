@@ -77,6 +77,14 @@
       "attack": "Life,Life",
       "defence": "Physical",
       "tier": 1
+    },
+    {
+      "name": "Brutus",
+      "attack": "Wild,Wild,",
+      "defence": "Wild,Wild,Wild,",
+      "clipMethod": "",
+      "clipCount": 1,
+      "tier": 2
     }
   ]
 }

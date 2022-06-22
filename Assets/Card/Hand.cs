@@ -91,9 +91,9 @@ public class Hand : MonoBehaviour
     private void DoHandGen()
     {
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 10; i++)
         {
-            Card newCard = Card.CreateInstance(Random.Range(2, 3), i.ToString());
+            Card newCard = Card.CreateInstance(1, i.ToString());
             Vector3 position = new Vector3(1920 - 150, 1080 - 50);
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;
@@ -121,6 +121,7 @@ public class Hand : MonoBehaviour
                 handScrollIndex += 1;
             }
         }
+        SortHand();
         UpdateCardDisplay();
     }
     public void UpdateCardDisplay()
@@ -138,6 +139,7 @@ public class Hand : MonoBehaviour
         if (Settings.instance.sortBy == SortBy.Rarity) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.rarity.CompareTo(c2.GetComponent<CardDisplay>().card.rarity));
         if (Settings.instance.sortBy == SortBy.Type) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.type.CompareTo(c2.GetComponent<CardDisplay>().card.type));
         if (Settings.instance.sortBy == SortBy.Durability) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.durability.CompareTo(c2.GetComponent<CardDisplay>().card.durability));
+        if (Settings.instance.sortBy == SortBy.Name) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.name.CompareTo(c2.GetComponent<CardDisplay>().card.name));
         for (int i = 0; i < hand.Count; i++)
         {
             hand[i].transform.SetSiblingIndex(i);

@@ -11,9 +11,9 @@ public class CardDataSet
     public CardDataObject GetCardBaseData(int tier)
     {
         // if (tier > 3) { Debug.LogError("Tried to created a card with tier greater than 3"); return null; }
-        List<CardDataObject> specificTierItems = set.FindAll(item => item.tier == 2);
+        List<CardDataObject> specificTierItems = set.FindAll(item => item.tier == tier);
         // List<CardDataObject> neighbourTierBelow = set.FindAll(item => item.tier == tier);
-        List<CardDataObject> neighbourTierAbove = set.FindAll(item => item.tier == 3);
+        List<CardDataObject> neighbourTierAbove = set.FindAll(item => item.tier == tier + 1);
         return ChooseFromWeightedCards(specificTierItems.ToArray(), neighbourTierAbove.ToArray());
     }
     private CardDataObject ChooseFromWeightedCards(CardDataObject[] cardsMain, CardDataObject[] cardsNeighbourTierAbove)

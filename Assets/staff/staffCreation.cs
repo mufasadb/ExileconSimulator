@@ -29,7 +29,7 @@ public class staffCreation : MonoBehaviour
         zombieSpawner.used = true;
         GameObject staffPrefab = PrefabHolder.instance.StaffPrefab;
         createStaffMember(staffPrefab, "Zombie", zombieSpawner);
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 18; i++)
         {
             createStaffMember(staffPrefab);
         }

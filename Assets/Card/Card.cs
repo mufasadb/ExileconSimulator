@@ -6,8 +6,9 @@ using UnityEngine;
 public class Card : ScriptableObject
 {
     public new string name;
-
-    private int[] rarityChances = new int[] { 60, 20, 1 };
+    //rarity chance by tier
+    int[] rareChance = { 5, 10, 15, 20, 25 };
+    int[] magicChance = { 15, 25, 35, 40, 35 };
 
     public string description;
 
@@ -39,8 +40,7 @@ public class Card : ScriptableObject
     public void Init(int tier, string newname)
     {
         this.rarity = genRarity(tier);
-        CardDataObject cardData =
-            CardDataSystem.instance.cardDataSet.GetCardBaseData(tier);
+        CardDataObject cardData = CardDataSystem.instance.cardDataSet.GetCardBaseData(tier);
         this.type = cardData.type;
         if (this.type == Type.Currency) { this.rarity = Rarity.Currency; }
         if (cardData.isUnique) { this.rarity = Rarity.Unique; }
@@ -111,17 +111,15 @@ public class Card : ScriptableObject
 
     public Rarity genRarity(int tier)
     {
-        int rarityTotal = 0;
-        foreach (int val in rarityChances)
-        {
-            rarityTotal += val * tier;
-        }
-        int randNumber = Random.Range(1, rarityTotal);
-        if (randNumber < rarityChances[1] * tier)
+
+
+        int randNumber = Random.Range(1, 100);
+        if (randNumber < rareChance[tier - 1])
         {
             return Rarity.Rare;
         }
-        if (randNumber < rarityChances[0] * tier)
+
+        if (randNumber < magicChance[tier - 1])
         {
             return Rarity.Magic;
         }
