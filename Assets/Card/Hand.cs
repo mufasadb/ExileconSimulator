@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class Hand : MonoBehaviour
 {
-    public int handScrollIndex = 0;
+    public int handScrollIndex = -2;
     [SerializeField] public GameObject handContainer;
     public float cooldDownHover;
     public CardSelection cardSelection;
@@ -71,7 +71,7 @@ public class Hand : MonoBehaviour
             GameObject card = handContainer.transform.GetChild(i).gameObject;
             CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
             // cardDisplay.transform.position = new Vector3(1920 - 100, 1080 - 100);
-            cardDisplay.destination = new Vector3(1920 - 150, 1080 - 100);
+            cardDisplay.destination = new Vector3(1920 - 150, 1080 - 100, 0);
             // cardDisplay.HideBack();
             if (handContainer.activeSelf)
                 cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", false);
@@ -91,16 +91,25 @@ public class Hand : MonoBehaviour
     private void DoHandGen()
     {
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
-        for (int i = 0; i < 10; i++)
+        GameObject statCardPrefab = PrefabHolder.instance.ToolStatPrefab;
+        GameObject howCardPrefab = PrefabHolder.instance.ToolQuickReferencePrefab;
+        Vector3 position = new Vector3(1920 - 150, 1080 - 50, 0);
+        for (int i = 0; i < 30; i++)
         {
-            Card newCard = Card.CreateInstance(1, i.ToString());
-            Vector3 position = new Vector3(1920 - 150, 1080 - 50);
+            Card newCard = Card.CreateInstance(3, i.ToString());
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;
             card.card = newCard;
             hand.Add(Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform));
             hand[hand.Count - 1].name = card.card.name;
+
         }
+        hand.Add(Instantiate(statCardPrefab, position, Quaternion.identity, handContainer.transform));
+        hand[hand.Count - 1].name = "QuickReferenceStat";
+        hand[hand.Count - 1].GetComponent<CardDisplay>().parentContainer = handContainer;
+        hand.Add(Instantiate(howCardPrefab, position, Quaternion.identity, handContainer.transform));
+        hand[hand.Count - 1].GetComponent<CardDisplay>().parentContainer = handContainer;
+        hand[hand.Count - 1].name = "QuickReferenceHowTo";
         CardsIntoDeck();
         SortHand();
         UpdateCardDisplay();
@@ -132,18 +141,31 @@ public class Hand : MonoBehaviour
             CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
             cardDisplay.repositionInHand(i + handScrollIndex, handContainer.transform.childCount, handContainer.transform.position);
             cardDisplay.updatePositionScaleCaches(i);
+
         }
     }
     public void SortHand()
     {
-        if (Settings.instance.sortBy == SortBy.Rarity) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.rarity.CompareTo(c2.GetComponent<CardDisplay>().card.rarity));
-        if (Settings.instance.sortBy == SortBy.Type) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.type.CompareTo(c2.GetComponent<CardDisplay>().card.type));
-        if (Settings.instance.sortBy == SortBy.Durability) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.durability.CompareTo(c2.GetComponent<CardDisplay>().card.durability));
-        if (Settings.instance.sortBy == SortBy.Name) hand.Sort((c1, c2) => c1.GetComponent<CardDisplay>().card.name.CompareTo(c2.GetComponent<CardDisplay>().card.name));
+
+
+        // if (Settings.instance.sortBy == SortBy.Durability) hand.Sort(
+        //     (c1, c2) => c1.GetComponent<CardDisplay>().card.durability == c2.GetComponent<CardDisplay>().card.durability ?
+        //     c1.GetComponent<CardDisplay>().card.type.CompareTo(c2.GetComponent<CardDisplay>().card.type) :
+        //     c1.GetComponent<CardDisplay>().card.durability.CompareTo(c2.GetComponent<CardDisplay>().card.durability));
+        if (Settings.instance.sortBy == SortBy.Rarity) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.rarity).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID());
+        if (Settings.instance.sortBy == SortBy.Type) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID());
+        if (Settings.instance.sortBy == SortBy.Name) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.name).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID());
+        if (Settings.instance.sortBy == SortBy.Durability) hand.OrderBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetInstanceID());
+
         for (int i = 0; i < hand.Count; i++)
         {
             hand[i].transform.SetSiblingIndex(i);
         }
+        var quickRef = hand.Find(c => c.name == "QuickReferenceStat");
+        quickRef.transform.SetAsFirstSibling();
+        var howTo = hand.Find(c => c.name == "QuickReferenceHowTo");
+        howTo.transform.SetAsFirstSibling();
+
     }
     public void selectCard(CardDisplay card)
     {

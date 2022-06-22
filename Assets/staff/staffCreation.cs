@@ -23,16 +23,38 @@ public class staffCreation : MonoBehaviour
     }
     private void DoStaffGen()
     {
-        //there is a specific spawner close left which is always there whatever name is in the 
-        // "create staff member" section will specifically spawn that mob in the close left position
-        SpawnPoint zombieSpawner = spawnPoints.Find(spawn => spawn.specifiedFor == "Zombie");
-        zombieSpawner.used = true;
         GameObject staffPrefab = PrefabHolder.instance.StaffPrefab;
-        createStaffMember(staffPrefab, "Zombie", zombieSpawner);
+
+        SpecialStaffGen(staffPrefab);
         for (int i = 0; i < 18; i++)
         {
             createStaffMember(staffPrefab);
         }
+
+    }
+    void SpecialStaffGen(GameObject staffPrefab)
+    {
+        //there is a specific spawner close left which is always there whatever name is in the 
+        // "create staff member" section will specifically spawn that mob in the close left position
+        SpawnPoint zombieSpawner = spawnPoints.Find(spawn => spawn.specifiedFor == "Zombie");
+        zombieSpawner.used = true;
+        createStaffMember(staffPrefab, "Zombie", zombieSpawner);
+
+        zombieSpawner = spawnPoints.Find(spawn => spawn.specifiedFor == "Shaper");
+        zombieSpawner.used = true;
+        createStaffMember(staffPrefab, "The Shaper", zombieSpawner);
+        zombieSpawner = spawnPoints.Find(spawn => spawn.specifiedFor == "Minotaur");
+        zombieSpawner.used = true;
+        createStaffMember(staffPrefab, "Guardian of The Minotaur", zombieSpawner);
+        zombieSpawner = spawnPoints.Find(spawn => spawn.specifiedFor == "Phoenix");
+        zombieSpawner.used = true;
+        createStaffMember(staffPrefab, "Guardian of The Pheonix", zombieSpawner);
+        zombieSpawner = spawnPoints.Find(spawn => spawn.specifiedFor == "Chimera");
+        zombieSpawner.used = true;
+        createStaffMember(staffPrefab, "Guardian of The Chimera", zombieSpawner);
+        zombieSpawner = spawnPoints.Find(spawn => spawn.specifiedFor == "Hydra");
+        zombieSpawner.used = true;
+        createStaffMember(staffPrefab, "Guardian of The Hydra", zombieSpawner);
 
     }
     private void createStaffMember(GameObject staffPrefab)

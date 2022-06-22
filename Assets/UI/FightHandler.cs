@@ -48,8 +48,11 @@ public class FightHandler : MonoBehaviour
 
         if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, fightTargetAttack, fightTargetDefence))
         {
-
-            GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(cardSelection.extraDraw + 2, fightTargetTier, cardSelection.extraDraw + 1);
+            if (targetName == "Guardian of The Hydra") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Hydra");
+            else if (targetName == "Guardian of The Phoenix") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Phoneix");
+            else if (targetName == "Guardian of The Chimera") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Chimera");
+            else if (targetName == "Guardian of The Minotaur") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Minotaur");
+            else GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(cardSelection.extraDraw + 2, fightTargetTier, cardSelection.extraDraw + 1);
 
             Debug.Log("PLAYER WON");
             questHandler.MarkDefeatQuestcomplete(targetName);
@@ -229,39 +232,39 @@ public class FightHandler : MonoBehaviour
             {
                 cardSelection.attack.physical += card.card.implicits.physical;
                 cardSelection.attack.physical += card.card.explicits.physical;
-                cardSelection.attack.physical += card.card.implicits.life;
-                cardSelection.attack.physical += card.card.explicits.life;
-                cardSelection.attack.physical += card.card.implicits.armour;
-                cardSelection.attack.physical += card.card.explicits.armour;
-                cardSelection.attack.physical += card.card.implicits.chaos;
-                cardSelection.attack.physical += card.card.explicits.chaos;
-                cardSelection.attack.physical += card.card.implicits.wild;
-                cardSelection.attack.physical += card.card.explicits.wild;
-                cardSelection.attack.physical += card.card.implicits.cold;
-                cardSelection.attack.physical += card.card.explicits.cold;
-                cardSelection.attack.physical += card.card.implicits.fire;
-                cardSelection.attack.physical += card.card.explicits.fire;
-                cardSelection.attack.physical += card.card.implicits.lightning;
-                cardSelection.attack.physical += card.card.explicits.lightning;
+                cardSelection.attack.life += card.card.implicits.life;
+                cardSelection.attack.life += card.card.explicits.life;
+                cardSelection.attack.armour += card.card.implicits.armour;
+                cardSelection.attack.armour += card.card.explicits.armour;
+                cardSelection.attack.chaos += card.card.implicits.chaos;
+                cardSelection.attack.chaos += card.card.explicits.chaos;
+                cardSelection.attack.wild += card.card.implicits.wild;
+                cardSelection.attack.wild += card.card.explicits.wild;
+                cardSelection.attack.cold += card.card.implicits.cold;
+                cardSelection.attack.cold += card.card.explicits.cold;
+                cardSelection.attack.fire += card.card.implicits.fire;
+                cardSelection.attack.fire += card.card.explicits.fire;
+                cardSelection.attack.lightning += card.card.implicits.lightning;
+                cardSelection.attack.lightning += card.card.explicits.lightning;
             }
             foreach (var card in cardSelection.twoHandedWeapons)
             {
                 cardSelection.attack.physical += card.card.implicits.physical;
                 cardSelection.attack.physical += card.card.explicits.physical;
-                cardSelection.attack.physical += card.card.implicits.life;
-                cardSelection.attack.physical += card.card.explicits.life;
-                cardSelection.attack.physical += card.card.implicits.armour;
-                cardSelection.attack.physical += card.card.explicits.armour;
-                cardSelection.attack.physical += card.card.implicits.chaos;
-                cardSelection.attack.physical += card.card.explicits.chaos;
-                cardSelection.attack.physical += card.card.implicits.wild;
-                cardSelection.attack.physical += card.card.explicits.wild;
-                cardSelection.attack.physical += card.card.implicits.cold;
-                cardSelection.attack.physical += card.card.explicits.cold;
-                cardSelection.attack.physical += card.card.implicits.fire;
-                cardSelection.attack.physical += card.card.explicits.fire;
-                cardSelection.attack.physical += card.card.implicits.lightning;
-                cardSelection.attack.physical += card.card.explicits.lightning;
+                cardSelection.attack.life += card.card.implicits.life;
+                cardSelection.attack.life += card.card.explicits.life;
+                cardSelection.attack.armour += card.card.implicits.armour;
+                cardSelection.attack.armour += card.card.explicits.armour;
+                cardSelection.attack.chaos += card.card.implicits.chaos;
+                cardSelection.attack.chaos += card.card.explicits.chaos;
+                cardSelection.attack.wild += card.card.implicits.wild;
+                cardSelection.attack.wild += card.card.explicits.wild;
+                cardSelection.attack.cold += card.card.implicits.cold;
+                cardSelection.attack.cold += card.card.explicits.cold;
+                cardSelection.attack.fire += card.card.implicits.fire;
+                cardSelection.attack.fire += card.card.explicits.fire;
+                cardSelection.attack.lightning += card.card.implicits.lightning;
+                cardSelection.attack.lightning += card.card.explicits.lightning;
             }
         }
         #endregion

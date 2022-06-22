@@ -146,7 +146,8 @@ public enum Type
     Amulet,
     Ring,
     Currency,
-    Map
+    Map,
+    Tool
 }
 
 public enum Rarity

@@ -41,19 +41,29 @@ public class CardDisplay : MonoBehaviour
     {
         selectedContainer = GlobalVariables.instance.SelectionContainer;
         rendererObj = GetComponent<Renderer>();
-        typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
+        if (card.type != Type.Tool) typeIcon.sprite = CardImageHolder.instance.getTypeIcon(card.type);
         if (card.type == Type.TwoHandedWeapon || card.type == Type.OneHandedWeapon) { asWeapon = true; }
         MoveTypeIcon(card.type);
         itemImage.sprite = CardImageHolder.instance.getItem(card.name, card.type);
-        baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
+
+        if (card.name == "Quick Reference")
+        {
+            // baseImage.sprite = CardImageHolder.instance.getBase(Rarity.Currency, 2);
+            itemImage.color = new Color(0, 0, 0, 0);
+            typeIcon.color = new Color(0, 0, 0, 0);
+        }
+        else
+        {
+            descriptiveText.text = card.extraDescription;
+            baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
+        }
         title.text = card.name;
-        if (card.type != Type.Currency && card.type != Type.Map)
+        if (card.type != Type.Currency && card.type != Type.Map && card.type != Type.Tool)
         {
             card.implicits.StatDisplay(implicitContainer.transform);
             card.explicits.StatDisplay(explicitContainer.transform);
         }
         canvas = GetComponent<Canvas>();
-        descriptiveText.text = card.extraDescription;
         if (card.type == Type.Currency) descriptiveText.transform.localPosition = new Vector3(0, 85, 0);
     }
     public void DoClip(int clipCount)
@@ -67,6 +77,12 @@ public class CardDisplay : MonoBehaviour
         card.durability -= clipCount;
         destination = new Vector3(1920 / 2, 1080 / 2, 0);
         baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
+
+        StartCoroutine(DoLater.DoAfterXSeconds(1.8f, () => { AudioManager.instance.Play("cardClip"); }));
+        StartCoroutine(DoLater.DoAfterXSeconds(1.1f, () => { Biggerise(); }));
+        StartCoroutine(DoLater.DoAfterXSeconds(1.7f, () => { GlobalVariables.instance.clipTop.SetActive(true); }));
+        StartCoroutine(DoLater.DoAfterXSeconds(1.7f, () => { GlobalVariables.instance.clipBottom.SetActive(true); }));
+        StartCoroutine(DoLater.DoAfterXSeconds(3f, () => { Smallerise(); }));
     }
     public void AsWeaponTrue()
     {
@@ -203,6 +219,7 @@ public class CardDisplay : MonoBehaviour
         Hand.instance.cardSelection.UnSelect(this);
         Hand.instance.UpdateCardDisplay();
         AudioManager.instance.Play("cardSwipe");
+
         cardActionHandler.DetachSelectionContainer();
     }
 
@@ -221,6 +238,7 @@ public class CardDisplay : MonoBehaviour
         if (transform.position != destination)
         {
             transform.position = Vector3.Lerp(transform.position, destination, Time.deltaTime * speed);
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         }
         // }

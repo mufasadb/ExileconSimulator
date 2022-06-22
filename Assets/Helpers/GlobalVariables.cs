@@ -42,6 +42,8 @@ public class GlobalVariables : MonoBehaviour
     public GameObject handContainer;
     public MapSelection mapSelection;
     public MapHandler mapHandler;
+    public GameObject clipTop;
+    public GameObject clipBottom;
 
 
     // Update is called once per frame

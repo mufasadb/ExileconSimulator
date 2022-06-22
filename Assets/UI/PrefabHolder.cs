@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PrefabHolder : MonoBehaviour
 {
-        #region Singleton
+    #region Singleton
     public static PrefabHolder instance;
     void Awake()
     {
@@ -19,4 +19,6 @@ public class PrefabHolder : MonoBehaviour
     public GameObject CardPrefab;
     public GameObject StaffPrefab;
     public GameObject NerdPrefab;
+    public GameObject ToolStatPrefab;
+    public GameObject ToolQuickReferencePrefab;
 }

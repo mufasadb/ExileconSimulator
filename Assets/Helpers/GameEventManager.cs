@@ -69,6 +69,7 @@ public class GameEventManager : MonoBehaviour
                 Hand.instance.CardsIntoDeck();
                 GlobalVariables.instance.cardAnimation = true;
                 StartCoroutine(ExecuteAfterTime(1.3f, () => { CloseUIItem(handUI); }));
+                StartCoroutine(ExecuteAfterTime(1.5f, () => { CloseUIItem(handUI); }));
             }
 
             handOpen = false;
