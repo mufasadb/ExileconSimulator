@@ -32,7 +32,9 @@ public class GameEventManager : MonoBehaviour
     [SerializeField] MapHandler mapHandler;
     [SerializeField] GameObject enemyUI;
     [SerializeField] TextMeshProUGUI cancelFightText;
+    [SerializeField] GameObject optionsMenu;
     public bool handOpen = true;
+    float menuCooldown = 0;
 
     public void OpenHand()
     {
@@ -150,14 +152,17 @@ public class GameEventManager : MonoBehaviour
     }
     public void CloseAllUI()
     {
-        CloseUIItem(fightUI);
-        CloseUIItem(selectionUI);
-        CloseHand();
-        CloseUIItem(craftUI);
-        CloseUIItem(rewardUI);
-        CloseUIItem(enemyUI);
-        GlobalVariables.instance.preventMoving = false;
-        FightHandler.instance.CancelFight();
+        if (GlobalVariables.instance.clipPendingCount == 0 && GlobalVariables.instance.rewardPendingCount == 0 && GlobalVariables.instance.selectionState != SelectionState.InMaps)
+        {
+            CloseUIItem(fightUI);
+            CloseUIItem(selectionUI);
+            CloseHand();
+            CloseUIItem(craftUI);
+            CloseUIItem(rewardUI);
+            CloseUIItem(enemyUI);
+            GlobalVariables.instance.preventMoving = false;
+            FightHandler.instance.CancelFight();
+        }
     }
     public void StepToNextFight()
     {
@@ -213,5 +218,22 @@ public class GameEventManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("WonAt", -1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+    public void Update()
+    {
+        if (menuCooldown > 0) menuCooldown -= Time.deltaTime;
+        if (Input.GetButton("Cancel"))
+        {
+            if (menuCooldown <= 0) { menuCooldown = 0.3f; CancelButton(); }
+        }
+    }
+    public void CancelButton()
+    {
+        if (handOpen) CloseAllUI();
+        else
+        {
+            if (optionsMenu.activeSelf) optionsMenu.SetActive(false);
+            else optionsMenu.SetActive(true);
+        }
     }
 }

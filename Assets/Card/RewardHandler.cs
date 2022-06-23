@@ -62,7 +62,7 @@ public class RewardHandler : MonoBehaviour
         if (reward == "Fragment of Phoenix") cardDisplay.card = PhoenixFrag;
         if (reward == "Fragment of Chimera") cardDisplay.card = chimeraFrag;
         if (reward == "Fragment of Minotaur") cardDisplay.card = MinotaurFrag;
-        if (reward == "map") cardDisplay.card = Level1Map;
+        if (reward == "map") cardDisplay.card = PhoenixFrag; Debug.Log(Level1Map.name);
         GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, Hand.instance.handContainer.transform);
         newCard.GetComponent<CardDisplay>().parentContainer = Hand.instance.handContainer;
         newCard.GetComponent<CardDisplay>().DoUnselect();

@@ -50,32 +50,32 @@
     },
     {
       "name": "Guardian of The Chimera",
-      "attack": "Chaos,Chaos,Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Chaos,Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "attack": "Chaos,Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Chaos,Chaos,Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
       "clipMethod": "Shield",
       "clipCount": 1,
       "tier": 5
     },
     {
       "name": "Guardian of The Hydra",
-      "attack": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
       "clipMethod": "Shield",
       "clipCount": 1,
       "tier": 5
     },
     {
       "name": "Guardian of The Minotaur",
-      "attack": "Physical,Physical,Physical,Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "attack": "Life,Life,Armour,Armour,Armour,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild",
       "clipMethod": "Shield",
       "clipCount": 1,
       "tier": 5
     },
     {
       "name": "Guardian of The Pheonix",
-      "attack": "Fire,Fire,Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "attack": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Fire,Fire,Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
       "clipMethod": "Shield",
       "clipCount": 1,
       "tier": 5

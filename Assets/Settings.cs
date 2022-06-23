@@ -34,11 +34,6 @@ public class Settings : MonoBehaviour
             if (val > 900 && val < 1000) count[9]++;
             if (val == 1000) count[10]++;
         }
-        int tutInt = PlayerPrefs.GetInt("Tutorial");
-        if (tutInt == 1)
-        {
-            ToggleSkipTutorial();
-        }
 
         // for some reason random.range seems to behave better after you smash it a few 1000 times. so .. I did that
 
@@ -57,12 +52,27 @@ public class Settings : MonoBehaviour
     public float hiddenNeighbourTierRateMulti = 0.2f;
 
     [Header("uiHolders")]
-    [SerializeField] TMPro.TMP_Dropdown timeDropdown;
-    [SerializeField] TMPro.TMP_Dropdown sortByDropdown;
-    [SerializeField] GameObject tick;
+    TMPro.TMP_Dropdown timeDropdown;
+    TMPro.TMP_Dropdown sortByDropdown;
+    GameObject options;
+    GameObject tick;
     public void Quit()
     {
         Application.Quit();
+    }
+    public void AssignOptions()
+    {
+        options = GameObject.Find("Options Menu");
+        timeDropdown = GameObject.Find("Time Display").GetComponent<TMPro.TMP_Dropdown>();
+        sortByDropdown = GameObject.Find("Hand Sort Dropdown").GetComponent<TMPro.TMP_Dropdown>();
+        tick = GameObject.Find("Skip Tutorial Tick");
+        int tutInt = PlayerPrefs.GetInt("Tutorial");
+        if (tutInt == 1)
+        {
+            ToggleSkipTutorial();
+        }
+        else { tick.SetActive(false); }
+        options.SetActive(false);
     }
     public void PlayGame()
     {
@@ -80,8 +90,10 @@ public class Settings : MonoBehaviour
         {
             skipTutorial = true;
             PlayerPrefs.SetInt("Tutorial", 1);
+
             tick.SetActive(true);
         }
+        PlayerPrefs.Save();
     }
     public void UpdateSeed(string _input)
     {

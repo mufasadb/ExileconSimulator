@@ -51,7 +51,7 @@ public class FightHandler : MonoBehaviour
         {
             if (isChrisFight) GameEventManager.instance.WinGame();
             if (targetName == "Guardian of The Hydra") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Hydra");
-            else if (targetName == "Guardian of The Phoenix") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Phoneix");
+            else if (targetName == "Guardian of The Pheonix") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Phoneix");
             else if (targetName == "Guardian of The Chimera") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Chimera");
             else if (targetName == "Guardian of The Minotaur") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Minotaur");
             else GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(cardSelection.extraDraw + 2, fightTargetTier, cardSelection.extraDraw + 1);
@@ -71,7 +71,6 @@ public class FightHandler : MonoBehaviour
 
 
         }
-        else { Debug.LogError("Player Loses"); }
 
         //clip cards
 
@@ -194,7 +193,10 @@ public class FightHandler : MonoBehaviour
     {
         fightTargetAttack = new Stats();
         fightTargetDefence = new Stats();
-        CopyStats(storedFightTargetAttack, storedFightTargetDefence);
+        if (storedFightTargetDefence != null)
+        {
+            CopyStats(storedFightTargetAttack, storedFightTargetDefence);
+        }
 
         //Handle Unique Card Shavronnes Wrappings
         #region Handle Unique Edits to Stats

@@ -165,7 +165,7 @@ public class CardSelection : MonoBehaviour
                     break;
                 }
             default:
-                Debug.Log("didn't have a type");
+                // Debug.Log("didn't have a type");
                 break;
         }
         statCalc();

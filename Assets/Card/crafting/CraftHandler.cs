@@ -96,7 +96,7 @@ public class CraftHandler : MonoBehaviour
     }
     void CheckQuest()
     {
-        questHandler.MarkCraftQuestComplete(item.card.name, currency.card.name);
+        questHandler.MarkCraftQuestComplete(item.card.type.ToString(), currency.card.name);
     }
     private void ThrowError(string error)
     {
@@ -113,8 +113,8 @@ public class CraftHandler : MonoBehaviour
         acceptReward.SetActive(show);
         cantAcceptReward.SetActive(!show);
     }
-    public void Start()
-    {
-        DisplayAcceptRewardButton(false);
-    }
+//     public void Start()
+//     {
+//         DisplayAcceptRewardButton(false);
+//     }
 }

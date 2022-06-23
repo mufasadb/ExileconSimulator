@@ -149,6 +149,7 @@ public class CardDisplay : MonoBehaviour
         if (selected)
         {
             baseImage.transform.localScale = new Vector3(1f, 1f, 1);
+            transform.SetAsLastSibling();
         }
         else
         {

@@ -15,7 +15,7 @@ public static class ClipMethodResolver
                 return;
             }
         }
-        if (clipMethod == ClipMethod.All) { foreach (CardDisplay card in cardList) { card.DoClip(clipCount); } }
+        if (clipMethod == ClipMethod.All) { foreach (CardDisplay card in cardList) { DoClip(card, clipCount); } }
         else if (clipMethod == ClipMethod.Jewellery)
         {
             foreach (CardDisplay card in cardList)
