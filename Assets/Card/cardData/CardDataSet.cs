@@ -10,22 +10,21 @@ public class CardDataSet
     // }
     public CardDataObject GetCardBaseData(int tier, bool forMaps)
     {
-        // if (tier > 3) { Debug.LogError("Tried to created a card with tier greater than 3"); return null; }
+
         List<CardDataObject> specificTierItems = set.FindAll(item => item.tier == tier);
-        // List<CardDataObject> neighbourTierBelow = set.FindAll(item => item.tier == tier);
         List<CardDataObject> neighbourTierAbove = new List<CardDataObject>();
         if (!forMaps && tier != 4)
         {
             neighbourTierAbove = set.FindAll(item => item.tier == tier + 1);
         }
 
-        return ChooseFromWeightedCards(specificTierItems.ToArray(), neighbourTierAbove.ToArray(), forMaps, tier == 5);
+        return ChooseFromWeightedCards(specificTierItems.ToArray(), neighbourTierAbove.ToArray(), forMaps, tier);
     }
     public CardDataObject GetSpecificCard(string cardName)
     {
         return set.Find(c => c.name == cardName);
     }
-    private CardDataObject ChooseFromWeightedCards(CardDataObject[] cardsMain, CardDataObject[] cardsNeighbourTierAbove, bool forMaps, bool finalTier)
+    private CardDataObject ChooseFromWeightedCards(CardDataObject[] cardsMain, CardDataObject[] cardsNeighbourTierAbove, bool forMaps, int tier)
     {
         int[] weights = new int[cardsMain.Length + cardsNeighbourTierAbove.Length];
         int totalInt = 0;
@@ -48,7 +47,7 @@ public class CardDataSet
             {
                 if (forMaps)
                 {
-                    if (finalTier)
+                    if (tier == 5)
                     {
 
                         weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].mapRate);
@@ -63,8 +62,16 @@ public class CardDataSet
                 }
                 else
                 {
-                    weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * Settings.instance.hiddenNeighbourTierRateMulti);
-                    totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * Settings.instance.hiddenNeighbourTierRateMulti);
+                    if (tier == 1 && GlobalVariables.instance.selectionState != SelectionState.InitialDeal)
+                    {
+                        weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * 1.5f);
+                        totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * 1.5f);
+                    }
+                    else
+                    {
+                        weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * Settings.instance.hiddenNeighbourTierRateMulti);
+                        totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * Settings.instance.hiddenNeighbourTierRateMulti);
+                    }
                 }
             }
         }

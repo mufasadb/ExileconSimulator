@@ -39,8 +39,8 @@ public class TimerDisplay : MonoBehaviour
         int hours = ((int)Mathf.FloorToInt(GlobalVariables.instance.timer - (days * 8 * 60)) / 60);
         int minutes = 60 - (int)Mathf.FloorToInt(GlobalVariables.instance.timer - hours * 60 - (days * 8 * 60));
         hours = 16 - hours;
-        string dayString = "Saturday";
-        if (days == 1) { dayString = "Sunday"; }
+        string dayString = "Sunday";
+        if (days == 1) { dayString = "Saturday"; }
         string hourString = hours.ToString();
         if (hours < 10) { hourString = "0" + hourString; }
         string minuteString = minutes.ToString();

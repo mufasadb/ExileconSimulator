@@ -18,7 +18,7 @@ public class GlobalVariables : MonoBehaviour
     }
     #endregion
     [Header("Global Settings")]
-    [Range(0.1f, 3f)]
+    [Range(0.1f, 5f)]
     public float timeMulti = 1;
     // Start is called before the first frame update
     [Header("Tracked Variables")]
@@ -29,8 +29,9 @@ public class GlobalVariables : MonoBehaviour
     public int clipPendingCount = 0;
     public float cardsMovingCooldown = 0;
     public bool cardAnimation = false;
-    public SelectionState selectionState = SelectionState.Fight;
-    public float gameSpeed = 1;
+    public int lastFightID;
+    public SelectionState selectionState = SelectionState.InitialDeal;
+    public float gameSpeed = 0.5f;
 
     [Header("Containers")]
 
@@ -57,4 +58,4 @@ public class GlobalVariables : MonoBehaviour
 
     }
 }
-public enum SelectionState { Fight, EnteringMaps, InMaps }
+public enum SelectionState { Fight, EnteringMaps, InMaps, InitialDeal }

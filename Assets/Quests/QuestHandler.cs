@@ -88,9 +88,9 @@ public class QuestHandler : MonoBehaviour
     }
     public void TakeRewards()
     {
-        if (questTier1ReadyToReceive && !questTier1Received) { questTier1Received = true; rewardHandler.DoReward(1, 1, 1); CheckIfTiercomplete(); return; }
-        if (questTier2ReadyToReceive && !questTier2Received) { questTier2Received = true; rewardHandler.DoReward(1, 2, 1); CheckIfTiercomplete(); return; }
-        if (questTier3ReadyToReceive && !questTier3Received) { questTier3Received = true; rewardHandler.DoReward(1, 3, 1); CheckIfTiercomplete(); return; }
+        if (questTier1ReadyToReceive && !questTier1Received) { questTier1Received = true; rewardHandler.DoReward(1, 2, 1); CheckIfTiercomplete(); return; }
+        if (questTier2ReadyToReceive && !questTier2Received) { questTier2Received = true; rewardHandler.DoReward(1, 3, 1); CheckIfTiercomplete(); return; }
+        if (questTier3ReadyToReceive && !questTier3Received) { questTier3Received = true; rewardHandler.DoReward(1, 4, 1); CheckIfTiercomplete(); return; }
         if (questTier4ReadyToReceive && !questTier4Received) { questTier4Received = true; rewardHandler.DoSpecificReward("map"); CheckIfTiercomplete(); return; }
     }
     public void MarkCraftQuestComplete(string carftingItem, string craftingCurrency)

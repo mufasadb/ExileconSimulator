@@ -18,29 +18,39 @@ public class CraftHandler : MonoBehaviour
             {
                 if (item.card.type == Type.OneHandedWeapon || item.card.type == Type.TwoHandedWeapon)
                 {
+                    if (item.card.isCrafted)
+                    {
+                        ThrowError("Blacksmith Whestones can't be applied to already qualitied weapons");
+                        return;
+                    }
                     //Craft quality handles the added stat and the images, just send weather or not its an item to dictate stat
                     item.CraftQuality(true);
                 }
                 else
                 {
                     ThrowError("Blacksmith Whetstones can only be applied to weapons");
-                return;
+                    return;
                 }
             }
             if (currency.card.name == "Armourer Scrap")
             {
                 if (item.card.type == Type.Chest || item.card.type == Type.Shield)
                 {
+                    if (item.card.isCrafted)
+                    {
+                        ThrowError("Armourer Scraps can't be applied to already qualitied Armour pieces");
+                        return;
+                    }
                     //Craft quality handles the added stat and the images, just send weather or not its an item to dictate stat=
                     item.CraftQuality(false);
                 }
                 else
                 {
                     ThrowError("Armourer Scraps can only be aplied to chest armour or shields");
-                return;
+                    return;
                 }
             }
-            Rarity newRarity = Rarity.Magic;
+            Rarity newRarity = item.card.rarity;
             if (currency.card.name == "Alchemy Orb")
             {
                 if (item.card.rarity == Rarity.Normal)
@@ -53,7 +63,7 @@ public class CraftHandler : MonoBehaviour
             {
                 if (item.card.rarity == Rarity.Normal)
                 {
-
+                    newRarity = Rarity.Magic;
                 }
                 else { ThrowError("The item must be Normal to craft with an Alchemy Orb"); return; }
             }
@@ -61,7 +71,7 @@ public class CraftHandler : MonoBehaviour
             {
                 if (item.card.rarity == Rarity.Magic)
                 {
-
+                    newRarity = Rarity.Magic;
                 }
                 else { ThrowError("The item must be Normal to craft with an Alchemy Orb"); return; }
             }
@@ -88,14 +98,18 @@ public class CraftHandler : MonoBehaviour
             Destroy(currency.gameObject);
             CheckQuest();
 
-            item.card.rarity = newRarity;
-            item.craftingSticker.SetActive(true);
-            for (int i = 0; i < item.explicitContainer.transform.childCount; i++)
+            if (item.card.rarity != newRarity)
             {
-                Destroy(item.explicitContainer.transform.GetChild(i).gameObject);
+
+                item.card.rarity = newRarity;
+                item.craftingSticker.SetActive(true);
+                for (int i = 0; i < item.explicitContainer.transform.childCount; i++)
+                {
+                    Destroy(item.explicitContainer.transform.GetChild(i).gameObject);
+                }
+                item.card.explicits.makeExplicit(item.card.type, newRarity);
+                item.card.explicits.StatDisplay(item.explicitContainer.transform);
             }
-            item.card.explicits.makeExplicit(item.card.type, newRarity);
-            item.card.explicits.StatDisplay(item.explicitContainer.transform);
         }
         else
         {

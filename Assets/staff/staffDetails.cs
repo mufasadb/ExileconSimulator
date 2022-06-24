@@ -52,7 +52,7 @@ public class staffDetails : MonoBehaviour
     {
         if (baseEleName == "Wild")
         {
-            statEleList.Add(baseEleName + statVal);
+            if (statVal > 0) statEleList.Add(baseEleName + statVal);
         }
         else
         {

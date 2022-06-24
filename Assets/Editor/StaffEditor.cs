@@ -177,7 +177,10 @@ public class StaffEditor : EditorWindow
             for (int i = 0; i < defenceChaos; i++) { implicitString += "Chaos,"; };
             for (int i = 0; i < defenceWild; i++) { implicitString += "Wild,"; };
         }
-        implicitString.Remove(implicitString.Length - 1, 1);
+        if (implicitString.Length > 0)
+        {
+            implicitString.Remove(implicitString.Length - 1, 1);
+        }
         return implicitString;
     }
     private void StringToStats(string implicitString, bool isAttack)

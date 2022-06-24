@@ -7688,7 +7688,7 @@ MonoBehaviour:
   seed: 0
   skipTutorial: 0
   sortBy: 0
-  hiddenNeighbourTierRateMulti: 0.2
+  hiddenNeighbourTierRateMulti: 0.4
 --- !u!4 &2092799477
 Transform:
   m_ObjectHideFlags: 0

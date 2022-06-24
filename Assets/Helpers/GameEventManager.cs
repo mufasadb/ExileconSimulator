@@ -35,6 +35,7 @@ public class GameEventManager : MonoBehaviour
     [SerializeField] GameObject optionsMenu;
     public bool handOpen = true;
     float menuCooldown = 0;
+    float handCooldown = 0;
 
     public void OpenHand()
     {
@@ -231,6 +232,22 @@ public class GameEventManager : MonoBehaviour
         {
             if (menuCooldown <= 0) { menuCooldown = 0.3f; CancelButton(); }
         }
+        if (handCooldown > 0) handCooldown -= Time.deltaTime;
+        if (Input.GetButton("Hand"))
+        {
+            if (handCooldown <= 0)
+            {
+                if (!handOpen)
+                {
+                    OpenHand();
+                }
+                else
+                {
+                    CloseHand();
+                }
+                handCooldown = 0.3f;
+            }
+        }
     }
     public void CancelButton()
     {
@@ -240,5 +257,6 @@ public class GameEventManager : MonoBehaviour
             if (optionsMenu.activeSelf) optionsMenu.SetActive(false);
             else optionsMenu.SetActive(true);
         }
+
     }
 }

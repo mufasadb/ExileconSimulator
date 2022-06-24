@@ -26,11 +26,14 @@ public class staffCreation : MonoBehaviour
         GameObject staffPrefab = PrefabHolder.instance.StaffPrefab;
 
         SpecialStaffGen(staffPrefab);
-        for (int i = 0; i < 38; i++)
+        // for (int i = 0; i < 50; i++)
+        // {
+        //     createStaffMember(staffPrefab);
+        // }
+        foreach (var sm in StaffDataSystem.instance.staffDataSet.set)
         {
-            createStaffMember(staffPrefab);
-        }
-
+            createStaffMember(staffPrefab, sm.name);
+        };
     }
     void SpecialStaffGen(GameObject staffPrefab)
     {
@@ -57,11 +60,11 @@ public class staffCreation : MonoBehaviour
         createStaffMember(staffPrefab, "Guardian of The Hydra", zombieSpawner);
 
     }
-    private void createStaffMember(GameObject staffPrefab)
+    private void createStaffMember(GameObject staffPrefab, string staffName)
     {
-        StaffMember staffMember = StaffMember.CreateInstance(1);
+        StaffMember staffMember = StaffMember.CreateSpecific(staffName);
         staffList.Add(staffMember);
-        staffList.Add(StaffMember.CreateInstance(1));
+        // staffList.Add(StaffMember.CreateInstance(1));
         SpawnPoint newPositionObj = getSpawnPoint();
         Transform newPositionTrans = newPositionObj.transformPoint.transform;
         Vector3 position = new Vector3(newPositionTrans.position.x, newPositionTrans.position.y, newPositionTrans.position.z);

@@ -115,6 +115,7 @@ public class Hand : MonoBehaviour
         CardsIntoDeck();
         SortHand();
         UpdateCardDisplay();
+        GlobalVariables.instance.selectionState = SelectionState.Fight;
     }
     public void UpdateScrollIndex(bool moveLeft)
     {
