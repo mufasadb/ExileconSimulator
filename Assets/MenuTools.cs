@@ -17,7 +17,8 @@ public class MenuTools : MonoBehaviour
     }
     public void UpdateSeed(string _input)
     {
-        Settings.instance.UpdateSeed(_input);
+        
+        Settings.instance.UpdateSeed(_input.GetHashCode());
     }
     public void UpdateTimeDisplay()
     {

@@ -50,15 +50,23 @@ public class staffDetails : MonoBehaviour
     }
     private List<string> CalculateAndAddStringsFromStatEle(string baseEleName, int statVal, List<string> statEleList)
     {
-        int workingStat = statVal % 3;
-        int statTriple = (int)Mathf.Floor(statVal / 3);
-        for (int i = 0; i < workingStat; i++)
+        if (baseEleName == "Wild")
         {
-            statEleList.Add(baseEleName);
+            statEleList.Add(baseEleName + statVal);
         }
-        for (int i = 0; i < statTriple; i++)
+        else
         {
-            statEleList.Add(baseEleName + "Triple");
+            int workingStat = statVal % 3;
+            int statTriple = (int)Mathf.Floor(statVal / 3);
+
+            for (int i = 0; i < workingStat; i++)
+            {
+                statEleList.Add(baseEleName);
+            }
+            for (int i = 0; i < statTriple; i++)
+            {
+                statEleList.Add(baseEleName + "Triple");
+            }
         }
         return statEleList;
     }

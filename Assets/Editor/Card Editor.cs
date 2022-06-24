@@ -1,6 +1,6 @@
 using UnityEditor;
 using UnityEngine;
-
+using System.Linq;
 public class CardEditor : EditorWindow
 {
 
@@ -28,6 +28,8 @@ public class CardEditor : EditorWindow
     bool newCard = false;
     int editingInt;
     int uniqueEditingInt;
+    bool detailedReporting = false;
+
     Vector2 scrollPos;
     [MenuItem("Window/Card Editor")]
     public static void ShowWindow()
@@ -38,11 +40,25 @@ public class CardEditor : EditorWindow
     {
         LoadFromJson();
 
-
+        int[] totalRateArray = new int[8];
+        int[] totalMapRateArray = new int[8];
         GUILayout.Label("Sort By", EditorStyles.boldLabel);
 
         // data.set.Sort((c1, c2) => c1.tier.CompareTo(c2.tier));
-        data.set.Sort((c1, c2) => c1.type.CompareTo(c2.type));
+        // data.set.Sort((c1, c2) => c1.type.CompareTo(c2.type));
+        data.set = data.set.OrderBy(c => c.tier).ThenBy(c => c.type).ToList();
+        foreach (var card in data.set)
+        {
+            // if (card.tier < 0) Debug.Log(card.name);
+            // if (card.tier > 4) Debug.Log(card.name);
+
+            totalRateArray[card.tier] += card.rate;
+            // if (card.tier == 1)
+            // {
+            //     Debug.Log(totalRateArray[card.tier]);
+            // }
+            totalMapRateArray[card.tier] += card.mapRate;
+        }
         // data.set.Sort((c1, c2) => c1.name.CompareTo(c2.name));
 
         GUILayout.Label("Data", EditorStyles.boldLabel);
@@ -53,6 +69,7 @@ public class CardEditor : EditorWindow
             singleCard.type = (Type)EditorGUILayout.EnumFlagsField("Type", singleCard.type);
             singleCard.tier = EditorGUILayout.IntField("Tier", singleCard.tier);
             singleCard.rate = EditorGUILayout.IntField("rate", singleCard.rate);
+            singleCard.mapRate = EditorGUILayout.IntField("Map Rate", singleCard.mapRate);
             singleCard.extraDescription = EditorGUILayout.TextField("extraDescription", singleCard.extraDescription);
             singleCard.isUnique = EditorGUILayout.Toggle("Is Unique", singleCard.isUnique);
             if (singleCard.isUnique)
@@ -93,12 +110,15 @@ public class CardEditor : EditorWindow
         }
         else
         {
-
+            if (GUILayout.Button("Detailed Reporting")) { detailedReporting = !detailedReporting; }
             GUILayout.BeginHorizontal();
             GUILayout.Label("Name", EditorStyles.label);
-            GUILayout.Label("Tier", EditorStyles.label, GUILayout.Width(100));
-            GUILayout.Label("Rate", EditorStyles.label, GUILayout.Width(100));
-            GUILayout.Label("Type", EditorStyles.label, GUILayout.Width(200));
+            GUILayout.Label("Tier", EditorStyles.label, GUILayout.Width(75));
+            GUILayout.Label("Rate", EditorStyles.label, GUILayout.Width(75));
+            if (detailedReporting) GUILayout.Label("% of Tier", EditorStyles.label, GUILayout.Width(150));
+            GUILayout.Label("Map Rate", EditorStyles.label, GUILayout.Width(75));
+            if (detailedReporting) GUILayout.Label("Map % of Tier", EditorStyles.label, GUILayout.Width(150));
+            GUILayout.Label("Type", EditorStyles.label, GUILayout.Width(150));
             GUILayout.EndHorizontal();
             scrollPos =
             GUILayout.BeginScrollView(scrollPos);
@@ -106,9 +126,15 @@ public class CardEditor : EditorWindow
             {
                 GUILayout.BeginHorizontal();
                 if (GUILayout.Button(data.set[i].name)) { editingInt = i; showForm = true; newCard = false; LoadCard(i); }
-                GUILayout.Label(data.set[i].tier.ToString(), EditorStyles.label, GUILayout.Width(100));
-                GUILayout.Label(data.set[i].rate.ToString(), EditorStyles.label, GUILayout.Width(100));
-                GUILayout.Label(data.set[i].type.ToString(), EditorStyles.label, GUILayout.Width(200));
+                GUILayout.Label(data.set[i].tier.ToString(), EditorStyles.label, GUILayout.Width(75));
+                GUILayout.Label(data.set[i].rate.ToString(), EditorStyles.label, GUILayout.Width(75));
+                if (detailedReporting) GUILayout.Label((data.set[i].rate != 0) ? (data.set[i].rate * 100 / ((totalRateArray[data.set[i].tier + 1] * 0.2) + totalRateArray[data.set[i].tier])).ToString() : 0.ToString(), EditorStyles.label, GUILayout.Width(150));
+
+                GUILayout.Label(data.set[i].mapRate.ToString(), EditorStyles.label, GUILayout.Width(75));
+
+                if (detailedReporting) GUILayout.Label((data.set[i].mapRate != 0) ? (data.set[i].mapRate * 100 / ((totalMapRateArray[data.set[i].tier + 1] * 0.2) + totalMapRateArray[data.set[i].tier])).ToString() : 0.ToString(), EditorStyles.label, GUILayout.Width(150));
+
+                GUILayout.Label(data.set[i].type.ToString(), EditorStyles.label, GUILayout.Width(150));
                 GUILayout.EndHorizontal();
 
 
@@ -150,7 +176,6 @@ public class CardEditor : EditorWindow
         if (singleCard.isUnique)
         {
             uniqueObject = uniqueData.set.Find(c => c.name == singleCard.name);
-            Debug.Log(uniqueObject.name);
             ExplicitStringToStats(uniqueObject.explicits);
             // ExplicitStringToStats(uniqueData.set.Find(c => c.name == singleCard.name).explicits);
         }
@@ -168,7 +193,6 @@ public class CardEditor : EditorWindow
             {
                 uniqueData.set.Add(uniqueObject);
             }
-            Debug.Log("added new card");
             data.set.Add(singleCard);
         }
         else

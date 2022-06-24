@@ -152,6 +152,11 @@ public class GameEventManager : MonoBehaviour
     }
     public void CloseAllUI()
     {
+        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+        {
+            CloseHand();
+            return;
+        }
         if (GlobalVariables.instance.clipPendingCount == 0 && GlobalVariables.instance.rewardPendingCount == 0 && GlobalVariables.instance.selectionState != SelectionState.InMaps)
         {
             CloseUIItem(fightUI);

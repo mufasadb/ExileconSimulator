@@ -94,9 +94,11 @@ public class Hand : MonoBehaviour
         GameObject statCardPrefab = PrefabHolder.instance.ToolStatPrefab;
         GameObject howCardPrefab = PrefabHolder.instance.ToolQuickReferencePrefab;
         Vector3 position = new Vector3(1920 - 150, 1080 - 50, 0);
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 10; i++)
         {
-            Card newCard = Card.CreateInstance(3, i.ToString());
+            Card newCard = Card.CreateInstance(1, false);
+            if (i == 0) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
+            if (i == 1) { newCard = Card.CreateSpecificInstance("Full Plate"); }
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;
             card.card = newCard;

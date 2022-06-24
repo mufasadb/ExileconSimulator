@@ -28,19 +28,56 @@ public class Card : ScriptableObject
     public int mapTier;
     public string extraDescription;
 
-    public static Card CreateInstance(int tier, string newname)
+    public static Card CreateInstance(int tier, bool inMaps)
     {
         // if (tier > ) Debug.LogWarning("Tier higher than 4 submitted");
 
         var data = ScriptableObject.CreateInstance<Card>();
-        data.Init(tier, newname);
+        data.Init(tier, inMaps);
+        return data;
+    }
+    public static Card CreateSpecificInstance(string cardName)
+    {
+        // if (tier > ) Debug.LogWarning("Tier higher than 4 submitted");
+
+        var data = ScriptableObject.CreateInstance<Card>();
+        data.Init(cardName);
         return data;
     }
 
-    public void Init(int tier, string newname)
+
+    public void Init(string cardName)
+    {
+        this.rarity = genRarity(1);
+        CardDataObject cardData = CardDataSystem.instance.cardDataSet.GetSpecificCard(cardName);
+        this.type = cardData.type;
+        if (this.type == Type.Currency) { this.rarity = Rarity.Currency; }
+        if (cardData.isUnique) { this.rarity = Rarity.Unique; }
+        //Enable this line to name cards by creation (1, 2, 3, etc.)
+        // this.name = newname;
+        this.name = cardData.name;
+        this.description = this.name;
+        this.extraDescription = cardData.extraDescription;
+        this.mapTier = cardData.mapTier;
+        if (cardData.type != Type.Currency && cardData.type != Type.Map)
+        {
+            this.implicits = new Stats();
+            this.implicits.DeclareStats(StatStringToIntArray(cardData.implicits));
+            this.explicits = new Stats();
+            this.explicits.makeExplicit(this.type, this.rarity);
+        }
+        if (cardData.isUnique)
+        {
+            UniqueDataObject uniqueDataObject = CardDataSystem.instance.uniqueDataSet.GetExplicitStringByUniqueName(cardData.name);
+            this.explicits.DeclareStats(StatStringToIntArray(uniqueDataObject.explicits));
+            this.extraDraw = uniqueDataObject.extraDraws;
+            this.extraTakes = uniqueDataObject.extraTakes;
+        }
+    }
+    public void Init(int tier, bool forMaps)
     {
         this.rarity = genRarity(tier);
-        CardDataObject cardData = CardDataSystem.instance.cardDataSet.GetCardBaseData(tier);
+        CardDataObject cardData = CardDataSystem.instance.cardDataSet.GetCardBaseData(tier, forMaps);
         this.type = cardData.type;
         if (this.type == Type.Currency) { this.rarity = Rarity.Currency; }
         if (cardData.isUnique) { this.rarity = Rarity.Unique; }

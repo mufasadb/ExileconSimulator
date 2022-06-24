@@ -21,7 +21,7 @@ public class Fight : Interactable
     {
         if (staffMember.name == "The Shaper")
         {
-            if (!UserHasFrags()) Debug.Log("You dont have the frags you need");
+            if (!UserHasFrags()) { GlobalVariables.instance.errorHandler.NewError("In order to fight Chris, you need all 4 Gaurdian Shards"); return; }
             else
             {
                 AudioManager.instance.SwitchToEndMusic();

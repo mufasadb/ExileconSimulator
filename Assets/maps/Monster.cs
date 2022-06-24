@@ -28,6 +28,7 @@ public class Monster : ScriptableObject
         this.name = monsterDataObject.name;
         this.clipCount = 1;
         this.clipMethod = (ClipMethod)Random.Range(0, 8);
+        if(this.clipMethod == ClipMethod.All) this.clipMethod = ClipMethod.Common;
         // this.clipCount = monsterDataObject.clipCount;
         // this.clipMethod = (ClipMethod)System.Enum.Parse(typeof(ClipMethod), monsterDataObject.clipMethod);
         this.defence = new Stats();

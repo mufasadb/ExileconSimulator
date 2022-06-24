@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
 
 public class StaffEditor : EditorWindow
 {
@@ -34,19 +35,13 @@ public class StaffEditor : EditorWindow
     {
         LoadFromJson();
 
-
-        // GUILayout.Label("Sort By", EditorStyles.boldLabel);
-
-        // data.set.Sort((c1, c2) => c1.tier.CompareTo(c2.tier));
-        // data.set.Sort((c1, c2) => c1.type.CompareTo(c2.type));
-        data.set.Sort((c1, c2) => c1.name.CompareTo(c2.name));
+        data.set = data.set.OrderBy(s => s.tier).ThenBy(s => s.name).ToList();
 
         GUILayout.Label("Data", EditorStyles.boldLabel);
 
         if (showForm)
         {
             singleStaffMember.name = EditorGUILayout.TextField("name", singleStaffMember.name);
-            // singleStaffMember.type = (Type)EditorGUILayout.EnumFlagsField("Type", singleStaffMember.type);
             singleStaffMember.tier = EditorGUILayout.IntField("Tier", singleStaffMember.tier);
             GUILayout.Label("", EditorStyles.boldLabel);
             GUILayout.Label("Attack Data", EditorStyles.boldLabel);
@@ -127,13 +122,13 @@ public class StaffEditor : EditorWindow
     }
     private void SaveCard()
     {
-        singleStaffMember.attack = StatsToString(false);
-        singleStaffMember.defence = StatsToString(true);
+
+        singleStaffMember.attack = StatsToString(true);
+        singleStaffMember.defence = StatsToString(false);
         if (singleStaffMember.clipCount == 0) { singleStaffMember.clipCount = 1; }
         if (singleStaffMember.clipMethod == "") { singleStaffMember.clipMethod = "Broken"; }
         if (newCard)
         {
-            Debug.Log("added new card");
             data.set.Add(singleStaffMember);
         }
         else
@@ -146,11 +141,6 @@ public class StaffEditor : EditorWindow
     {
         string jsonData = System.IO.File.ReadAllText(Application.dataPath + "/staff/staffData/staffData.json");
         data = JsonUtility.FromJson<StaffDataSet>(jsonData);
-        // data.set.Sort((c1, c2) => c1.type.CompareTo(c2.type));
-        // data.set.Sort((c1, c2) => c1.tier.CompareTo(c2.tier));
-        // singleCard = JsonUtility.FromJson<CardDataObject>(jsonData);
-        // oneLoadeD = true;
-        // StringToStats(singleCard.implicits);
     }
     public void SaveIntoJson()
     {

@@ -95,14 +95,20 @@ public class Settings : MonoBehaviour
         }
         PlayerPrefs.Save();
     }
-    public void UpdateSeed(string _input)
+    public void UpdateSeed(int _input)
     {
-        int input;
-        int.TryParse(_input, out input);
-        Debug.Log(input);
+        // int input;
+        // int.TryParse(_input, out input);
+        // Debug.Log(input);
 
-        if (input != 0)
+        if (_input != 0)
         {
+            seed = _input;
+            Random.InitState(seed);
+        }
+        else
+        {
+            seed = Random.Range(0, 444483647);
             Random.InitState(seed);
         }
 

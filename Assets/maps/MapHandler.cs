@@ -65,9 +65,7 @@ public class MapHandler : MonoBehaviour
     public void NextFight()
     {
         currentFightTier++;
-        Debug.Log("Creating the next fight at tier " + currentFightTier);
         Monster monsterToFight = Monster.CreateInstance(currentFightTier);
-        Debug.Log("against " + monsterToFight.name);
         FightHandler.instance.InitiateFight(monsterToFight);
         fightsRemaining--;
         // GlobalVariables.instance
@@ -97,7 +95,7 @@ public class MapHandler : MonoBehaviour
         {
             Hand.instance.hand.Remove(map.gameObject);
             Destroy(map.gameObject);
-
+            GlobalVariables.instance.selectionState = SelectionState.Fight;
 
             List<CardDisplay> allSelectedCards = new List<CardDisplay>();
             foreach (var card in Hand.instance.cardSelection.twoHandedWeapons) { allSelectedCards.Add(card); }
@@ -115,6 +113,7 @@ public class MapHandler : MonoBehaviour
 
         }
         GameEventManager.instance.EndMapScreen();
+        GameEventManager.instance.CloseAllUI();
         GameEventManager.instance.SetFightCancelButtonToCancel();
         isInMap = false;
         currentFightTier = 0;

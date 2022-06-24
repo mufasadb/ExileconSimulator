@@ -24,8 +24,8 @@ public class CraftHandler : MonoBehaviour
                 else
                 {
                     ThrowError("Blacksmith Whetstones can only be applied to weapons");
-                }
                 return;
+                }
             }
             if (currency.card.name == "Armourer Scrap")
             {
@@ -37,8 +37,8 @@ public class CraftHandler : MonoBehaviour
                 else
                 {
                     ThrowError("Armourer Scraps can only be aplied to chest armour or shields");
-                }
                 return;
+                }
             }
             Rarity newRarity = Rarity.Magic;
             if (currency.card.name == "Alchemy Orb")
@@ -72,6 +72,15 @@ public class CraftHandler : MonoBehaviour
                     newRarity = Rarity.Rare;
                 }
                 else { ThrowError("The item must be Normal to craft with an Alchemy Orb"); return; }
+            }
+            if (currency.card.name == "Scour Orb")
+            {
+                if (item.card.rarity == Rarity.Magic || item.card.rarity == Rarity.Rare)
+                {
+                    newRarity = Rarity.Normal;
+                }
+                else { ThrowError("The item must be rare or magic to craft with a soure orb"); }
+
             }
 
             //do craft
@@ -113,8 +122,8 @@ public class CraftHandler : MonoBehaviour
         acceptReward.SetActive(show);
         cantAcceptReward.SetActive(!show);
     }
-//     public void Start()
-//     {
-//         DisplayAcceptRewardButton(false);
-//     }
+    //     public void Start()
+    //     {
+    //         DisplayAcceptRewardButton(false);
+    //     }
 }

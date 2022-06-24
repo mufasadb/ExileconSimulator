@@ -14,6 +14,7 @@ public class CardDataObject
     public int mapTier;
     public int rate;
     public string extraDescription;
+    public int mapRate;
     // public CardDataObject(){
     //     // name = cardDataObject.name;
     //     // implicits = cardDataObject.implicits;

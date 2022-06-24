@@ -9,6 +9,7 @@ public class RewardHandler : MonoBehaviour
     [SerializeField] Card PhoenixFrag;
     [SerializeField] Card MinotaurFrag;
     [SerializeField] Card Level1Map;
+    [SerializeField] MapHandler mapHandler;
     public void DoReward(int numberOfCardsOffered, int tier, int takeCount)
     {
         GameEventManager.instance.BeginRewardScreen();
@@ -40,7 +41,14 @@ public class RewardHandler : MonoBehaviour
     {
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         CardDisplay cardDisplay = cardPrefab.GetComponent<CardDisplay>();
-        cardDisplay.card = Card.CreateInstance(tier, "null");
+        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+        {
+            cardDisplay.card = Card.CreateInstance(mapHandler.map.card.mapTier + 2, true);
+        }
+        else
+        {
+            cardDisplay.card = Card.CreateInstance(tier, false);
+        }
         GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, Hand.instance.handContainer.transform);
 
         //tell it where to go (to the hand container roughly)
@@ -62,13 +70,17 @@ public class RewardHandler : MonoBehaviour
         if (reward == "Fragment of Phoenix") cardDisplay.card = PhoenixFrag;
         if (reward == "Fragment of Chimera") cardDisplay.card = chimeraFrag;
         if (reward == "Fragment of Minotaur") cardDisplay.card = MinotaurFrag;
-        if (reward == "map") cardDisplay.card = PhoenixFrag; Debug.Log(Level1Map.name);
-        GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, Hand.instance.handContainer.transform);
-        newCard.GetComponent<CardDisplay>().parentContainer = Hand.instance.handContainer;
-        newCard.GetComponent<CardDisplay>().DoUnselect();
-        newCard.GetComponent<CardDisplay>().destination = GlobalVariables.instance.RewardContainer.transform.position + new Vector3(0 * 250 - 250, 0, 0);
-        newCard.transform.SetParent(GlobalVariables.instance.RewardContainer.transform);
-        newCard.AddComponent<RewardSelection>();
-        newCard.GetComponent<Animator>().SetBool("facingForward", true);
+        if (reward == "map")
+        {
+            cardDisplay.card = Level1Map;
+            GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, Hand.instance.handContainer.transform);
+            newCard.GetComponent<CardDisplay>().parentContainer = Hand.instance.handContainer;
+            newCard.GetComponent<CardDisplay>().DoUnselect();
+            newCard.GetComponent<CardDisplay>().destination = GlobalVariables.instance.RewardContainer.transform.position + new Vector3(0 * 250 - 250, 0, 0);
+            newCard.transform.SetParent(GlobalVariables.instance.RewardContainer.transform);
+            newCard.AddComponent<RewardSelection>();
+            newCard.GetComponent<Animator>().SetBool("facingForward", true);
+
+        }
     }
 }

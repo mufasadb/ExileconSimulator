@@ -8,15 +8,24 @@ public class CardDataSet
     // public void AddCard(){
     //     set.Add(new CardDataObject());
     // }
-    public CardDataObject GetCardBaseData(int tier)
+    public CardDataObject GetCardBaseData(int tier, bool forMaps)
     {
         // if (tier > 3) { Debug.LogError("Tried to created a card with tier greater than 3"); return null; }
         List<CardDataObject> specificTierItems = set.FindAll(item => item.tier == tier);
         // List<CardDataObject> neighbourTierBelow = set.FindAll(item => item.tier == tier);
-        List<CardDataObject> neighbourTierAbove = set.FindAll(item => item.tier == tier + 1);
-        return ChooseFromWeightedCards(specificTierItems.ToArray(), neighbourTierAbove.ToArray());
+        List<CardDataObject> neighbourTierAbove = new List<CardDataObject>();
+        if (!forMaps && tier != 4)
+        {
+            neighbourTierAbove = set.FindAll(item => item.tier == tier + 1);
+        }
+
+        return ChooseFromWeightedCards(specificTierItems.ToArray(), neighbourTierAbove.ToArray(), forMaps, tier == 5);
     }
-    private CardDataObject ChooseFromWeightedCards(CardDataObject[] cardsMain, CardDataObject[] cardsNeighbourTierAbove)
+    public CardDataObject GetSpecificCard(string cardName)
+    {
+        return set.Find(c => c.name == cardName);
+    }
+    private CardDataObject ChooseFromWeightedCards(CardDataObject[] cardsMain, CardDataObject[] cardsNeighbourTierAbove, bool forMaps, bool finalTier)
     {
         int[] weights = new int[cardsMain.Length + cardsNeighbourTierAbove.Length];
         int totalInt = 0;
@@ -24,13 +33,39 @@ public class CardDataSet
         {
             if (i < cardsMain.Length)
             {
-                weights[i] = cardsMain[i].rate;
-                totalInt += cardsMain[i].rate;
+                if (forMaps)
+                {
+                    weights[i] = cardsMain[i].mapRate;
+                    totalInt += cardsMain[i].mapRate;
+                }
+                else
+                {
+                    weights[i] = cardsMain[i].rate;
+                    totalInt += cardsMain[i].rate;
+                }
             }
             else
             {
-                weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * Settings.instance.hiddenNeighbourTierRateMulti);
-                totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * Settings.instance.hiddenNeighbourTierRateMulti);
+                if (forMaps)
+                {
+                    if (finalTier)
+                    {
+
+                        weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].mapRate);
+                        totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].mapRate);
+                    }
+                    else
+                    {
+
+                        weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].mapRate * Settings.instance.hiddenNeighbourTierRateMulti);
+                        totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].mapRate * Settings.instance.hiddenNeighbourTierRateMulti);
+                    }
+                }
+                else
+                {
+                    weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * Settings.instance.hiddenNeighbourTierRateMulti);
+                    totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * Settings.instance.hiddenNeighbourTierRateMulti);
+                }
             }
         }
         int selectedVal = Random.Range(0, totalInt);

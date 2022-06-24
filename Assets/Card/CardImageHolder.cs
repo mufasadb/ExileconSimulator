@@ -89,6 +89,18 @@ public class CardImageHolder : MonoBehaviour
 
     public SpriteHolder chestTypeIcon;
 
+    [Header("Wild Icons")]
+    public SpriteHolder wild1;
+    public SpriteHolder wild2;
+    public SpriteHolder wild3;
+    public SpriteHolder wild4;
+    public SpriteHolder wild5;
+    public SpriteHolder wild6;
+    public SpriteHolder wild7;
+    public SpriteHolder wild8;
+    public SpriteHolder wild9;
+    public SpriteHolder wild10;
+
     public Sprite getBase(Rarity rarity, int durability)
     {
         if (durability == 0)
@@ -147,7 +159,7 @@ public class CardImageHolder : MonoBehaviour
         // if (name == "Gladiator Armour")
         // {
         // string path = "Items/Chest/Gladiator Armour.png";
-        string path = "Items/" + type.ToString() + "/" + name ;
+        string path = "Items/" + type.ToString() + "/" + name;
         // path = name+".png";
         // Sprite sprite = LoadSprite("Assets/Card/images/Items/Chest/Gladiator Armour.png");
         Sprite sprite = LoadSprite(path);
@@ -212,6 +224,26 @@ public class CardImageHolder : MonoBehaviour
                 return wildTriple.sprite;
             case "ArmourTriple":
                 return armourTriple.sprite;
+            case "Wild1":
+                return wild1.sprite;
+            case "Wild2":
+                return wild2.sprite;
+            case "Wild3":
+                return wild3.sprite;
+            case "Wild4":
+                return wild4.sprite;
+            case "Wild5":
+                return wild5.sprite;
+            case "Wild6":
+                return wild6.sprite;
+            case "Wild7":
+                return wild7.sprite;
+            case "Wild8":
+                return wild8.sprite;
+            case "Wild9":
+                return wild9.sprite;
+            case "Wild10":
+                return wild10.sprite;
             default:
                 return wild.sprite;
         }

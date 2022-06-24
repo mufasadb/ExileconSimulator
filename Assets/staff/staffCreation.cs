@@ -26,7 +26,7 @@ public class staffCreation : MonoBehaviour
         GameObject staffPrefab = PrefabHolder.instance.StaffPrefab;
 
         SpecialStaffGen(staffPrefab);
-        for (int i = 0; i < 18; i++)
+        for (int i = 0; i < 38; i++)
         {
             createStaffMember(staffPrefab);
         }
