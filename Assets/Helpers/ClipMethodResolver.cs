@@ -59,7 +59,7 @@ public static class ClipMethodResolver
     // Start is called before the first frame update
     public static CardDisplay Comparer(List<CardDisplay> cardList, ClipMethod clipMethod)
     {
-        CardDisplay selectedCardDisplay = cardList[0];
+        CardDisplay selectedCardDisplay = cardList[Random.Range(0, cardList.Count)];
         switch (clipMethod)
         {
             case ClipMethod.Rare:

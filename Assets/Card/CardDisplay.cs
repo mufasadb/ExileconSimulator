@@ -18,7 +18,7 @@ public class CardDisplay : MonoBehaviour
     public GameObject qualitySticker;
     private List<Image> implicitList;
     public GameObject explicitContainer;
-    [SerializeField] TMPro.TMP_Text descriptiveText;
+    public TMPro.TMP_Text descriptiveText;
     private int horizontalCardSpacing = 120; //positions spacing between cards
     private int verticalCardSpacing = -10; //positions spacing between cards
     private Canvas canvas;
@@ -75,7 +75,8 @@ public class CardDisplay : MonoBehaviour
         gameObject.AddComponent<ClipAcceptance>();
         //animate and noise
         card.durability -= clipCount;
-        destination = new Vector3(1920 / 2, 1080 / 2, 0);
+        if (card.durability == -1) { card.durability = 0; }
+        destination = new Vector3(parentContainer.transform.position.x, 1080 / 2, 0);
         baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
 
         StartCoroutine(DoLater.DoAfterXSeconds(1.8f, () => { AudioManager.instance.Play("cardClip"); }));
@@ -255,7 +256,7 @@ public class CardDisplay : MonoBehaviour
         transform.localScale = new Vector3(scale, scale, 1);
         float x = 0;
         if (myPositionIndex != halfWay) { x = position * horizontalCardSpacing; }
-        x += (1920 / 2);
+        x += (parentContainer.transform.position.x);
         float y = Mathf.Abs(position) * verticalCardSpacing + 200 - scale;
         destination = new Vector3(x, y, 0);
         if (gameObject.transform.parent.gameObject.activeSelf)

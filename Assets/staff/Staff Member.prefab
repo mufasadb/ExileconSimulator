@@ -6150,6 +6150,8 @@ GameObject:
   - component: {fileID: 5868826464980316867}
   - component: {fileID: 1942724037010649749}
   - component: {fileID: 5496618282535457522}
+  - component: {fileID: 8539537265982667651}
+  - component: {fileID: 521134485020175159}
   m_Layer: 0
   m_Name: Staff Member
   m_TagString: Untagged
@@ -6295,6 +6297,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 3
   interactionTransform: {fileID: 7316021443515465315}
+--- !u!114 &8539537265982667651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7316021443515465324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dc06e88ac326c4f8c2c6ef550cace2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tier: 0
+  staffQ: {fileID: 0}
+  interactRange: 3
+--- !u!114 &521134485020175159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7316021443515465324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0e257942ece3b448054da27e93731c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenFights: 10
+  timeSinceFight: 10
 --- !u!1 &7697641678245791229
 GameObject:
   m_ObjectHideFlags: 0

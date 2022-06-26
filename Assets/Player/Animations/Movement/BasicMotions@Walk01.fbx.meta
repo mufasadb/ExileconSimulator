@@ -525,6 +525,21 @@ ModelImporter:
   - first:
       41386430: 2186277476908879412
     second: ImportLogs
+  - first:
+      74: 4074227603836372005
+    second: BasicMotions@Walk01 - BackwardsLeft (1)
+  - first:
+      74: -899330840407013873
+    second: BasicMotions@Walk01 - ForwardsLeft (1)
+  - first:
+      74: 7096728754599706385
+    second: BasicMotions@Walk01 - ForwardsRight (1)
+  - first:
+      74: -7242540296119188290
+    second: BasicMotions@Walk01 - Left (1)
+  - first:
+      74: -8449512724167269070
+    second: BasicMotions@Walk01 - Right (1)
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -555,14 +570,14 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: BasicMotions@Walk01 - Forwards
-      takeName: BasicMotions@Walk01 - Forwards
+      name: BasicMotions@Walk01 - Right (1)
+      takeName: BasicMotions@Walk01 - Right
       internalID: 0
       firstFrame: 0
       lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0.2
+      level: -0.7
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0

@@ -90,21 +90,25 @@ public class Hand : MonoBehaviour
 
     private void DoHandGen()
     {
+        int weaponCount = 0;
         GameObject cardPrefab = PrefabHolder.instance.CardPrefab;
         GameObject statCardPrefab = PrefabHolder.instance.ToolStatPrefab;
         GameObject howCardPrefab = PrefabHolder.instance.ToolQuickReferencePrefab;
         Vector3 position = new Vector3(1920 - 150, 1080 - 50, 0);
-        for (int i = 0; i < 10; i++)
+        GlobalVariables.instance.selectionState = SelectionState.InitialDeal;
+        for (int i = 0; i < 40; i++)
         {
-            Card newCard = Card.CreateInstance(1, false);
+            Card newCard = Card.CreateInstance(Random.Range(2,5), false);
             if (i == 0) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
+            if (i == 9 && weaponCount == 1) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
             if (i == 1) { newCard = Card.CreateSpecificInstance("Full Plate"); }
+            // if (i == 2) { newCard = Card.CreateSpecificInstance("Full Plate"); }
             var card = cardPrefab.GetComponent<CardDisplay>();
             card.parentContainer = handContainer;
             card.card = newCard;
             hand.Add(Instantiate(PrefabHolder.instance.CardPrefab, position, Quaternion.identity, handContainer.transform));
             hand[hand.Count - 1].name = card.card.name;
-
+            if (card.card.type == Type.OneHandedWeapon || card.card.type == Type.TwoHandedWeapon) weaponCount++;
         }
         hand.Add(Instantiate(statCardPrefab, position, Quaternion.identity, handContainer.transform));
         hand[hand.Count - 1].name = "QuickReferenceStat";
@@ -149,21 +153,32 @@ public class Hand : MonoBehaviour
     }
     public void SortHand()
     {
-        if (Settings.instance.sortBy == SortBy.Rarity) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.rarity).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
-        if (Settings.instance.sortBy == SortBy.Type) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
-        if (Settings.instance.sortBy == SortBy.Name) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.name).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
-        if (Settings.instance.sortBy == SortBy.Durability) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetInstanceID()).ToList();
+        if (Settings.instance.sortBy == SortBy.Durability) { hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetInstanceID()).ToList(); }
+        else
+        {
+            if (Settings.instance.sortBy == SortBy.Rarity) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.rarity).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
+            if (Settings.instance.sortBy == SortBy.Type) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.type).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
+            if (Settings.instance.sortBy == SortBy.Name) hand = hand.OrderBy(x => x.GetComponent<CardDisplay>().card.name).ThenBy(x => x.GetComponent<CardDisplay>().card.durability).ThenBy(x => x.GetInstanceID()).ToList();
+
+        }
 
 
         for (int i = 0; i < hand.Count; i++)
         {
             if (!hand[i].GetComponent<CardDisplay>().selected) hand[i].transform.SetSiblingIndex(i);
         }
+
         var quickRef = hand.Find(c => c.name == "QuickReferenceStat");
         quickRef.transform.SetAsFirstSibling();
         var howTo = hand.Find(c => c.name == "QuickReferenceHowTo");
         howTo.transform.SetAsFirstSibling();
-
+        if (Settings.instance.sortBy != SortBy.Durability)
+        {
+            for (int i = 0; i < hand.Count; i++)
+            {
+                if (hand[i].GetComponent<CardDisplay>().card.durability == 0) hand[i].transform.SetAsFirstSibling();
+            }
+        }
     }
     public void selectCard(CardDisplay card)
     {

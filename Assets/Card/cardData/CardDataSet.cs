@@ -64,8 +64,8 @@ public class CardDataSet
                 {
                     if (tier == 1 && GlobalVariables.instance.selectionState != SelectionState.InitialDeal)
                     {
-                        weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * 1.5f);
-                        totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * 1.5f);
+                        weights[i] = Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * 1.6f);
+                        totalInt += Mathf.RoundToInt(cardsNeighbourTierAbove[i - cardsMain.Length].rate * 1.6f);
                     }
                     else
                     {

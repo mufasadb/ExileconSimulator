@@ -71,6 +71,7 @@ public class CraftHandler : MonoBehaviour
             {
                 if (item.card.rarity == Rarity.Magic)
                 {
+                    item.card.rarity = Rarity.Normal;
                     newRarity = Rarity.Magic;
                 }
                 else { ThrowError("The item must be Normal to craft with an Alchemy Orb"); return; }
@@ -79,6 +80,7 @@ public class CraftHandler : MonoBehaviour
             {
                 if (item.card.rarity == Rarity.Rare)
                 {
+                    item.card.rarity = Rarity.Normal;
                     newRarity = Rarity.Rare;
                 }
                 else { ThrowError("The item must be Normal to craft with an Alchemy Orb"); return; }
@@ -103,12 +105,21 @@ public class CraftHandler : MonoBehaviour
 
                 item.card.rarity = newRarity;
                 item.craftingSticker.SetActive(true);
-                for (int i = 0; i < item.explicitContainer.transform.childCount; i++)
+                if (item.card.type != Type.Map)
                 {
-                    Destroy(item.explicitContainer.transform.GetChild(i).gameObject);
+
+                    for (int i = 0; i < item.explicitContainer.transform.childCount; i++)
+                    {
+                        Destroy(item.explicitContainer.transform.GetChild(i).gameObject);
+                    }
+                    item.card.explicits.makeExplicit(item.card.type, newRarity);
+                    item.card.explicits.StatDisplay(item.explicitContainer.transform);
                 }
-                item.card.explicits.makeExplicit(item.card.type, newRarity);
-                item.card.explicits.StatDisplay(item.explicitContainer.transform);
+                else
+                {
+                    item.card.RollMapMods();
+                    item.descriptiveText.text = item.card.extraDescription;
+                }
             }
         }
         else

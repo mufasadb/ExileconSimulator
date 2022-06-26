@@ -16,7 +16,8 @@ public class Monster : ScriptableObject
         var data = ScriptableObject.CreateInstance<Monster>();
 
         MonsterDataObject monsterDataObject = MonsterDataSystem.instance.monsterDataSet.GetMonsterBaseData(tier);
-        if(monsterDataObject == null){
+        if (monsterDataObject == null)
+        {
             Debug.LogError("couldnt find amonster with tier " + tier);
         }
         // data.Init(Random.Range(1, 5));
@@ -28,7 +29,7 @@ public class Monster : ScriptableObject
         this.name = monsterDataObject.name;
         this.clipCount = 1;
         this.clipMethod = (ClipMethod)Random.Range(0, 8);
-        if(this.clipMethod == ClipMethod.All) this.clipMethod = ClipMethod.Common;
+        if (this.clipMethod == ClipMethod.All) this.clipMethod = ClipMethod.Common;
         // this.clipCount = monsterDataObject.clipCount;
         // this.clipMethod = (ClipMethod)System.Enum.Parse(typeof(ClipMethod), monsterDataObject.clipMethod);
         this.defence = new Stats();
@@ -36,6 +37,31 @@ public class Monster : ScriptableObject
         this.attack = new Stats();
         this.attack.DeclareStats(StatStringToIntArray(monsterDataObject.attack));
         this.tier = monsterDataObject.tier;
+    }
+    public void AddStats(Stats stat, bool asAttack)
+    {
+        if (asAttack)
+        {
+            this.attack.fire += stat.fire;
+            this.attack.cold += stat.cold;
+            this.attack.lightning += stat.lightning;
+            this.attack.physical += stat.physical;
+            this.attack.life += stat.life;
+            this.attack.armour += stat.armour;
+            this.attack.chaos += stat.chaos;
+            this.attack.wild += stat.wild;
+        }
+        else
+        {
+            this.defence.fire += stat.fire;
+            this.defence.cold += stat.cold;
+            this.defence.lightning += stat.lightning;
+            this.defence.physical += stat.physical;
+            this.defence.life += stat.life;
+            this.defence.armour += stat.armour;
+            this.defence.chaos += stat.chaos;
+            this.defence.wild += stat.wild;
+        }
     }
     private int[] StatStringToIntArray(string str)
     {

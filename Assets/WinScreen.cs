@@ -25,7 +25,7 @@ public class WinScreen : MonoBehaviour
             standardWinText2.SetActive(false);
             standardWinText1.SetActive(false);
             lostText.SetActive(true);
-            gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+            gameObject.GetComponent<Image>().color = new Color(1, 1,1, 0.5f);
         }
         else
         {

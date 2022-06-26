@@ -22,6 +22,14 @@ public class QuestHandler : MonoBehaviour
     [HideInInspector]
     public bool questTier4Received;
     [HideInInspector]
+    public bool questTier1BellPlayed = false;
+    [HideInInspector]
+    public bool questTier2BellPlayed = false;
+    [HideInInspector]
+    public bool questTier3BellPlayed = false;
+    [HideInInspector]
+    public bool questTier4BellPlayed = false;
+    [HideInInspector]
     public bool questTier1ReadyToReceive;
     [HideInInspector]
     public bool questTier2ReadyToReceive;
@@ -88,10 +96,10 @@ public class QuestHandler : MonoBehaviour
     }
     public void TakeRewards()
     {
-        if (questTier1ReadyToReceive && !questTier1Received) { questTier1Received = true; rewardHandler.DoReward(1, 2, 1); CheckIfTiercomplete(); return; }
-        if (questTier2ReadyToReceive && !questTier2Received) { questTier2Received = true; rewardHandler.DoReward(1, 3, 1); CheckIfTiercomplete(); return; }
-        if (questTier3ReadyToReceive && !questTier3Received) { questTier3Received = true; rewardHandler.DoReward(1, 4, 1); CheckIfTiercomplete(); return; }
-        if (questTier4ReadyToReceive && !questTier4Received) { questTier4Received = true; rewardHandler.DoSpecificReward("map"); CheckIfTiercomplete(); return; }
+        if (questTier1ReadyToReceive && !questTier1Received) { questTier1Received = true; rewardHandler.DoReward(1, 2, 1); questTier1Received = true; return; }
+        if (questTier2ReadyToReceive && !questTier2Received) { questTier2Received = true; rewardHandler.DoReward(1, 3, 1); questTier2Received = true; return; }
+        if (questTier3ReadyToReceive && !questTier3Received) { questTier3Received = true; rewardHandler.DoReward(1, 4, 1); questTier3Received = true; return; }
+        if (questTier4ReadyToReceive && !questTier4Received) { questTier4Received = true; rewardHandler.DoSpecificReward("map"); questTier4Received = true; return; }
     }
     public void MarkCraftQuestComplete(string carftingItem, string craftingCurrency)
     {
@@ -110,12 +118,12 @@ public class QuestHandler : MonoBehaviour
     }
     public void CheckIfTiercomplete()
     {
-        if (!questTier1Received) questTier1ReadyToReceive = CheckIndividualTierReceiving(questTier1ReadyToReceive, 1);
-        if (!questTier2Received) questTier2ReadyToReceive = CheckIndividualTierReceiving(questTier2ReadyToReceive, 2);
-        if (!questTier3Received) questTier3ReadyToReceive = CheckIndividualTierReceiving(questTier3ReadyToReceive, 3);
-        if (!questTier4Received) questTier4ReadyToReceive = CheckIndividualTierReceiving(questTier4ReadyToReceive, 4);
+        if (!questTier1Received) questTier1ReadyToReceive = CheckIndividualTierReceiving(questTier1ReadyToReceive, 1, questTier1BellPlayed);
+        if (!questTier2Received) questTier2ReadyToReceive = CheckIndividualTierReceiving(questTier2ReadyToReceive, 2, questTier2BellPlayed);
+        if (!questTier3Received) questTier3ReadyToReceive = CheckIndividualTierReceiving(questTier3ReadyToReceive, 3, questTier3BellPlayed);
+        if (!questTier4Received) questTier4ReadyToReceive = CheckIndividualTierReceiving(questTier4ReadyToReceive, 4, questTier4BellPlayed);
     }
-    public bool CheckIndividualTierReceiving(bool questTierToReceive, int tier)
+    public bool CheckIndividualTierReceiving(bool questTierToReceive, int tier, bool bell)
     {
         if (!questTierToReceive)
         {
@@ -125,7 +133,19 @@ public class QuestHandler : MonoBehaviour
                 if (q.tier == tier && q.isComplete == false) { questTierToReceive = false; }
             }
         }
-        if (questTierToReceive) craftHandler.DisplayAcceptRewardButton(true);
+        if (questTierToReceive)
+        {
+            PlayBell(bell);
+        }
         return questTierToReceive;
+    }
+    void PlayBell(bool bell)
+    {
+        if (!bell)
+        {
+            AudioManager.instance.Play("chime");
+            craftHandler.DisplayAcceptRewardButton(true);
+            bell = true;
+        }
     }
 }

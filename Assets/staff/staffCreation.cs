@@ -10,11 +10,9 @@ public class staffCreation : MonoBehaviour
     // public SpawnPoint spawners;
     private List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
     public List<StaffMember> staffList = new List<StaffMember>();
-    private NerdSpawner nerdSpawner;
     // Start is called before the first frame update
     void Awake()
     {
-        nerdSpawner = GetComponent<NerdSpawner>();
         foreach (var objs in spawnObjects)
         {
             spawnPoints.Add(new SpawnPoint(objs));
@@ -71,8 +69,9 @@ public class staffCreation : MonoBehaviour
         var staff = staffPrefab.GetComponent<staffDetails>();
         staff.staffData = staffMember;
         GameObject staffMem = Instantiate(staffPrefab, position, Quaternion.identity, staffCollection.transform);
+        staffMem.name = staff.staffData.name;
         staffMem.transform.LookAt(newPositionObj.direction, Vector3.up);
-        nerdSpawner.DoNerdGen(position, newPositionObj.direction.localPosition, staff.staffData.staffQueueSize, staffMem.transform);
+        // nerdSpawner.DoNerdGen(position, newPositionObj.direction.localPosition, staff.staffData.staffQueueSize, staffMem.transform);
     }
     private void createStaffMember(GameObject staffPrefab, string chosenStaffMember, SpawnPoint spawnPoint)
     {
@@ -86,8 +85,9 @@ public class staffCreation : MonoBehaviour
         var staff = staffPrefab.GetComponent<staffDetails>();
         staff.staffData = staffMember;
         GameObject staffMem = Instantiate(staffPrefab, position, Quaternion.identity, staffCollection.transform);
+        staffMem.name = staff.staffData.name;
         staffMem.transform.LookAt(newPositionObj.direction, Vector3.up);
-        nerdSpawner.DoNerdGen(position, newPositionObj.direction.localPosition, staff.staffData.staffQueueSize, staffMem.transform);
+        // nerdSpawner.DoNerdGen(position, newPositionObj.direction.localPosition, staff.staffData.staffQueueSize, staffMem.transform);
     }
     private SpawnPoint getSpawnPoint()
     {

@@ -17,6 +17,8 @@ public class FightHandler : MonoBehaviour
     public CardSelection cardSelection;
     private float seperatingDistance = 18;
     string targetName;
+    int LastFoughtID;
+    int heldFoughtID;
     // private StaffMember currentFightTarget;
     private Stats fightTargetAttack;
     private Stats fightTargetDefence;
@@ -49,6 +51,7 @@ public class FightHandler : MonoBehaviour
 
         if (ResolveFight(Hand.instance.cardSelection.attack, Hand.instance.cardSelection.defence, fightTargetAttack, fightTargetDefence))
         {
+            LastFoughtID = heldFoughtID;
             if (isChrisFight) GameEventManager.instance.WinGame();
             if (targetName == "Guardian of The Hydra") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Hydra");
             else if (targetName == "Guardian of The Pheonix") GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoSpecificReward("Fragment of Phoneix");
@@ -302,6 +305,13 @@ public class FightHandler : MonoBehaviour
     {
         if (!isFighting)
         {
+            int thisTargetID = TargetEnemy.GetInstanceID();
+            if (LastFoughtID == thisTargetID)
+            {
+                GlobalVariables.instance.errorHandler.NewError("You can't fight the same enemy twice in a row");
+                return;
+            }
+            heldFoughtID = TargetEnemy.GetInstanceID();
             storedFightTargetAttack = staffMember.attack;
             storedFightTargetDefence = staffMember.defence;
             fightTargetAttack = new Stats();

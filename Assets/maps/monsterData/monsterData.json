@@ -1,45 +1,63 @@
 {
   "set": [
     {
-      "name": "Burning Man",
-      "attack": "Fire,Fire,Fire",
-      "defence": "Wild,Wild,Wild",
+      "name": "Ghost",
+      "attack": "Wild,",
+      "defence": "Wild,Wild,",
+      "tier": 1
+    },
+    {
+      "name": "Skeleton",
+      "attack": "Life,",
+      "defence": "Physical,Wild,Wild,",
+      "tier": 1
+    },
+    {
+      "name": "Spectral Corsair",
+      "attack": "Life,Wild,",
+      "defence": "Physical,",
+      "tier": 1
+    },
+    {
+      "name": "Zombie",
+      "attack": "Wild,Wild,",
+      "defence": "Wild,",
+      "tier": 1
+    },
+    {
+      "name": "Brutus",
+      "attack": "Wild,Wild,Wild,",
+      "defence": "Wild,Wild,Wild,Wild,",
       "tier": 2
     },
     {
-      "name": "Dominus",
-      "attack": "Lightning,Lightning,Lightning",
-      "defence": "Physical,Physical,Wild,Wild,Wild,Wild",
-      "tier": 4
+      "name": "Burning Man",
+      "attack": "Fire,Fire,Wild,",
+      "defence": "Wild,Wild,Wild,",
+      "tier": 2
     },
     {
       "name": "Flame Totem",
-      "attack": "Armour",
-      "defence": "Fire,Fire,Wild",
+      "attack": "Armour,Wild,Wild,",
+      "defence": "Fire,Wild,",
       "tier": 2
     },
     {
       "name": "Goatman",
-      "attack": "Wild,Wild",
-      "defence": "Cold,Cold",
-      "tier": 1
-    },
-    {
-      "name": "Kitava",
-      "attack": "Life,Life,Armour,Armour,Wild,Wild,Wild,Wild",
-      "defence": "Physical,Physical,Wild,Wild,Wild,Wild",
-      "tier": 5
-    },
-    {
-      "name": "Lunaris",
-      "attack": "Cold,Cold,Cold,Wild",
-      "defence": "Fire,Fire,Wild",
+      "attack": "Cold,Cold,",
+      "defence": "Wild,Wild,",
       "tier": 2
     },
     {
+      "name": "Lunaris",
+      "attack": "Cold,Cold,Cold,Wild,",
+      "defence": "Fire,Fire,Wild,",
+      "tier": 3
+    },
+    {
       "name": "Necromancer",
-      "attack": "Chaos,Wild,Wild",
-      "defence": "",
+      "attack": "",
+      "defence": "Chaos,Wild,Wild,",
       "tier": 2
     },
     {
@@ -49,42 +67,106 @@
       "tier": 2
     },
     {
-      "name": "Skeleton",
-      "attack": "Life",
-      "defence": "Physical,Wild,Wild",
-      "tier": 1
+      "name": "Fidelitas",
+      "attack": "Lightning,Wild,Wild,",
+      "defence": "Lightning,Wild,Wild,",
+      "tier": 2
+    },
+    {
+      "name": "The Faun",
+      "attack": "Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Wild,Wild,",
+      "tier": 2
+    },
+    {
+      "name": "Abberath",
+      "attack": "Fire,Fire,Wild,Wild,Wild,Wild,",
+      "defence": "Fire,Fire,Wild,Wild,Wild,Wild,",
+      "tier": 3
+    },
+    {
+      "name": "Avarius",
+      "attack": "Life,Life,Armour,Armour,",
+      "defence": "Physical,Wild,Wild,Wild,",
+      "tier": 3
+    },
+    {
+      "name": "Dominus",
+      "attack": "Lightning,Lightning,Wild,Wild,Wild,",
+      "defence": "Physical,Lightning,Wild,Wild,",
+      "tier": 3
     },
     {
       "name": "Solaris",
-      "attack": "Fire,Fire,Wild,",
-      "defence": "Fire,Fire,Fire,Wild,",
+      "attack": "Fire,Fire,Fire,Wild,",
+      "defence": "Cold,Cold,Wild,",
       "tier": 3
     },
     {
       "name": "Templar",
-      "attack": "Wild,Wild,Wild,Wild,Wild",
-      "defence": "Wild,Wild,Wild,Wild,Wild",
+      "attack": "Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Wild,Wild,Wild,Wild,Wild,",
       "tier": 3
     },
     {
-      "name": "The Faun",
-      "attack": "Wild,Wild,Wild",
-      "defence": "Physical,Physical,Physical",
-      "tier": 1
+      "name": "Kitava",
+      "attack": "Life,Life,Armour,Armour,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Wild,Wild,Wild,Wild,",
+      "tier": 4
     },
     {
-      "name": "Zombie",
-      "attack": "Life,Life",
-      "defence": "Physical",
-      "tier": 1
+      "name": "Malachai",
+      "attack": "Wild,Wild,Wild,Wild,Wild",
+      "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "tier": 4
     },
     {
-      "name": "Brutus",
-      "attack": "Wild,Wild,",
-      "defence": "Wild,Wild,Wild,",
-      "clipMethod": "",
-      "clipCount": 1,
-      "tier": 2
+      "name": "Guardian of The Chimera",
+      "attack": "Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "tier": 5
+    },
+    {
+      "name": "Guardian of The Hydra",
+      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "tier": 5
+    },
+    {
+      "name": "Guardian of The Minotaur",
+      "attack": "Life,Life,Armour,Armour,Armour,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "tier": 5
+    },
+    {
+      "name": "Guardian of The Pheonix",
+      "attack": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "tier": 5
+    },
+    {
+      "name": "The Shaper",
+      "attack": "Life,Life,Life,Armour,Fire,Fire,Cold,Cold,Cold,Cold,Lightning,Lightning,Chaos,Chaos,Wild,Wild,",
+      "defence": "Physical,Physical,Physical,Physical,Fire,Fire,Cold,Cold,Lightning,Lightning,Chaos,Chaos,",
+      "tier": 5
+    },
+    {
+      "name": "Izaro",
+      "attack": "Life,Life,Armour,Armour,Fire,Cold,Lightning,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "tier": 5
+    },
+    {
+      "name": "The Elder",
+      "attack": "Life,Life,Life,Life,Armour,Armour,Armour,Armour,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "tier": 5
+    },
+    {
+      "name": "The Orion",
+      "attack": "Life,Life,Armour,Armour,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "tier": 5
     }
   ]
 }

@@ -7,8 +7,8 @@ public class Card : ScriptableObject
 {
     public new string name;
     //rarity chance by tier
-    int[] rareChance = { 5, 10, 15, 20, 25 };
-    int[] magicChance = { 15, 25, 35, 40, 35 };
+    int[] rareChance = { 2, 5, 10, 10, 10 };
+    int[] magicChance = { 5, 10, 15, 20, 25 };
 
     public string description;
 
@@ -19,6 +19,7 @@ public class Card : ScriptableObject
     public int extraTakes;
 
     public Type type;
+    public MapMods mapMods;
 
     public int durability = 2;
 
@@ -38,7 +39,6 @@ public class Card : ScriptableObject
     }
     public static Card CreateSpecificInstance(string cardName)
     {
-        // if (tier > ) Debug.LogWarning("Tier higher than 4 submitted");
 
         var data = ScriptableObject.CreateInstance<Card>();
         data.Init(cardName);
@@ -64,6 +64,7 @@ public class Card : ScriptableObject
             this.explicits = new Stats();
             this.explicits.makeExplicit(this.type, this.rarity);
         }
+        if (cardData.type == Type.Map) { mapMods = new MapMods(); mapMods.RollMods(this.mapTier, this.rarity); this.extraDescription = mapMods.description; }
         if (cardData.isUnique)
         {
             UniqueDataObject uniqueDataObject = CardDataSystem.instance.uniqueDataSet.GetExplicitStringByUniqueName(cardData.name);
@@ -92,6 +93,7 @@ public class Card : ScriptableObject
             this.explicits = new Stats();
             this.explicits.makeExplicit(this.type, this.rarity);
         }
+        if (cardData.type == Type.Map) { mapMods = new MapMods(); mapMods.RollMods(this.mapTier, this.rarity); this.extraDescription = mapMods.description; }
         if (cardData.isUnique)
         {
             UniqueDataObject uniqueDataObject = CardDataSystem.instance.uniqueDataSet.GetExplicitStringByUniqueName(cardData.name);
@@ -99,6 +101,12 @@ public class Card : ScriptableObject
             this.extraDraw = uniqueDataObject.extraDraws;
             this.extraTakes = uniqueDataObject.extraTakes;
         }
+    }
+    public void RollMapMods()
+    {
+        mapMods = new MapMods();
+        mapMods.RollMods(mapTier, rarity);
+        extraDescription = mapMods.description;
     }
 
     private int[] StatStringToIntArray(string str)

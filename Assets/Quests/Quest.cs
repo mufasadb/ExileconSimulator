@@ -11,6 +11,7 @@ public class Quest
     public GameObject tickBox;
     public void TickTickBox()
     {
+        AudioManager.instance.Play("halfChime");
         tickBox.SetActive(true);
     }
 }

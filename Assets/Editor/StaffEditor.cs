@@ -64,6 +64,9 @@ public class StaffEditor : EditorWindow
             defenceChaos = EditorGUILayout.IntField("chaos defence", defenceChaos);
             defenceWild = EditorGUILayout.IntField("wild defence", defenceWild);
 
+            singleStaffMember.clipCount = EditorGUILayout.IntField("clip count", singleStaffMember.clipCount);
+            singleStaffMember.clipMethod = EditorGUILayout.TextField("clip method", singleStaffMember.clipMethod);
+
 
             if (GUILayout.Button("Save")) { SaveCard(); SaveIntoJson(); }
             if (GUILayout.Button("Cancel")) { Cancel(); }

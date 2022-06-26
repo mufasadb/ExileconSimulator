@@ -66,6 +66,39 @@ public class MapHandler : MonoBehaviour
     {
         currentFightTier++;
         Monster monsterToFight = Monster.CreateInstance(currentFightTier);
+
+        if (map.card.rarity != Rarity.Normal)
+        {
+
+            if (map.card.mapMods.mod == Mods.Attack)
+            {
+                if (fightsRemaining > 3)
+                {
+                    monsterToFight.AddStats(map.card.mapMods.addedStats, true);
+                }
+            }
+            else if (map.card.mapMods.mod == Mods.Defence)
+            {
+                if (fightsRemaining > 3)
+                {
+                    monsterToFight.AddStats(map.card.mapMods.addedStats, false);
+                }
+            }
+            if (map.card.mapMods.mod == Mods.ExtraClip)
+            {
+                foreach (int mob in map.card.mapMods.monstersAffected)
+                {
+                    if (3 - fightsRemaining == mob)
+                    {
+                        monsterToFight.clipCount = 2;
+                    }
+                }
+            }
+
+
+        }
+
+
         FightHandler.instance.InitiateFight(monsterToFight);
         fightsRemaining--;
         // GlobalVariables.instance
@@ -91,31 +124,27 @@ public class MapHandler : MonoBehaviour
 
     public void endMapInteraction()
     {
-        if (isInMap)
+        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
         {
+            if (currentFightTier > 1)
+            {
+                int rewardCount = 1;
+                if (map.card.rarity == Rarity.Magic) rewardCount = 2;
+                if (map.card.rarity == Rarity.Rare) rewardCount = 3;
+
+                GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(rewardCount + 1, map.card.mapTier + 2, rewardCount);
+            }
             Hand.instance.hand.Remove(map.gameObject);
             Destroy(map.gameObject);
+            map = null;
             GlobalVariables.instance.selectionState = SelectionState.Fight;
 
-            List<CardDisplay> allSelectedCards = new List<CardDisplay>();
-            foreach (var card in Hand.instance.cardSelection.twoHandedWeapons) { allSelectedCards.Add(card); }
-            foreach (var card in Hand.instance.cardSelection.oneHandedWeapons) { allSelectedCards.Add(card); }
-            foreach (var card in Hand.instance.cardSelection.shields) { allSelectedCards.Add(card); }
-            foreach (var card in Hand.instance.cardSelection.amulets) { allSelectedCards.Add(card); }
-            foreach (var card in Hand.instance.cardSelection.rings) { allSelectedCards.Add(card); }
-            foreach (var card in Hand.instance.cardSelection.chests) { allSelectedCards.Add(card); }
-
-            //this just exits if you dont fight the monster. if we want to clip the cards it needs to be done in the fight handler (which doesnt know if we're in a map);
-            foreach (var card in allSelectedCards)
-            {
-                card.DoUnselect();
-            }
 
         }
         GameEventManager.instance.EndMapScreen();
         GameEventManager.instance.CloseAllUI();
         GameEventManager.instance.SetFightCancelButtonToCancel();
-        isInMap = false;
+        Hand.instance.cardSelection.UnSelectAllCards();
         currentFightTier = 0;
         fightsRemaining = 0;
         ShowMapButtons();

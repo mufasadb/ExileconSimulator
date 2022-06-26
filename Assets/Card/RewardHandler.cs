@@ -70,17 +70,15 @@ public class RewardHandler : MonoBehaviour
         if (reward == "Fragment of Phoenix") cardDisplay.card = PhoenixFrag;
         if (reward == "Fragment of Chimera") cardDisplay.card = chimeraFrag;
         if (reward == "Fragment of Minotaur") cardDisplay.card = MinotaurFrag;
-        if (reward == "map")
-        {
-            cardDisplay.card = Level1Map;
-            GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, Hand.instance.handContainer.transform);
-            newCard.GetComponent<CardDisplay>().parentContainer = Hand.instance.handContainer;
-            newCard.GetComponent<CardDisplay>().DoUnselect();
-            newCard.GetComponent<CardDisplay>().destination = GlobalVariables.instance.RewardContainer.transform.position + new Vector3(0 * 250 - 250, 0, 0);
-            newCard.transform.SetParent(GlobalVariables.instance.RewardContainer.transform);
-            newCard.AddComponent<RewardSelection>();
-            newCard.GetComponent<Animator>().SetBool("facingForward", true);
+        if (reward == "map") cardDisplay.card = Level1Map;
 
-        }
+        GameObject newCard = Instantiate(cardPrefab, new Vector3(0, 0, 0), Quaternion.identity, Hand.instance.handContainer.transform);
+        newCard.GetComponent<CardDisplay>().parentContainer = Hand.instance.handContainer;
+        newCard.GetComponent<CardDisplay>().DoUnselect();
+        newCard.GetComponent<CardDisplay>().destination = GlobalVariables.instance.RewardContainer.transform.position + new Vector3(0 * 250 - 250, 0, 0);
+        newCard.transform.SetParent(GlobalVariables.instance.RewardContainer.transform);
+        newCard.AddComponent<RewardSelection>();
+        newCard.GetComponent<Animator>().SetBool("facingForward", true);
+
     }
 }

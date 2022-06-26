@@ -2124,6 +2124,8 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
+    - m_Text: Time 24 Hour
+      m_Image: {fileID: 0}
     - m_Text: Days Hours Minutes Remaining
       m_Image: {fileID: 0}
     - m_Text: Hours Minutes Remaining
@@ -2131,8 +2133,6 @@ MonoBehaviour:
     - m_Text: Minutes Remaining
       m_Image: {fileID: 0}
     - m_Text: Time Standard
-      m_Image: {fileID: 0}
-    - m_Text: Time 24 Hour
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4059,7 +4059,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Durability
+  m_text: Type
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b96aecc0fc97d546b6f9f295e72e1b8, type: 2}
   m_sharedMaterial: {fileID: -6218994487533821567, guid: 0b96aecc0fc97d546b6f9f295e72e1b8, type: 2}
@@ -5474,6 +5474,18 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: chime
+    clip: {fileID: 8300000, guid: b57f77340e2d25e4cbf5c719beb64ab3, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: halfChime
+    clip: {fileID: 8300000, guid: 1a03e45da6c88fc4f96a35e95d0e413a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   musicBox:
   - name: Theme
     clip: {fileID: 8300000, guid: a77abd9f5ab0180459adcc901f8b8bba, type: 3}
@@ -6471,9 +6483,9 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Durability
-      m_Image: {fileID: 0}
     - m_Text: Type
+      m_Image: {fileID: 0}
+    - m_Text: Durability
       m_Image: {fileID: 0}
     - m_Text: Rarity
       m_Image: {fileID: 0}
@@ -7684,11 +7696,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 991c8f38fa0171942b4184d4f8a3914a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timePreference: 0
+  timePreference: 2
   seed: 0
   skipTutorial: 0
-  sortBy: 0
-  hiddenNeighbourTierRateMulti: 0.4
+  sortBy: 1
+  hiddenNeighbourTierRateMulti: 0.3
 --- !u!4 &2092799477
 Transform:
   m_ObjectHideFlags: 0
@@ -8222,7 +8234,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Days Hours Minutes Remaining
+  m_text: Time 24 Hour
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b96aecc0fc97d546b6f9f295e72e1b8, type: 2}
   m_sharedMaterial: {fileID: -6218994487533821567, guid: 0b96aecc0fc97d546b6f9f295e72e1b8, type: 2}
@@ -8249,7 +8261,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 36.9
   m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 1

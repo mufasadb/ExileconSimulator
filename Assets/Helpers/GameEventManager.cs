@@ -142,6 +142,7 @@ public class GameEventManager : MonoBehaviour
     }
     public void BeginCraftScreen()
     {
+        Hand.instance.cardSelection.UnSelectAllCards();
         OpenHand();
         OpenUIItem(craftUI);
         GlobalVariables.instance.preventMoving = true;
