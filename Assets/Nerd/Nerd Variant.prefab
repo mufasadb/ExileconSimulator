@@ -75,6 +75,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8215067863698960541, guid: 70178d2ae2e7d494091c0c88ad4a5cc6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9048868321022745216, guid: 70178d2ae2e7d494091c0c88ad4a5cc6, type: 3}
       propertyPath: m_SizeDelta.x
       value: 5.2385
@@ -102,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a49c90a336120444ea6b726ab30c8230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SearchRange: 10
+  SearchRange: 30
 --- !u!114 &262976174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +191,7 @@ MonoBehaviour:
   _VisionConeColour: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
   _HearingRange: 20
   _HearingRangeColour: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
-  _ProximityDetectionRange: 35
+  _ProximityDetectionRange: 50
   _ProximityRangeColour: {r: 1, g: 1, b: 1, a: 0.12156863}
   state: 0
   tier: 1
@@ -204,20 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe7713f4d9d7804dbd331471b182d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VisionSensitivity:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  VisionMinimumAwareness: 1
-  VisionAwarenessBuildRate: 10
-  HearingMinimumAwareness: 0
-  HearingAwarenessBuildRate: 0.5
-  ProximityMinimumAwareness: 0
-  ProximityAwarenessBuildRate: 1
-  AwarenessDecayDelay: 0.1
-  AwarenessDecayRate: 0.1
+  Targets: []
 --- !u!195 &262976184
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -280,9 +271,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reportGOAP: 0
   queuePriority: 60
-  MinAwarenessToChase: 1.5
-  AwarenessToStopChase: 1
+  qLengthDisinsentive: 5
   CurrentTarget: {fileID: 0}
+  CurrentPriority: 0
+  currentTargetViablityPoints: 0
+  differenceToSwitchTarget: 5
 --- !u!114 &262976188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a22be8475bec374e95fafb9a8be984e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  qMan: {fileID: 0}
   isPlayer: 0
 --- !u!114 &262976191
 MonoBehaviour:
@@ -334,9 +328,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reportGOAP: 0
   queuePriority: 70
-  MinAwarenessToChase: 1.5
-  AwarenessToStopChase: 1
+  qLengthDisinsentive: 5
   CurrentTarget: {fileID: 0}
+  CurrentPriority: 0
 --- !u!114 &7211382825836419662 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4385682992435073776, guid: 70178d2ae2e7d494091c0c88ad4a5cc6, type: 3}

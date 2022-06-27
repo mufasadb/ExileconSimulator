@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(QueueManager))]
 public class DetectableTarget : MonoBehaviour
 {
     public int tier;
-    [SerializeField] QueueManager qMan;
     public float interactRange = 3f;
+    public QueueManager qMan;
 
     // Start is called before the first frame update
     void Start()
     {
+        qMan = GetComponent<QueueManager>();
         DetectableTargetManager.Instance.Register(this);
         if (tier == 0)
         {

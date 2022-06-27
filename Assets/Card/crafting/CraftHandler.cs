@@ -12,6 +12,11 @@ public class CraftHandler : MonoBehaviour
     // Start is called before the first frame update
     public void DoCraft()
     {
+        if (!GlobalVariables.instance.atFrontOfQueue)
+        {
+            GlobalVariables.instance.errorHandler.NewError("you must be at the front of the queue, fast forward to get there faster!");
+            return;
+        }
         if (item != null && currency != null)
         {
             if (currency.card.name == "Blacksmith Whetstone")

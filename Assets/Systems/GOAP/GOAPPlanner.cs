@@ -28,8 +28,8 @@ public class GOAPPlanner : MonoBehaviour
             goal.OnTickGoal();
 
             // can it run?
-            if (!goal.CanRun())
-                continue;
+            if (!goal.CanRun()) continue;
+
 
             // is it a worse priority?
             if (!(bestGoal == null || goal.CalculatePriority() > bestGoal.CalculatePriority()))
@@ -78,7 +78,7 @@ public class GOAPPlanner : MonoBehaviour
                 ActiveAction.OnActivated(ActiveGoal);
             }
         } // new goal or no valid goal
-        else if (ActiveGoal.GetType() != bestGoal.GetType())
+        else if (ActiveGoal != bestGoal)
         {
             ActiveGoal.OnGoalDeactivated();
             ActiveAction.OnDeactivated();

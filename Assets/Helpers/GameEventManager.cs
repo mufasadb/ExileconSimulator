@@ -33,10 +33,31 @@ public class GameEventManager : MonoBehaviour
     [SerializeField] GameObject enemyUI;
     [SerializeField] TextMeshProUGUI cancelFightText;
     [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject fastForwardMenu;
+    [SerializeField] GameObject fastForwardIndicator;
     public bool handOpen = true;
     float menuCooldown = 0;
     float handCooldown = 0;
 
+    public void FastForward()
+    {
+        Time.timeScale = 10f;
+        OpenUIItem(fastForwardIndicator);
+        CloseUIItem(fastForwardMenu);
+    }
+    public void NormalTime()
+    {
+        Time.timeScale = 1f;
+        CloseUIItem(fastForwardMenu);
+        CloseUIItem(fastForwardIndicator);
+    }
+    public void AutoFastForward()
+    {
+        if (Settings.instance.autoFastForward)
+        {
+            FastForward();
+        }
+    }
     public void OpenHand()
     {
         if (GlobalVariables.instance.cardsMovingCooldown <= 0)
@@ -91,6 +112,7 @@ public class GameEventManager : MonoBehaviour
     public void BeginFightScreen()
     {
         // if (!isMapFight) { Debug.LogError("tried to initiate fight not in a map, but without a staff member (check fight handler initiate fight"); }
+        OpenUIItem(fastForwardMenu);
         OpenUIItem(fightUI);
         OpenUIItem(selectionUI);
         OpenUIItem(enemyUI);
@@ -103,6 +125,7 @@ public class GameEventManager : MonoBehaviour
         CloseUIItem(selectionUI);
         CloseHand();
         CloseUIItem(enemyUI);
+        CloseUIItem(fastForwardMenu);
         GlobalVariables.instance.preventMoving = false;
     }
     public void BeginRewardScreen()
@@ -151,6 +174,9 @@ public class GameEventManager : MonoBehaviour
     {
         CloseUIItem(craftUI);
         GlobalVariables.instance.preventMoving = false;
+        GameEventManager.instance.NormalTime();
+        QueueMember_Player queueMember_Player = GlobalVariables.instance.player.GetComponent<QueueMember_Player>();
+        if (queueMember_Player) queueMember_Player.qMan.Deregister(queueMember_Player);
     }
     public void CloseAllUI()
     {
@@ -195,6 +221,14 @@ public class GameEventManager : MonoBehaviour
         {
             EndRewardScreen();
         }
+    }
+    public void HideFastForward()
+    {
+        CloseUIItem(fastForwardMenu);
+    }
+    public void ShowFastForward()
+    {
+        OpenUIItem(fastForwardMenu);
     }
 
     private void OpenUIItem(GameObject UIItem)

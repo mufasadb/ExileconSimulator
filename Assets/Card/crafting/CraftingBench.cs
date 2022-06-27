@@ -6,7 +6,9 @@ public class CraftingBench : Interactable
 {
 
     // Start is called before the first frame update
-    [SerializeField]private Outline outline;
+    [SerializeField] private Outline outline;
+    private float clickCooldown = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +34,23 @@ public class CraftingBench : Interactable
     }
     public override void Interact()
     {
-        GameEventManager.instance.BeginCraftScreen();
+        if (clickCooldown <= 0)
+        {
+            clickCooldown = 1f;
+            GlobalVariables.instance.atFrontOfQueue = false;
+            GameEventManager.instance.ShowFastForward();
+            GameEventManager.instance.AutoFastForward();
+            QueueManager qMan = GetComponent<QueueManager>();
+            GameObject player = GameObject.Find("Player");
+            player.AddComponent<QueueMember_Player>();
+            player.GetComponent<QueueMember_Player>().RegisterSelf(qMan);
+            GameEventManager.instance.BeginCraftScreen();
+        }
     }
     // Update is called once per frame
+    public override void Update()
+    {
+        base.Update();
+        if (clickCooldown > 0) { clickCooldown -= Time.deltaTime; }
+    }
 }

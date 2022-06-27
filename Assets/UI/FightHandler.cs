@@ -301,15 +301,16 @@ public class FightHandler : MonoBehaviour
         isChrisFight = true;
         InitiateFight(TargetEnemy, staffMember);
     }
-    public void InitiateFight(GameObject TargetEnemy, StaffMember staffMember)
+    public bool InitiateFight(GameObject TargetEnemy, StaffMember staffMember)
     {
         if (!isFighting)
         {
+            GlobalVariables.instance.atFrontOfQueue = false;
             int thisTargetID = TargetEnemy.GetInstanceID();
             if (LastFoughtID == thisTargetID)
             {
                 GlobalVariables.instance.errorHandler.NewError("You can't fight the same enemy twice in a row");
-                return;
+                return false;
             }
             heldFoughtID = TargetEnemy.GetInstanceID();
             storedFightTargetAttack = staffMember.attack;
@@ -323,7 +324,9 @@ public class FightHandler : MonoBehaviour
             text.text = staffMember.name;
             targetName = staffMember.name;
             SetupStatsAndDisplaysForFight();
+            return true;
         }
+        return false;
     }
     public void InitiateFight(Monster monster)
     {

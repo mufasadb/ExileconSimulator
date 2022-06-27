@@ -8,21 +8,22 @@ public class Goal_Wander : Goal_Base
 
     [SerializeField] float PriorityBuildRate = 1f;
     [SerializeField] float PriorityDecayRate = 0.1f;
-    float CurrentPriority = 0f;
+    float CurrentPriority = 10f;
 
     public override void OnTickGoal()
     {
-        if (Agent.IsMoving)
+        if (NerdAI.state == State.Wander)
             CurrentPriority -= PriorityDecayRate * Time.deltaTime;
-        else
+        if (NerdAI.state == State.Idle)
             CurrentPriority += PriorityBuildRate * Time.deltaTime;
     }
 
     public override void OnGoalActivated(Action_Base _linkedAction)
     {
         base.OnGoalActivated(_linkedAction);
-
-        CurrentPriority = WanderPriority;
+        // NerdAI.state = State.Wander;
+        NerdAI.Wandering();
+        if (CurrentPriority < WanderPriority) CurrentPriority += 10;
     }
 
     public override int CalculatePriority()
@@ -32,6 +33,7 @@ public class Goal_Wander : Goal_Base
 
     public override bool CanRun()
     {
+        if (NerdAI.state == State.InQueue) { return false; }
         return true;
     }
 }

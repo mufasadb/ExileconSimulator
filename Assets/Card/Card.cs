@@ -64,7 +64,11 @@ public class Card : ScriptableObject
             this.explicits = new Stats();
             this.explicits.makeExplicit(this.type, this.rarity);
         }
-        if (cardData.type == Type.Map) { mapMods = new MapMods(); mapMods.RollMods(this.mapTier, this.rarity); this.extraDescription = mapMods.description; }
+        if (cardData.type == Type.Map && this.rarity != Rarity.Normal)
+        {
+            mapMods = new MapMods();
+            mapMods.RollMods(this.mapTier, this.rarity); this.extraDescription = mapMods.description;
+        }
         if (cardData.isUnique)
         {
             UniqueDataObject uniqueDataObject = CardDataSystem.instance.uniqueDataSet.GetExplicitStringByUniqueName(cardData.name);

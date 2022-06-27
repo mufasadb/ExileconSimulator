@@ -4,49 +4,42 @@ using UnityEngine;
 
 public class QueueManager : MonoBehaviour
 {
-    public List<QueueMember> AllMembers { get; private set; } = new List<QueueMember>();
+    public List<QueueMember_Base> AllMembers { get; private set; } = new List<QueueMember_Base>();
     public float timeBetweenFights = 0f;
     public float timeSinceFight = 0f;
     // private Vector3 myPosition;
     // private Vector3 firstPositionInQueue;
     private float queueGap = 1.5f;
 
-    public void Register(QueueMember queueMember)
+    public void Register(QueueMember_Base queueMember)
     {
         AllMembers.Add(queueMember);
         UpdatePlayerPosition();
     }
-    public void Deregister(QueueMember queueMember)
+    public void Deregister(QueueMember_Base queueMember)
     {
         AllMembers.Remove(queueMember);
     }
     public void Update()
     {
+        if (timeSinceFight > 0) timeSinceFight -= Time.deltaTime;
         if (AllMembers.Count > 0)
         {
-            if (AllMembers[0].isPlayer)
+            if (timeSinceFight <= 0)
             {
-                //handle player
-            }
-            else
-            {
-
-                if (timeSinceFight > 0) timeSinceFight -= Time.deltaTime;
-                if (timeSinceFight <= 0)
-                {
-                    timeSinceFight = timeBetweenFights;
-                    AllMembers[0].LeaveQueue(GetComponent<DetectableTarget>(), transform.position + Vector3.back * 2);
-                    UpdatePlayerPosition();
-                }
+                timeSinceFight = timeBetweenFights;
+                AllMembers[0].LeaveQueue(GetComponent<DetectableTarget>(), transform.position + Vector3.back * 2);
+                UpdatePlayerPosition();
             }
         }
+
 
     }
     void UpdatePlayerPosition()
     {
         for (int i = 0; i < AllMembers.Count; i++)
         {
-            AllMembers[i].UpdatePosition((transform.position + Vector3.forward * queueGap * (i + 1)));
+            AllMembers[i].UpdatePosition((transform.position + transform.forward * queueGap * (i + 1)));
         }
     }
 }

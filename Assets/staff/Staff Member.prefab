@@ -6310,8 +6310,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tier: 0
-  staffQ: {fileID: 0}
   interactRange: 3
+  qMan: {fileID: 0}
 --- !u!114 &521134485020175159
 MonoBehaviour:
   m_ObjectHideFlags: 0

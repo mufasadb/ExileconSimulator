@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyAI))]
+[RequireComponent(typeof(AwarenessSystem))]
 public class ProximitySensor : MonoBehaviour
 {
     EnemyAI LinkedAI;
-
+    AwarenessSystem awareness;
     // Start is called before the first frame update
     void Start()
     {
         LinkedAI = GetComponent<EnemyAI>();
+        awareness = GetComponent<AwarenessSystem>();
     }
 
     // Update is called once per frame
@@ -22,11 +24,7 @@ public class ProximitySensor : MonoBehaviour
 
             if (candidateTarget.tier != LinkedAI.tier) continue;
             if (candidateTarget == LinkedAI.lastFaughtTarget) continue;
-            // skip if ourselves
-            if (candidateTarget.gameObject == gameObject)
-                continue;
-            if (Vector3.Distance(LinkedAI.EyeLocation, candidateTarget.transform.position) <= LinkedAI.ProximityDetectionRange)
-                LinkedAI.ReportInProximity(candidateTarget);
+            awareness.StoreTarget(candidateTarget);
         }
     }
 }

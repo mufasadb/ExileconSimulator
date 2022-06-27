@@ -32,6 +32,7 @@ public class GlobalVariables : MonoBehaviour
     public int lastFightID;
     public SelectionState selectionState = SelectionState.InitialDeal;
     public float gameSpeed = 0.5f;
+    public bool atFrontOfQueue = false;
 
     [Header("Containers")]
 
@@ -45,6 +46,7 @@ public class GlobalVariables : MonoBehaviour
     public MapHandler mapHandler;
     public GameObject clipTop;
     public GameObject clipBottom;
+    public GameObject player;
 
 
     // Update is called once per frame

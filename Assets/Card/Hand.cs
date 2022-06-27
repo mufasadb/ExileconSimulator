@@ -96,9 +96,9 @@ public class Hand : MonoBehaviour
         GameObject howCardPrefab = PrefabHolder.instance.ToolQuickReferencePrefab;
         Vector3 position = new Vector3(1920 - 150, 1080 - 50, 0);
         GlobalVariables.instance.selectionState = SelectionState.InitialDeal;
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 10; i++)
         {
-            Card newCard = Card.CreateInstance(Random.Range(2,5), false);
+            Card newCard = Card.CreateInstance(1, false);
             if (i == 0) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
             if (i == 9 && weaponCount == 1) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
             if (i == 1) { newCard = Card.CreateSpecificInstance("Full Plate"); }

@@ -19,7 +19,7 @@ public class Interactable : MonoBehaviour
     {
         if (!interactionTransform) { interactionTransform = transform; }
     }
-    void Update()
+    public virtual void Update()
     {
         if (isFocus && !hasInteracted)
         {

@@ -41,7 +41,9 @@ public class Action_GoToQueue : Action_Base
 
     public override void OnTick()
     {
-        // Agent.MoveTo(queueGoal.CurrentTarget.transform.position);
+        // Debug.Log(queueGoal.CurrentTarget.gameObject.name);
+        Vector3 destination = queueGoal.CurrentTarget.transform.position + new Vector3(0, 0.5f, 0);
+        Agent.MoveTo(destination);
     }
     // IEnumerator Queue()
     // {

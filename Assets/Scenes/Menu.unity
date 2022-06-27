@@ -7701,6 +7701,7 @@ MonoBehaviour:
   skipTutorial: 0
   sortBy: 1
   hiddenNeighbourTierRateMulti: 0.3
+  autoFastForward: 0
 --- !u!4 &2092799477
 Transform:
   m_ObjectHideFlags: 0
@@ -7800,7 +7801,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2092799476}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1

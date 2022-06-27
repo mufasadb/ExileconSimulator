@@ -7,6 +7,7 @@ public class Fight : Interactable
     private Hand hand;
     private CardSelection cardSelection;
     private StaffMember staffMember;
+    private float clickCooldown = 0;
     public void Start()
     {
         hand = Hand.instance;
@@ -15,7 +16,11 @@ public class Fight : Interactable
     }
     public override void Interact()
     {
-        checkSelection();
+        if (clickCooldown <= 0)
+        {
+            clickCooldown = 0.2f;
+            checkSelection();
+        }
     }
     private void checkSelection()
     {
@@ -28,7 +33,20 @@ public class Fight : Interactable
                 AudioManager.instance.Play("imChris");
             }
         }
-        FightHandler.instance.InitiateFight(gameObject, staffMember);
+        if (FightHandler.instance.InitiateFight(gameObject, staffMember))
+        {
+            GameEventManager.instance.AutoFastForward();
+            QueueManager qMan = GetComponent<QueueManager>();
+            GameObject player = GameObject.Find("Player");
+            player.AddComponent<QueueMember_Player>();
+            player.GetComponent<QueueMember_Player>().RegisterSelf(qMan);
+        }
+
+    }
+    public override void Update()
+    {
+        base.Update();
+        if (clickCooldown > 0) { clickCooldown -= Time.deltaTime; }
     }
     private bool UserHasFrags()
     {

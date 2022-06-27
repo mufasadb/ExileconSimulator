@@ -9,9 +9,6 @@ public class StaffMember : ScriptableObject
     public Stats attack;
     public ClipMethod clipMethod;
     public int clipCount;
-    public int staffQueueSize = 0;
-    public Vector3 nextSpotInQueue;
-    private float queueGap = 1f;
     public int tier { get; private set; }
 
     public static StaffMember CreateInstance(int tier)

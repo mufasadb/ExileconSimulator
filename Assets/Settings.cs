@@ -50,16 +50,19 @@ public class Settings : MonoBehaviour
     public bool skipTutorial = false;
     public SortBy sortBy;
     public float hiddenNeighbourTierRateMulti = 0.2f;
+    public bool autoFastForward = false;
 
     [Header("uiHolders")]
     TMPro.TMP_Dropdown timeDropdown;
     TMPro.TMP_Dropdown sortByDropdown;
     GameObject options;
     GameObject tick;
+
     public void Quit()
     {
         Application.Quit();
     }
+
     public void AssignOptions()
     {
         options = GameObject.Find("Options Menu");

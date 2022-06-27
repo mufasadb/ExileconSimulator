@@ -65,57 +65,51 @@ public class EnemyAI : MonoBehaviour
 
     public void FinishedFightingStaff(DetectableTarget foughtStaff)
     {
+        int oldTier = tier;
         lastFaughtTarget = foughtStaff;
+        Goal_JoinQueue joinQ = GetComponent<Goal_JoinQueue>();
+        if (joinQ)
+        {
+            joinQ.CurrentTarget = null;
+            // joinQ.OnGoalDeactivated();
+        }
         state = State.Idle;
         FeedbackDisplay.text = "I'm done fighting now";
-        if (Random.Range(0, 15) < 1) tier++;
+
+        //tier represents tier of staff but 6 is crafting and 7 is maps
+
+
+        if (tier == 6) { tier = Random.Range(2, 4); }
+        else if (tier == 7)
+        {
+            if (Random.Range(0, 2) < 1) tier = 5;
+        }
+        else if (tier == 4)
+        {
+            if (Random.Range(0, 20) < 1) tier = 7;
+        }
+        else
+        {
+            if (Random.Range(0, 15) < 1) tier++;
+        }
         if (Random.Range(0, 10) < 1) tier = 6;
-        if (Random.Range(0, 20) < 1) tier = 7;
-        if (tier > 4) tier = 4;
-    }
-    public void ReportCanSee(DetectableTarget seen)
-    {
-        Awareness.ReportCanSee(seen);
-    }
+        if (tier > 7) Debug.LogError("an ai got to 4");
 
-    public void ReportCanHear(GameObject source, Vector3 location, EHeardSoundCategory category, float intensity)
-    {
-        Awareness.ReportCanHear(source, location, category, intensity);
-    }
 
-    public void ReportInProximity(DetectableTarget target)
-    {
-        Awareness.ReportInProximity(target);
-    }
+        Awareness.ChangedTier();
 
-    public void OnSuspicious()
-    {
-        // FeedbackDisplay.text = "I hear you";
-    }
 
-    public void OnDetected(GameObject target)
-    {
-        // FeedbackDisplay.text = "I see you " + target.gameObject.name;
+        // Debug.Log(Awareness.Targets.Count);
     }
-
-    public void OnFullyDetected(GameObject target)
+    public void Wandering()
     {
-        // FeedbackDisplay.text = "Charge! " + target.gameObject.name;
+        state = State.Wander;
+        FeedbackDisplay.text = "wandering";
     }
-
-    public void OnLostDetect(GameObject target)
+    public void Idling()
     {
-        // FeedbackDisplay.text = "Where are you " + target.gameObject.name;
-    }
-
-    public void OnLostSuspicion()
-    {
-        // FeedbackDisplay.text = "Where did you go";
-    }
-
-    public void OnFullyLost()
-    {
-        // FeedbackDisplay.text = "Must be nothing";
+        state = State.Idle;
+        FeedbackDisplay.text = "now Idle";
     }
     public void ToQueue()
     {
@@ -126,10 +120,6 @@ public class EnemyAI : MonoBehaviour
     {
         state = State.InQueue;
         FeedbackDisplay.text = "I'm in the Queue now";
-    }
-    public void StepForward()
-    {
-        FeedbackDisplay.text = "I've stepped forward";
     }
 }
 

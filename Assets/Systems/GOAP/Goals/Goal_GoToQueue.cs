@@ -6,54 +6,65 @@ using UnityEngine;
 public class Goal_GoToQueue : Goal_Base
 {
     [SerializeField] int queuePriority = 60;
-    [SerializeField] float MinAwarenessToChase = 1.5f;
-    [SerializeField] float AwarenessToStopChase = 1f;
+    [SerializeField] float qLengthDisinsentive = 2f;
+    // [SerializeField] float AwarenessToStopChase = 1f;
     public DetectableTarget CurrentTarget;
-    int CurrentPriority = 0;
+
+    public int CurrentPriority = 0;
+    public int currentTargetViablityPoints = 0;
+    [SerializeField] float differenceToSwitchTarget = 5f;
 
     public Vector3 MoveTarget => CurrentTarget != null ? CurrentTarget.transform.position : transform.position;
     public override void OnTickGoal()
     {
         CurrentPriority = 0;
-        if (NerdAI.state == State.InQueue) return;
-
-        // no targets
-        if (Sensors.ActiveTargets == null || Sensors.ActiveTargets.Count == 0)
-            return;
-
-        // acquire a new target if possible
-        foreach (var candidate in Sensors.ActiveTargets.Values)
+        if(CurrentTarget == NerdAI.lastFaughtTarget) CurrentTarget = null;
+        for (int i = 0; i < Sensors.Targets.Count; i++)
         {
-            // found a target to acquire
-            if (candidate.Awareness >= MinAwarenessToChase)
+            if (CurrentTarget == Sensors.Targets[i]) { continue; }
+            if (Sensors.Targets[i] == NerdAI.lastFaughtTarget) { continue; }
+            if (CurrentTarget == null)
             {
-                float distToTarget = (candidate.Detectable.transform.position - transform.position).magnitude;
-                if (distToTarget > candidate.Detectable.interactRange)
+                CurrentTarget = Sensors.Targets[i];
+                currentTargetViablityPoints = CalculateTargetViability(CurrentTarget);
+            }
+            else
+            {
+                if (currentTargetViablityPoints < CalculateTargetViability(Sensors.Targets[i]))
                 {
-                    if (CurrentTarget == null)
-                    {
-                        // Debug.Log("here");
-                        // Debug.Log(CurrentTarget);
-                        // if (CurrentTarget == null)
-                        // if (CurrentTarget == null || candidate.Detectable.GetComponent<QueueManager>().AllMembers.Count < CurrentTarget.GetComponent<QueueManager>().AllMembers.Count)
-                        // {
-                        CurrentTarget = candidate.Detectable;
-                        CurrentPriority = queuePriority;
-                        return;
-                    }
-                    // }
+                    currentTargetViablityPoints = CalculateTargetViability(Sensors.Targets[i]);
+                    CurrentTarget = Sensors.Targets[i];
                 }
             }
         }
+        if (CurrentTarget != null)
+        {
+            CurrentPriority = Mathf.RoundToInt(queuePriority - CurrentTarget.qMan.AllMembers.Count * qLengthDisinsentive);
+        }
+        // Debug.Log(CurrentTarget.name);
+        // Debug.Log(Sensors.Targets.Count);
 
     }
+    int CalculateTargetViability(DetectableTarget target)
+    {
+        int value = 0;
 
+        if (Mathf.Abs(target.transform.position.y - transform.position.y) > 15) value -= 50;
+        if (Mathf.Abs(target.transform.position.y - transform.position.y) > 5) value -= 50;
+        value += (100 - Mathf.RoundToInt((target.transform.position - transform.position).magnitude));
+        value -= Mathf.RoundToInt(target.qMan.AllMembers.Count * qLengthDisinsentive);
+        return value;
+
+    }
     public override void OnGoalDeactivated()
     {
-        // base.OnGoalDeactivated();
-
-        // Debug.Log("check");
+        base.OnGoalDeactivated();
         CurrentTarget = null;
+    }
+    public override void OnGoalActivated(Action_Base _linkedAction)
+    {
+        base.OnGoalActivated(_linkedAction);
+
     }
 
     public override int CalculatePriority()
@@ -66,14 +77,15 @@ public class Goal_GoToQueue : Goal_Base
         if (NerdAI.state == State.InQueue) return false;
 
         // no targets
-        if (Sensors.ActiveTargets == null || Sensors.ActiveTargets.Count == 0)
+        if (Sensors.Targets == null || Sensors.Targets.Count == 0)
+        {
             return false;
+        }
 
         // check if we have anything we are aware of
-        foreach (var candidate in Sensors.ActiveTargets.Values)
+        foreach (var candidate in Sensors.Targets)
         {
-            if (candidate.Awareness >= MinAwarenessToChase)
-                return true;
+            return true;
         }
 
         return false;

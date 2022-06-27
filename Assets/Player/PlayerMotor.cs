@@ -19,7 +19,7 @@ public class PlayerMotor : MonoBehaviour
         if (target != null)
         {
             agent.SetDestination(target.position);
-            FaceTarget();
+            FaceTarget(target);
         }
     }
     public void MoveToPoint(Vector3 point)
@@ -41,9 +41,9 @@ public class PlayerMotor : MonoBehaviour
         agent.updateRotation = true;
         target = null;
     }
-    void FaceTarget()
+    public void FaceTarget(Transform trans)
     {
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (trans.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0.01f, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }

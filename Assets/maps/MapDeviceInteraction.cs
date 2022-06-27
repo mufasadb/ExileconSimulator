@@ -6,6 +6,7 @@ public class MapDeviceInteraction : Interactable
 {
     [SerializeField] private Outline outline;
 
+    private float clickCooldown = 0;
 
     private void OnMouseEnter()
     {
@@ -26,6 +27,23 @@ public class MapDeviceInteraction : Interactable
     }
     public override void Interact()
     {
-        GameEventManager.instance.BeginMapScreen();
+        if (clickCooldown <= 0)
+        {
+            clickCooldown = 1f;
+            GlobalVariables.instance.atFrontOfQueue = false;
+            GameEventManager.instance.ShowFastForward();
+            GameEventManager.instance.AutoFastForward();
+            QueueManager qMan = GetComponent<QueueManager>();
+            GameObject player = GameObject.Find("Player");
+            player.AddComponent<QueueMember_Player>();
+            player.GetComponent<QueueMember_Player>().RegisterSelf(qMan);
+            GameEventManager.instance.BeginMapScreen();
+            // GameEventManager.instance.BeginCraftScreen();
+        }
+    }
+    public override void Update()
+    {
+        base.Update();
+        if (clickCooldown > 0) { clickCooldown -= Time.deltaTime; }
     }
 }

@@ -30,6 +30,11 @@ public class MapHandler : MonoBehaviour
     #endregion
     public void DoMap()
     {
+        if (GlobalVariables.instance.atFrontOfQueue == false)
+        {
+            GlobalVariables.instance.errorHandler.NewError("You'll have to be at the front of the queue to leave the maps");
+            return;
+        }
         isInMap = true;
         HideMapButtons();
         GameEventManager.instance.CloseHand();
@@ -44,8 +49,11 @@ public class MapHandler : MonoBehaviour
     }
     public void EnterMap()
     {
-        GameEventManager.instance.MapWeaponSelection();
-        CheckCanEnterMap();
+        if (map != null)
+        {
+            GameEventManager.instance.MapWeaponSelection();
+            CheckCanEnterMap();
+        }
     }
     public void CheckCanEnterMap()
     {
@@ -111,7 +119,6 @@ public class MapHandler : MonoBehaviour
         cantLockInButton.SetActive(false);
         lockInButton.SetActive(false);
         GlobalVariables.instance.mapSelection.MoveContainer(false);
-
     }
     public void ShowMapButtons()
     {
@@ -126,7 +133,7 @@ public class MapHandler : MonoBehaviour
     {
         if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
         {
-            if (currentFightTier > 1)
+            if (currentFightTier < 3)
             {
                 int rewardCount = 1;
                 if (map.card.rarity == Rarity.Magic) rewardCount = 2;
@@ -141,13 +148,23 @@ public class MapHandler : MonoBehaviour
 
 
         }
+        ResetMapState();
         GameEventManager.instance.EndMapScreen();
         GameEventManager.instance.CloseAllUI();
         GameEventManager.instance.SetFightCancelButtonToCancel();
         Hand.instance.cardSelection.UnSelectAllCards();
         currentFightTier = 0;
         fightsRemaining = 0;
-        ShowMapButtons();
+        GameEventManager.instance.NormalTime();
+        QueueMember_Player queueMember_Player = GlobalVariables.instance.player.GetComponent<QueueMember_Player>();
+        if (queueMember_Player) queueMember_Player.qMan.Deregister(queueMember_Player);
+    }
+    public void ResetMapState()
+    {
+        doMap.SetActive(true);
+        cancelButton.SetActive(true);
+        lockInButton.SetActive(false);
+        cantLockInButton.SetActive(false);
     }
     public void CanLockin()
     {
