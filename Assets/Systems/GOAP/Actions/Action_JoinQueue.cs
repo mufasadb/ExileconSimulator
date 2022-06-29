@@ -26,7 +26,7 @@ public class Action_JoinQueue : Action_Base
         queueGoal = (Goal_JoinQueue)LinkedGoal;
         // Debug.Log(gameObject.name + " joined queue for" + queueGoal.CurrentTarget.gameObject.name);
         GetComponentInParent<EnemyAI>().JoinQueue();
-        gameObject.AddComponent<QueueMember_Staff>();
+        // gameObject.AddComponent<QueueMember_Staff>();
         QueueMember_Base qMem = gameObject.GetComponent<QueueMember_Staff>();
         QueueManager qMan = queueGoal.CurrentTarget.qMan;
         // Debug.Log(queueGoal);

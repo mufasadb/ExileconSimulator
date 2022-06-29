@@ -18,7 +18,7 @@ public class Fight : Interactable
     {
         if (clickCooldown <= 0)
         {
-            clickCooldown = 0.2f;
+            clickCooldown = 0.05f;
             checkSelection();
         }
     }
@@ -38,7 +38,7 @@ public class Fight : Interactable
             GameEventManager.instance.AutoFastForward();
             QueueManager qMan = GetComponent<QueueManager>();
             GameObject player = GameObject.Find("Player");
-            player.AddComponent<QueueMember_Player>();
+            // player.AddComponent<QueueMember_Player>();
             player.GetComponent<QueueMember_Player>().RegisterSelf(qMan);
         }
 
@@ -47,6 +47,7 @@ public class Fight : Interactable
     {
         base.Update();
         if (clickCooldown > 0) { clickCooldown -= Time.deltaTime; }
+        interactionTransform.position = gameObject.GetComponent<QueueManager>().GetEndPosition();
     }
     private bool UserHasFrags()
     {

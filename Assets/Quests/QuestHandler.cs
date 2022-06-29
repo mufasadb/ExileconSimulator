@@ -12,6 +12,7 @@ public class QuestHandler : MonoBehaviour
     public GameObject questTier2Container;
     public GameObject questTier3Container;
     public GameObject questTier4Container;
+    public GameObject questTier5Container;
     public GameObject questPrefab;
     [HideInInspector]
     public bool questTier1Received;
@@ -80,6 +81,7 @@ public class QuestHandler : MonoBehaviour
         if (allMin)
         {
             allMin = false;
+
             questTier1Minimized = false;
             questTier2Minimized = false;
             questTier3Minimized = false;
@@ -88,18 +90,54 @@ public class QuestHandler : MonoBehaviour
         else
         {
             allMin = true;
-            questTier1Minimized = true;
+            if (questTier5Container.activeSelf)
+            {
+                questTier1Minimized = true;
+            }
             questTier2Minimized = true;
             questTier3Minimized = true;
             questTier4Minimized = true;
         }
     }
+    public void ToggleQuest1Min()
+    {
+        if (questTier1Minimized || questTier5Container.activeSelf)
+            questTier1Minimized = false;
+        else
+            questTier1Minimized = true;
+    }
+    public void ToggleQuest2Min()
+    {
+        if (questTier2Minimized)
+            questTier2Minimized = false;
+        else
+            questTier2Minimized = true;
+    }
+    public void ToggleQuest3Min()
+    {
+        if (questTier3Minimized)
+            questTier3Minimized = false;
+        else
+            questTier3Minimized = true;
+    }
+    public void ToggleQuest4Min()
+    {
+        if (questTier4Minimized)
+            questTier4Minimized = false;
+        else
+            questTier4Minimized = true;
+    }
     public void TakeRewards()
     {
-        if (questTier1ReadyToReceive && !questTier1Received) { questTier1Received = true; rewardHandler.DoReward(1, 2, 1); questTier1Received = true; return; }
-        if (questTier2ReadyToReceive && !questTier2Received) { questTier2Received = true; rewardHandler.DoReward(1, 3, 1); questTier2Received = true; return; }
-        if (questTier3ReadyToReceive && !questTier3Received) { questTier3Received = true; rewardHandler.DoReward(1, 4, 1); questTier3Received = true; return; }
-        if (questTier4ReadyToReceive && !questTier4Received) { questTier4Received = true; rewardHandler.DoSpecificReward("map"); questTier4Received = true; return; }
+        if (questTier1ReadyToReceive && !questTier1Received) { questTier1Received = true; rewardHandler.DoReward(1, 2, 1); questTier1Received = true; craftHandler.DisplayAcceptRewardButton(false); CheckIfTiercomplete(); return; }
+        if (questTier2ReadyToReceive && !questTier2Received) { questTier2Received = true; rewardHandler.DoReward(1, 3, 1); questTier2Received = true; craftHandler.DisplayAcceptRewardButton(false); CheckIfTiercomplete(); return; }
+        if (questTier3ReadyToReceive && !questTier3Received) { questTier3Received = true; rewardHandler.DoReward(1, 4, 1); questTier3Received = true; craftHandler.DisplayAcceptRewardButton(false); CheckIfTiercomplete(); return; }
+        if (questTier4ReadyToReceive && !questTier4Received) { questTier4Received = true; rewardHandler.DoSpecificReward("map"); questTier4Received = true; craftHandler.DisplayAcceptRewardButton(false); CheckIfTiercomplete(); OpenTier5(); return; }
+    }
+    void OpenTier5()
+    {
+        questTier1Container.SetActive(true);
+        questTier5Container.SetActive(true);
     }
     public void MarkCraftQuestComplete(string carftingItem, string craftingCurrency)
     {

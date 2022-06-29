@@ -36,6 +36,8 @@ public class Hand : MonoBehaviour
     public int seed;
     [SerializeField] float scale;
     float timesPressed;
+    public Transform cardDeckPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +74,7 @@ public class Hand : MonoBehaviour
             CardDisplay cardDisplay = card.GetComponent<CardDisplay>();
             // cardDisplay.transform.position = new Vector3(1920 - 100, 1080 - 100);
             cardDisplay.destination = new Vector3(1920 - 150, 1080 - 100, 0);
+            cardDisplay.destination = cardDeckPosition.position;
             // cardDisplay.HideBack();
             if (handContainer.activeSelf)
                 cardDisplay.gameObject.GetComponent<Animator>().SetBool("facingForward", false);
@@ -96,9 +99,9 @@ public class Hand : MonoBehaviour
         GameObject howCardPrefab = PrefabHolder.instance.ToolQuickReferencePrefab;
         Vector3 position = new Vector3(1920 - 150, 1080 - 50, 0);
         GlobalVariables.instance.selectionState = SelectionState.InitialDeal;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 40; i++)
         {
-            Card newCard = Card.CreateInstance(1, false);
+            Card newCard = Card.CreateInstance(Random.Range(3,5), false);
             if (i == 0) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
             if (i == 9 && weaponCount == 1) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
             if (i == 1) { newCard = Card.CreateSpecificInstance("Full Plate"); }
@@ -219,7 +222,7 @@ public class Hand : MonoBehaviour
         if (Input.GetButton("CardsRight")) { PressingDirectionLeft(true); }
         if (Input.GetButton("CardsLeft")) { PressingDirectionLeft(false); }
         if (pressCooldown > 0)
-            pressCooldown -= Time.deltaTime;
+            pressCooldown -= Time.deltaTime / Time.timeScale;
         if (timePressed > 0)
             timePressed -= Time.deltaTime;
         if (testCooldown > 0)

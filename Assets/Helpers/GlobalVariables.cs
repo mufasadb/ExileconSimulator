@@ -47,6 +47,7 @@ public class GlobalVariables : MonoBehaviour
     public GameObject clipTop;
     public GameObject clipBottom;
     public GameObject player;
+    public bool standingAtFrontOfQueue = false;
 
 
     // Update is called once per frame

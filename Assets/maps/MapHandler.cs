@@ -15,6 +15,8 @@ public class MapHandler : MonoBehaviour
     [SerializeField] private GameObject mapSelector;
     [SerializeField] private GameObject lockInButton;
     [SerializeField] private GameObject cantLockInButton;
+
+    public bool yetToClose = false;
     #region Singleton
 
     public static MapHandler instance;
@@ -133,7 +135,7 @@ public class MapHandler : MonoBehaviour
     {
         if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
         {
-            if (currentFightTier < 3)
+            if (fightsRemaining < 3)
             {
                 int rewardCount = 1;
                 if (map.card.rarity == Rarity.Magic) rewardCount = 2;
@@ -141,12 +143,19 @@ public class MapHandler : MonoBehaviour
 
                 GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(rewardCount + 1, map.card.mapTier + 2, rewardCount);
             }
+
+        }
+        else { CloseOff(); }
+
+    }
+    public void CloseOff()
+    {
+        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+        {
             Hand.instance.hand.Remove(map.gameObject);
             Destroy(map.gameObject);
             map = null;
             GlobalVariables.instance.selectionState = SelectionState.Fight;
-
-
         }
         ResetMapState();
         GameEventManager.instance.EndMapScreen();
@@ -157,7 +166,8 @@ public class MapHandler : MonoBehaviour
         fightsRemaining = 0;
         GameEventManager.instance.NormalTime();
         QueueMember_Player queueMember_Player = GlobalVariables.instance.player.GetComponent<QueueMember_Player>();
-        if (queueMember_Player) queueMember_Player.qMan.Deregister(queueMember_Player);
+        if (queueMember_Player != null) queueMember_Player.qMan.Deregister(queueMember_Player);
+
     }
     public void ResetMapState()
     {

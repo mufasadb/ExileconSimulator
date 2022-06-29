@@ -24,7 +24,7 @@ public class CraftingSelection : MonoBehaviour, IDropHandler
             }
             else
             {
-                if (cardDisplay.card.rarity != Rarity.Unique && cardDisplay.card.type != Type.Currency && cardDisplay.card.type != Type.Tool)
+                if (cardDisplay.card.type != Type.Currency && cardDisplay.card.type != Type.Tool)
                 {
                     gameObject.transform.parent.GetComponent<CraftHandler>().item = cardDisplay;
                     cardDisplay.DoSelect(GetComponent<Transform>().position, gameObject.transform.parent.gameObject);

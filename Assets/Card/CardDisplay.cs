@@ -19,6 +19,7 @@ public class CardDisplay : MonoBehaviour
     private List<Image> implicitList;
     public GameObject explicitContainer;
     public TMPro.TMP_Text descriptiveText;
+    public Transform qualityBox;
     private int horizontalCardSpacing = 120; //positions spacing between cards
     private int verticalCardSpacing = -10; //positions spacing between cards
     private Canvas canvas;
@@ -45,7 +46,6 @@ public class CardDisplay : MonoBehaviour
         if (card.type == Type.TwoHandedWeapon || card.type == Type.OneHandedWeapon) { asWeapon = true; }
         MoveTypeIcon(card.type);
         itemImage.sprite = CardImageHolder.instance.getItem(card.name, card.type);
-
         if (card.name == "Quick Reference")
         {
             // baseImage.sprite = CardImageHolder.instance.getBase(Rarity.Currency, 2);
@@ -56,6 +56,11 @@ public class CardDisplay : MonoBehaviour
         {
             descriptiveText.text = card.extraDescription;
             baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
+        }
+        if (card.type == Type.Tool && card.name != "Quick Reference")
+        {
+            baseImage.sprite = CardImageHolder.instance.getBase(Rarity.Currency, 2);
+            typeIcon.color = new Color(0, 0, 0, 0);
         }
         title.text = card.name;
         if (card.type != Type.Currency && card.type != Type.Map && card.type != Type.Tool)
@@ -77,10 +82,11 @@ public class CardDisplay : MonoBehaviour
         card.durability -= clipCount;
         if (card.durability == -1) { card.durability = 0; }
         destination = new Vector3(parentContainer.transform.position.x, 1080 / 2, 0);
-        baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
+        // baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability);
 
         StartCoroutine(DoLater.DoAfterXSeconds(1.8f, () => { AudioManager.instance.Play("cardClip"); }));
         StartCoroutine(DoLater.DoAfterXSeconds(1.1f, () => { Biggerise(); }));
+        StartCoroutine(DoLater.DoAfterXSeconds(1.9f, () => { baseImage.sprite = CardImageHolder.instance.getBase(card.rarity, card.durability); }));
         StartCoroutine(DoLater.DoAfterXSeconds(1.7f, () => { GlobalVariables.instance.clipTop.SetActive(true); }));
         StartCoroutine(DoLater.DoAfterXSeconds(1.7f, () => { GlobalVariables.instance.clipBottom.SetActive(true); }));
         StartCoroutine(DoLater.DoAfterXSeconds(3f, () => { Smallerise(); }));
@@ -101,7 +107,7 @@ public class CardDisplay : MonoBehaviour
         {
             card.quality.armour = 1;
         }
-        card.quality.StatDisplay(qualitySticker.transform);
+        card.quality.StatDisplay(qualityBox);
         card.isCrafted = true;
     }
     public void AsDefenceTrue()
@@ -147,17 +153,21 @@ public class CardDisplay : MonoBehaviour
     }
     public void Smallerise()
     {
-        if (selected)
+        if (gameObject.GetComponent<ClipAcceptance>() == null)
         {
-            baseImage.transform.localScale = new Vector3(1f, 1f, 1);
-            transform.SetAsLastSibling();
+
+            if (selected)
+            {
+                baseImage.transform.localScale = new Vector3(1f, 1f, 1);
+                transform.SetAsLastSibling();
+            }
+            else
+            {
+                transform.SetSiblingIndex(sortedOrderIndex);
+                baseImage.transform.localScale = new Vector3(1f, 1f, 1);
+            }
+            baseImage.transform.localPosition = new Vector3(0, 0, 0);
         }
-        else
-        {
-            transform.SetSiblingIndex(sortedOrderIndex);
-            baseImage.transform.localScale = new Vector3(1f, 1f, 1);
-        }
-        baseImage.transform.localPosition = new Vector3(0, 0, 0);
     }
     public void Biggerise()
     {

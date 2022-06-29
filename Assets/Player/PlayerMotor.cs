@@ -27,6 +27,20 @@ public class PlayerMotor : MonoBehaviour
         agent.SetDestination(point);
         if (characterAnimator) { characterAnimator.TargetChange(point); }
     }
+    public void StopCollisions()
+    {
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        agent.avoidancePriority = 0;
+    }
+    public void StartCollisions()
+    {
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+        agent.avoidancePriority = 50;
+    }
+    public void StopMoving(){
+        StopFollowingTarget();
+        agent.destination = transform.position;
+    }
 
     public void FollowTarget(Interactable newTarget)
     {

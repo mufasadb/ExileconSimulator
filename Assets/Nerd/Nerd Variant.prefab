@@ -331,6 +331,20 @@ MonoBehaviour:
   qLengthDisinsentive: 5
   CurrentTarget: {fileID: 0}
   CurrentPriority: 0
+--- !u!114 &5899973304230062494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093106314695543034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a22be8475bec374e95fafb9a8be984e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  qMan: {fileID: 0}
+  isPlayer: 0
 --- !u!114 &7211382825836419662 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4385682992435073776, guid: 70178d2ae2e7d494091c0c88ad4a5cc6, type: 3}

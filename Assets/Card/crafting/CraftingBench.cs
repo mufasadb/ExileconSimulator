@@ -37,12 +37,16 @@ public class CraftingBench : Interactable
         if (clickCooldown <= 0)
         {
             clickCooldown = 1f;
-            GlobalVariables.instance.atFrontOfQueue = false;
+            if (!GlobalVariables.instance.standingAtFrontOfQueue)
+            {
+                GlobalVariables.instance.atFrontOfQueue = false;
+            }
             GameEventManager.instance.ShowFastForward();
             GameEventManager.instance.AutoFastForward();
             QueueManager qMan = GetComponent<QueueManager>();
             GameObject player = GameObject.Find("Player");
-            player.AddComponent<QueueMember_Player>();
+
+            // player.AddComponent<QueueMember_Player>();
             player.GetComponent<QueueMember_Player>().RegisterSelf(qMan);
             GameEventManager.instance.BeginCraftScreen();
         }
@@ -52,5 +56,6 @@ public class CraftingBench : Interactable
     {
         base.Update();
         if (clickCooldown > 0) { clickCooldown -= Time.deltaTime; }
+        interactionTransform.position = gameObject.GetComponent<QueueManager>().GetEndPosition();
     }
 }

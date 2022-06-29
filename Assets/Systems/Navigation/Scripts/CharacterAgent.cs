@@ -17,6 +17,7 @@ public class CharacterAgent : CharacterBase
     NavMeshAgent Agent;
     bool DestinationSet = false;
     bool ReachedDestination = false;
+    Vector3 forcedPosition;
     // EOffmeshLinkStatus OffMeshLinkStatus = EOffmeshLinkStatus.NotStarted;
 
     public bool IsMoving => Agent.velocity.magnitude > float.Epsilon;
@@ -28,7 +29,27 @@ public class CharacterAgent : CharacterBase
     {
         Agent = GetComponent<NavMeshAgent>();
     }
-
+    public void Collide()
+    {
+        if (Agent)
+        {
+            Agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+            Agent.avoidancePriority = 50;
+        }
+    }
+    public void DontCollide()
+    {
+        if (Agent)
+        {
+            Agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+            Agent.avoidancePriority = 0;
+        }
+    }
+    public void ForcePosition(Vector3 destination)
+    {
+        CancelCurrentCommand();
+        forcedPosition = destination;
+    }
     // Update is called once per frame
     protected void Update()
     {
@@ -37,6 +58,18 @@ public class CharacterAgent : CharacterBase
         {
             DestinationSet = false;
             ReachedDestination = true;
+        }
+        if (forcedPosition != Vector3.zero)
+        {
+
+            if (Mathf.Approximately((transform.position - forcedPosition).magnitude, 0.1f))
+            {
+                forcedPosition = Vector3.zero;
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, forcedPosition, Time.deltaTime * 5f);
+            }
         }
 
         // are we on an offmesh link?

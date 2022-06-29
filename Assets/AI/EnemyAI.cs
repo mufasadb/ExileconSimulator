@@ -41,6 +41,7 @@ public class EnemyAI : MonoBehaviour
     public State state = State.Idle;
     public int tier = 1;
     public DetectableTarget lastFaughtTarget;
+    int rememberTier = 0;
 
 
     AwarenessSystem Awareness;
@@ -79,7 +80,7 @@ public class EnemyAI : MonoBehaviour
         //tier represents tier of staff but 6 is crafting and 7 is maps
 
 
-        if (tier == 6) { tier = Random.Range(2, 4); }
+        if (tier == 6) { tier = rememberTier; }
         else if (tier == 7)
         {
             if (Random.Range(0, 2) < 1) tier = 5;
@@ -92,7 +93,11 @@ public class EnemyAI : MonoBehaviour
         {
             if (Random.Range(0, 15) < 1) tier++;
         }
-        if (Random.Range(0, 10) < 1) tier = 6;
+        if (Random.Range(0, 10) < 1)
+        {
+            rememberTier = tier;
+            tier = 6;
+        }
         if (tier > 7) Debug.LogError("an ai got to 4");
 
 

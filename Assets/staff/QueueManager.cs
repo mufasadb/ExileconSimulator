@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QueueManager : MonoBehaviour
 {
-    public List<QueueMember_Base> AllMembers { get; private set; } = new List<QueueMember_Base>();
+    public List<QueueMember_Base> AllMembers = new List<QueueMember_Base>();
     public float timeBetweenFights = 0f;
     public float timeSinceFight = 0f;
     // private Vector3 myPosition;
@@ -15,6 +15,10 @@ public class QueueManager : MonoBehaviour
     {
         AllMembers.Add(queueMember);
         UpdatePlayerPosition();
+    }
+    public Vector3 GetEndPosition()
+    {
+        return transform.position + transform.forward * queueGap * AllMembers.Count;
     }
     public void Deregister(QueueMember_Base queueMember)
     {
@@ -27,9 +31,12 @@ public class QueueManager : MonoBehaviour
         {
             if (timeSinceFight <= 0)
             {
-                timeSinceFight = timeBetweenFights;
-                AllMembers[0].LeaveQueue(GetComponent<DetectableTarget>(), transform.position + Vector3.back * 2);
-                UpdatePlayerPosition();
+                if (!GlobalVariables.instance.standingAtFrontOfQueue)
+                {
+                    timeSinceFight = timeBetweenFights;
+                    UpdatePlayerPosition();
+                    AllMembers[0].LeaveQueue(GetComponent<DetectableTarget>(), transform.position + Vector3.back * 2, 0.1f);
+                }
             }
         }
 
@@ -39,7 +46,9 @@ public class QueueManager : MonoBehaviour
     {
         for (int i = 0; i < AllMembers.Count; i++)
         {
-            AllMembers[i].UpdatePosition((transform.position + transform.forward * queueGap * (i + 1)));
+            float timeToMove = timeBetweenFights;
+            if (i == AllMembers.Count - 1) timeToMove = 0;
+            AllMembers[i].UpdatePosition((transform.position + transform.forward * queueGap * (i + 1)), 0);
         }
     }
 }

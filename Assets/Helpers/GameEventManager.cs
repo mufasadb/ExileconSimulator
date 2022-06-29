@@ -41,7 +41,7 @@ public class GameEventManager : MonoBehaviour
 
     public void FastForward()
     {
-        Time.timeScale = 10f;
+        Time.timeScale = 15f;
         OpenUIItem(fastForwardIndicator);
         CloseUIItem(fastForwardMenu);
     }
@@ -176,7 +176,7 @@ public class GameEventManager : MonoBehaviour
         GlobalVariables.instance.preventMoving = false;
         GameEventManager.instance.NormalTime();
         QueueMember_Player queueMember_Player = GlobalVariables.instance.player.GetComponent<QueueMember_Player>();
-        if (queueMember_Player) queueMember_Player.qMan.Deregister(queueMember_Player);
+        if (queueMember_Player.qMan != null) queueMember_Player.qMan.Deregister(queueMember_Player);
     }
     public void CloseAllUI()
     {
@@ -213,8 +213,8 @@ public class GameEventManager : MonoBehaviour
             }
             else
             {
-                EndRewardScreen();
                 mapHandler.endMapInteraction();
+                EndRewardScreen();
             }
         }
         else
@@ -254,11 +254,13 @@ public class GameEventManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("WonAt", GlobalVariables.instance.timer);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        NormalTime();
     }
     public void LoseGame()
     {
         PlayerPrefs.SetFloat("WonAt", -1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        NormalTime();
     }
     public void Update()
     {

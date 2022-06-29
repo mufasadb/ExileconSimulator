@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class CraftHandler : MonoBehaviour
 {
     public CardDisplay item;
     public CardDisplay currency;
     [SerializeField] GameObject acceptReward;
-    [SerializeField] GameObject cantAcceptReward;
     [SerializeField] QuestHandler questHandler;
+    [SerializeField] Button buttonComponent;
     // Start is called before the first frame update
     public void DoCraft()
     {
@@ -133,6 +133,24 @@ public class CraftHandler : MonoBehaviour
             return;
         }
     }
+    public void Update()
+    {
+        if (!GlobalVariables.instance.atFrontOfQueue)
+        {
+            buttonComponent.enabled = false;
+            buttonComponent.gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+            acceptReward.GetComponent<Button>().enabled = false;
+            acceptReward.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+        }
+        else
+        {
+            buttonComponent.enabled = true;
+            buttonComponent.gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            acceptReward.GetComponent<Button>().enabled = true;
+            acceptReward.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        }
+
+    }
     void CheckQuest()
     {
         questHandler.MarkCraftQuestComplete(item.card.type.ToString(), currency.card.name);
@@ -150,10 +168,5 @@ public class CraftHandler : MonoBehaviour
     public void DisplayAcceptRewardButton(bool show)
     {
         acceptReward.SetActive(show);
-        cantAcceptReward.SetActive(!show);
     }
-    //     public void Start()
-    //     {
-    //         DisplayAcceptRewardButton(false);
-    //     }
 }

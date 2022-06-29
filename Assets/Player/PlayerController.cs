@@ -21,33 +21,43 @@ public class PlayerController : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-        if (Input.GetMouseButton(0))
+
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            if (!GlobalVariables.instance.preventMoving && !GlobalVariables.instance.currentlyDragging)
+            if (!GlobalVariables.instance.preventMoving)
             {
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100, movementMask))
+                if (Physics.Raycast(ray, out hit, 100))
                 {
-                    //move our player to what we hit
-                    motor.MoveToPoint(hit.point);
-                    removeFocus();
-                    // stop focus an item
-                }
-            }
-        }
-        if (Input.GetMouseButton(1))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                if (interactable != null)
-                {
-                    SetFocus(interactable);
+                    Interactable interactable = hit.collider.GetComponent<Interactable>();
+                    if (interactable != null)
+                    {
+                        SetFocus(interactable);
+                        GlobalVariables.instance.standingAtFrontOfQueue = false;
+                        return;
+                    }
                 }
                 //check if we hit an interactble - set it as focus if we do
+            }
+        }
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        {
+            if (!GlobalVariables.instance.preventMoving)
+            {
+                if (!GlobalVariables.instance.preventMoving && !GlobalVariables.instance.currentlyDragging)
+                {
+                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, 100, movementMask))
+                    {
+                        GlobalVariables.instance.standingAtFrontOfQueue = false;
+                        //move our player to what we hit
+                        motor.MoveToPoint(hit.point);
+                        removeFocus();
+                        // stop focus an item
+                    }
+                }
             }
         }
     }

@@ -35,7 +35,7 @@ public class MapDeviceInteraction : Interactable
             GameEventManager.instance.AutoFastForward();
             QueueManager qMan = GetComponent<QueueManager>();
             GameObject player = GameObject.Find("Player");
-            player.AddComponent<QueueMember_Player>();
+            // player.AddComponent<QueueMember_Player>();
             player.GetComponent<QueueMember_Player>().RegisterSelf(qMan);
             GameEventManager.instance.BeginMapScreen();
             // GameEventManager.instance.BeginCraftScreen();
@@ -45,5 +45,6 @@ public class MapDeviceInteraction : Interactable
     {
         base.Update();
         if (clickCooldown > 0) { clickCooldown -= Time.deltaTime; }
+        interactionTransform.position = gameObject.GetComponent<QueueManager>().GetEndPosition();
     }
 }

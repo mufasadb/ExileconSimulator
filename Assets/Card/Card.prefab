@@ -163,6 +163,7 @@ MonoBehaviour:
   qualitySticker: {fileID: 7244459691075770988}
   explicitContainer: {fileID: 8949489017750305363}
   descriptiveText: {fileID: 5146112535254635213}
+  qualityBox: {fileID: 3770262356587328892}
   destination: {x: 0, y: 0, z: 0}
   sortedOrderIndex: 0
   selected: 0
@@ -256,6 +257,7 @@ RectTransform:
   - {fileID: 4177971434739011076}
   - {fileID: 2538800828006752081}
   - {fileID: 8693931938095090375}
+  - {fileID: 3770262356587328892}
   m_Father: {fileID: 8121681596535635581}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -370,8 +372,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Upgrades a magic item into a s
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cbbe6ae8b4257684ebd45f89f26f4b42, type: 2}
-  m_sharedMaterial: {fileID: -6218994487533821567, guid: cbbe6ae8b4257684ebd45f89f26f4b42, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0b96aecc0fc97d546b6f9f295e72e1b8, type: 2}
+  m_sharedMaterial: {fileID: -6218994487533821567, guid: 0b96aecc0fc97d546b6f9f295e72e1b8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -648,6 +650,42 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6202577673011195976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3770262356587328892}
+  m_Layer: 5
+  m_Name: qualityBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3770262356587328892
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6202577673011195976}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3727156022437237952}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -17.3, y: -131.4}
+  m_SizeDelta: {x: 65.2667, y: 40.3745}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6385865113801578385
 GameObject:
   m_ObjectHideFlags: 0

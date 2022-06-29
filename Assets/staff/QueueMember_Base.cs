@@ -10,15 +10,15 @@ public class QueueMember_Base : MonoBehaviour
         qMan = _qMan;
         qMan.Register(this);
     }
-    public virtual void UpdatePosition(Vector3 destination)
+    public virtual void UpdatePosition(Vector3 destination, float timeBetweenFights)
     {
 
     }
-    public virtual void LeaveQueue(DetectableTarget foughtStaff, Vector3 newPosition)
+    public virtual void LeaveQueue(DetectableTarget foughtStaff, Vector3 newPosition, float waitTime)
     {
 
-        qMan.Deregister(this);
-        Destroy(this);
+        qMan = null;
+        // Destroy(this);
     }
 
 }

@@ -5452,8 +5452,8 @@ MonoBehaviour:
   sounds:
   - name: cardClip
     clip: {fileID: 8300000, guid: 6af088434e04ade45ab81dc574397abe, type: 3}
-    volume: 0.467
-    pitch: 1
+    volume: 0.534
+    pitch: 0.519
     loop: 0
     source: {fileID: 0}
   - name: cardSwipe
@@ -5537,12 +5537,6 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Theme
     clip: {fileID: 8300000, guid: 9ca69c54dd942254a9dbb368911604cc, type: 3}
-    volume: 0.747
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Theme
-    clip: {fileID: 8300000, guid: b2299e3f8c07fdd4a845d547dea18fb6, type: 3}
     volume: 0.747
     pitch: 1
     loop: 0
