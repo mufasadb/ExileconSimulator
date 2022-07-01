@@ -33,10 +33,11 @@ public class Hand : MonoBehaviour
     float testCooldown = 0;
     float xOffset;
     float yOffset;
-    public int seed;
     [SerializeField] float scale;
     float timesPressed;
     public Transform cardDeckPosition;
+    public int numberOfStartingCards = 10;
+    public int startCardValue = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -45,13 +46,15 @@ public class Hand : MonoBehaviour
         cardSelection = handContainer.GetComponent<CardSelection>();
         rewardContainer = GlobalVariables.instance.RewardContainer;
         DoHandGen();
-
-
-
         //remove for test
-        Random.InitState(seed);
         xOffset = Random.value;
         yOffset = Random.value;
+
+        if (Settings.instance.devMode)
+        {
+            // startCardValue = Random.Range(2, 6);
+            numberOfStartingCards = 50;
+        }
     }
     public void AddCardToHand(GameObject cardObject)
     {
@@ -99,9 +102,9 @@ public class Hand : MonoBehaviour
         GameObject howCardPrefab = PrefabHolder.instance.ToolQuickReferencePrefab;
         Vector3 position = new Vector3(1920 - 150, 1080 - 50, 0);
         GlobalVariables.instance.selectionState = SelectionState.InitialDeal;
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < (Settings.instance.devMode ? 50 : numberOfStartingCards); i++)
         {
-            Card newCard = Card.CreateInstance(Random.Range(3,5), false);
+            Card newCard = Card.CreateInstance(Settings.instance.devMode ? Random.Range(2, 6) : startCardValue, false);
             if (i == 0) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
             if (i == 9 && weaponCount == 1) { newCard = Card.CreateSpecificInstance("Wooden Hammer"); }
             if (i == 1) { newCard = Card.CreateSpecificInstance("Full Plate"); }

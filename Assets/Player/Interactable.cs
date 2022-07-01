@@ -37,6 +37,10 @@ public class Interactable : MonoBehaviour
         player = playerTransform;
         hasInteracted = false;
     }
+    public virtual void ShowHit()
+    {
+        
+    }
     public void OnDeFocused()
     {
         player = null;

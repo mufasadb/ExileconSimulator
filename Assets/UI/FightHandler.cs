@@ -223,7 +223,7 @@ public class FightHandler : MonoBehaviour
         }
         if (cardSelection.oneHandedWeapons.Find(c => c.name == "Soul Taker"))
         {
-            fightTargetAttack.wild += 2;
+            fightTargetAttack.wild += 3;
             fightTargetDefence.physical = 0;
             fightTargetDefence.cold = 0;
             fightTargetDefence.lightning = 0;
@@ -231,6 +231,7 @@ public class FightHandler : MonoBehaviour
             fightTargetDefence.fire = 0;
             fightTargetDefence.life = 0;
             fightTargetDefence.armour = 0;
+            fightTargetDefence.wild = 0;
         }
         if (cardSelection.chests.Find(c => c.name == "Tombfist"))
         {
@@ -392,6 +393,7 @@ public class FightHandler : MonoBehaviour
         fightTargetAttack = null;
         fightTargetDefence = null;
         fightTargetClipCount = 0;
+        targetName = "";
     }
     public void removeChildren()
     {
@@ -420,15 +422,22 @@ public class FightHandler : MonoBehaviour
     }
     private List<string> CalculateAndAddStringsFromStatEle(string baseEleName, int statVal, List<string> statEleList)
     {
-        int workingStat = statVal % 3;
-        int statTriple = (int)Mathf.Floor(statVal / 3);
-        for (int i = 0; i < workingStat; i++)
+        if (baseEleName == "Wild")
         {
-            statEleList.Add(baseEleName);
+            if (statVal > 0) statEleList.Add(baseEleName + statVal);
         }
-        for (int i = 0; i < statTriple; i++)
+        else
         {
-            statEleList.Add(baseEleName + "Triple");
+            int workingStat = statVal % 3;
+            int statTriple = (int)Mathf.Floor(statVal / 3);
+            for (int i = 0; i < workingStat; i++)
+            {
+                statEleList.Add(baseEleName);
+            }
+            for (int i = 0; i < statTriple; i++)
+            {
+                statEleList.Add(baseEleName + "Triple");
+            }
         }
         return statEleList;
     }

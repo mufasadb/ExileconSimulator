@@ -7,7 +7,7 @@ public class MapHandler : MonoBehaviour
     GameObject enterMapButton;
     GameObject mapSelectionContainer;
     public CardDisplay map;
-    public int fightsRemaining;
+    public int fightsRemaining = 3;
     public bool isInMap;
     private int currentFightTier;
     [SerializeField] private GameObject doMap;
@@ -43,7 +43,7 @@ public class MapHandler : MonoBehaviour
 
         //map tiers are 1-3, monsters will fight progressively stronger monsters
         // currentFightTier = map.card.mapTier;
-        currentFightTier = 1;
+        currentFightTier = map.card.mapTier;
         fightsRemaining = 3;
         GlobalVariables.instance.selectionState = SelectionState.InMaps;
         GameEventManager.instance.SetFightCancelButtonToLeaveMap();
@@ -74,6 +74,7 @@ public class MapHandler : MonoBehaviour
     }
     public void NextFight()
     {
+        if (fightsRemaining < 1) { endMapInteraction(); return; }
         currentFightTier++;
         Monster monsterToFight = Monster.CreateInstance(currentFightTier);
 
@@ -133,23 +134,14 @@ public class MapHandler : MonoBehaviour
 
     public void endMapInteraction()
     {
-        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+        if (fightsRemaining < 3)
         {
-            if (fightsRemaining < 3)
-            {
-                int rewardCount = 1;
-                if (map.card.rarity == Rarity.Magic) rewardCount = 2;
-                if (map.card.rarity == Rarity.Rare) rewardCount = 3;
-
-                GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(rewardCount + 1, map.card.mapTier + 2, rewardCount);
-            }
-
+            int rewardCount = 1;
+            if (map.card.rarity == Rarity.Magic) rewardCount = 2;
+            if (map.card.rarity == Rarity.Rare) rewardCount = 3;
+            yetToClose = true;
+            GlobalVariables.instance.RewardContainer.GetComponent<RewardHandler>().DoReward(rewardCount + 1, map.card.mapTier + 2, rewardCount);
         }
-        else { CloseOff(); }
-
-    }
-    public void CloseOff()
-    {
         if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
         {
             Hand.instance.hand.Remove(map.gameObject);
@@ -157,16 +149,24 @@ public class MapHandler : MonoBehaviour
             map = null;
             GlobalVariables.instance.selectionState = SelectionState.Fight;
         }
+
+        else { CloseOff(); }
+
+    }
+    public void CloseOff()
+    {
+
+        yetToClose = false;
         ResetMapState();
         GameEventManager.instance.EndMapScreen();
         GameEventManager.instance.CloseAllUI();
         GameEventManager.instance.SetFightCancelButtonToCancel();
         Hand.instance.cardSelection.UnSelectAllCards();
         currentFightTier = 0;
-        fightsRemaining = 0;
+        fightsRemaining = 3;
         GameEventManager.instance.NormalTime();
         QueueMember_Player queueMember_Player = GlobalVariables.instance.player.GetComponent<QueueMember_Player>();
-        if (queueMember_Player != null) queueMember_Player.qMan.Deregister(queueMember_Player);
+        if (queueMember_Player.qMan != null) queueMember_Player.qMan.Deregister(queueMember_Player);
 
     }
     public void ResetMapState()

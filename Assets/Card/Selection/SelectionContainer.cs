@@ -8,6 +8,7 @@ public class SelectionContainer : MonoBehaviour, IDropHandler
 {
     public Type type;
     public bool isUsed;
+    public GameObject card;
     [SerializeField] private SelectedJewellery selectedJewellery;
     // Start is called before the first frame update
     void Start()
@@ -21,29 +22,33 @@ public class SelectionContainer : MonoBehaviour, IDropHandler
     {
         if (eventData.pointerDrag != null)
         {
-
             CardDisplay cardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
-            if (cardDisplay.card.durability == 0)
+
+            TryToSelect(cardDisplay);
+        }
+    }
+    public void TryToSelect(CardDisplay cardDisplay)
+    {
+        if (cardDisplay.card.durability == 0)
+        {
+            GameEventManager.instance.DisplayError("This card cannot be used, as it is out of durability");
+            return;
+        }
+        if (cardDisplay.card.type == Type.TwoHandedWeapon && type == Type.OneHandedWeapon)
+        {
+            if (cardDisplay.card.durability > 0)
             {
-                GameEventManager.instance.DisplayError("This card cannot be used, as it is out of durability");
-                return;
-            }
-            if (cardDisplay.card.type == Type.TwoHandedWeapon && type == Type.OneHandedWeapon)
-            {
-                if (cardDisplay.card.durability > 0)
-                {
-                    ActionSelection(cardDisplay);
-                }
-            }
-            if (cardDisplay.card.type == type)
-            {
-                if (selectedJewellery)
-                {
-                    selectedJewellery.cardDisplay = cardDisplay;
-                    selectedJewellery.UpdatePosition();
-                }
                 ActionSelection(cardDisplay);
             }
+        }
+        if (cardDisplay.card.type == type)
+        {
+            if (selectedJewellery)
+            {
+                selectedJewellery.cardDisplay = cardDisplay;
+                selectedJewellery.UpdatePosition();
+            }
+            ActionSelection(cardDisplay);
         }
     }
     public void ActionSelection(CardDisplay cardDisplay)
@@ -51,6 +56,7 @@ public class SelectionContainer : MonoBehaviour, IDropHandler
         cardDisplay.DoSelect(GetComponent<Transform>().position, gameObject.transform.parent.gameObject);
         Hand.instance.cardSelection.Select(cardDisplay);
         cardDisplay.cardActionHandler.AttachToSelectionContainer(this.GetInstanceID());
+        cardDisplay.Smallerise();
         isUsed = true;
     }
     // Update is called once per frame

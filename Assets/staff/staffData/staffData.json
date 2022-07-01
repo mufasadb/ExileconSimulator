@@ -1,1 +1,228 @@
-{"set":[{"name":"Ghost","attack":"Wild,","defence":"Wild,Wild,","clipMethod":"Shield","clipCount":1,"tier":1},{"name":"Skeleton","attack":"Life,","defence":"Physical,Wild,Wild,","clipMethod":"Chest","clipCount":1,"tier":1},{"name":"Spectral Corsair","attack":"Life,Wild,","defence":"Physical,","clipMethod":"Broken","clipCount":1,"tier":1},{"name":"Zombie","attack":"Wild,Wild,","defence":"Wild,","clipMethod":"Common","clipCount":1,"tier":1},{"name":"Brutus","attack":"Wild,Wild,Wild,Wild,","defence":"Wild,Wild,Wild,","clipMethod":"Rare","clipCount":1,"tier":2},{"name":"Burning Man","attack":"Fire,Fire,Wild,","defence":"Wild,Wild,Wild,","clipMethod":"Chest","clipCount":1,"tier":2},{"name":"Fidelitas","attack":"Lightning,Wild,Wild,","defence":"Lightning,Wild,Wild,","clipMethod":"Broken","clipCount":1,"tier":2},{"name":"Flame Totem","attack":"Armour,Wild,Wild,","defence":"Fire,Wild,","clipMethod":"Shield","clipCount":1,"tier":2},{"name":"Goatman","attack":"Cold,Cold,","defence":"Wild,Wild,","clipMethod":"Common","clipCount":1,"tier":2},{"name":"Necromancer","attack":"","defence":"Chaos,Wild,Wild,","clipMethod":"Broken","clipCount":1,"tier":2},{"name":"Sea Witch","attack":"Cold,Life","defence":"Cold,Wild,Wild","clipMethod":"Weapon","clipCount":1,"tier":2},{"name":"The Faun","attack":"Wild,Wild,Wild,","defence":"Physical,Physical,Wild,Wild,","clipMethod":"Shield","clipCount":1,"tier":2},{"name":"Abberath","attack":"Fire,Fire,Wild,Wild,Wild,Wild,","defence":"Fire,Fire,Wild,Wild,Wild,Wild,","clipMethod":"Broken","clipCount":1,"tier":3},{"name":"Avarius","attack":"Life,Life,Armour,Armour,","defence":"Physical,Wild,Wild,Wild,","clipMethod":"Common","clipCount":1,"tier":3},{"name":"Dominus","attack":"Lightning,Lightning,Wild,Wild,Wild,","defence":"Physical,Lightning,Wild,Wild,","clipMethod":"Rare","clipCount":1,"tier":3},{"name":"Lunaris","attack":"Cold,Cold,Cold,Wild,","defence":"Fire,Fire,Wild,","clipMethod":"Jewellery","clipCount":1,"tier":3},{"name":"Solaris","attack":"Fire,Fire,Fire,Wild,","defence":"Cold,Cold,Wild,","clipMethod":"Jewellery","clipCount":1,"tier":3},{"name":"Templar","attack":"Wild,Wild,Wild,Wild,Wild,","defence":"Wild,Wild,Wild,Wild,Wild,","clipMethod":"Rare","clipCount":1,"tier":3},{"name":"Kitava","attack":"Life,Life,Armour,Armour,Wild,Wild,Wild,Wild,","defence":"Physical,Physical,Wild,Wild,Wild,Wild,","clipMethod":"All","clipCount":1,"tier":4},{"name":"Malachai","attack":"Wild,Wild,Wild,Wild,Wild","defence":"Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild","clipMethod":"Rare","clipCount":2,"tier":4},{"name":"Guardian of The Chimera","attack":"Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,","defence":"Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,","clipMethod":"Rare","clipCount":2,"tier":5},{"name":"Guardian of The Hydra","attack":"Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,","defence":"Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,","clipMethod":"Jewellery","clipCount":2,"tier":5},{"name":"Guardian of The Minotaur","attack":"Life,Life,Armour,Armour,Armour,Wild,Wild,Wild,Wild,Wild,","defence":"Physical,Physical,Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,","clipMethod":"Weapon","clipCount":2,"tier":5},{"name":"Guardian of The Pheonix","attack":"Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,","defence":"Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,","clipMethod":"Shield","clipCount":2,"tier":5},{"name":"Izaro","attack":"Life,Life,Armour,Armour,Fire,Cold,Lightning,Wild,Wild,Wild,Wild,Wild,","defence":"Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,","clipMethod":"Rare","clipCount":1,"tier":5},{"name":"The Elder","attack":"Life,Life,Life,Life,Armour,Armour,Armour,Armour,Wild,Wild,Wild,Wild,","defence":"Physical,Physical,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,","clipMethod":"Rare","clipCount":1,"tier":5},{"name":"The Orion","attack":"Life,Life,Armour,Armour,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,","defence":"Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,","clipMethod":"Broken","clipCount":1,"tier":5},{"name":"The Shaper","attack":"Life,Life,Life,Armour,Fire,Fire,Cold,Cold,Cold,Cold,Lightning,Lightning,Chaos,Chaos,Wild,Wild,","defence":"Physical,Physical,Physical,Physical,Fire,Fire,Cold,Cold,Lightning,Lightning,Chaos,Chaos,","clipMethod":"Rare","clipCount":1,"tier":5}]}
+{
+  "set": [
+    {
+      "name": "Ghost",
+      "attack": "Wild,",
+      "defence": "Wild,Wild,",
+      "clipMethod": "Shield",
+      "clipCount": 1,
+      "tier": 1
+    },
+    {
+      "name": "Skeleton",
+      "attack": "Life,",
+      "defence": "Physical,Wild,Wild,",
+      "clipMethod": "Chest",
+      "clipCount": 1,
+      "tier": 1
+    },
+    {
+      "name": "Spectral Corsair",
+      "attack": "Life,Wild,",
+      "defence": "Physical,",
+      "clipMethod": "Broken",
+      "clipCount": 1,
+      "tier": 1
+    },
+    {
+      "name": "Zombie",
+      "attack": "Wild,Wild,",
+      "defence": "Wild,",
+      "clipMethod": "Common",
+      "clipCount": 1,
+      "tier": 1
+    },
+    {
+      "name": "Brutus",
+      "attack": "Wild,Wild,Wild,Wild,",
+      "defence": "Wild,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "Burning Man",
+      "attack": "Fire,Fire,Wild,",
+      "defence": "Wild,Wild,Wild,",
+      "clipMethod": "Chest",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "Fidelitas",
+      "attack": "Lightning,Wild,Wild,",
+      "defence": "Lightning,Wild,Wild,",
+      "clipMethod": "Broken",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "Flame Totem",
+      "attack": "Armour,Wild,Wild,",
+      "defence": "Fire,Wild,",
+      "clipMethod": "Shield",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "Goatman",
+      "attack": "Cold,Cold,",
+      "defence": "Wild,Wild,",
+      "clipMethod": "Common",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "Necromancer",
+      "attack": "",
+      "defence": "Chaos,Wild,Wild,",
+      "clipMethod": "Broken",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "Sea Witch",
+      "attack": "Cold,Life",
+      "defence": "Cold,Wild,Wild",
+      "clipMethod": "Weapon",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "The Faun",
+      "attack": "Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Wild,Wild,",
+      "clipMethod": "Shield",
+      "clipCount": 1,
+      "tier": 2
+    },
+    {
+      "name": "Abberath",
+      "attack": "Fire,Fire,Wild,Wild,Wild,Wild,",
+      "defence": "Fire,Fire,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Broken",
+      "clipCount": 1,
+      "tier": 3
+    },
+    {
+      "name": "Avarius",
+      "attack": "Life,Life,Armour,Armour,",
+      "defence": "Physical,Wild,Wild,Wild,",
+      "clipMethod": "Common",
+      "clipCount": 1,
+      "tier": 3
+    },
+    {
+      "name": "Dominus",
+      "attack": "Lightning,Lightning,Wild,Wild,Wild,",
+      "defence": "Physical,Lightning,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 3
+    },
+    {
+      "name": "Lunaris",
+      "attack": "Cold,Cold,Cold,Wild,",
+      "defence": "Fire,Fire,Wild,",
+      "clipMethod": "Jewellery",
+      "clipCount": 1,
+      "tier": 3
+    },
+    {
+      "name": "Solaris",
+      "attack": "Fire,Fire,Fire,Wild,",
+      "defence": "Cold,Cold,Wild,",
+      "clipMethod": "Jewellery",
+      "clipCount": 1,
+      "tier": 3
+    },
+    {
+      "name": "Templar",
+      "attack": "Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 3
+    },
+    {
+      "name": "Kitava",
+      "attack": "Life,Life,Armour,Armour,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Wild,Wild,Wild,Wild,",
+      "clipMethod": "All",
+      "clipCount": 1,
+      "tier": 4
+    },
+    {
+      "name": "Malachai",
+      "attack": "Wild,Wild,Wild,Wild,Wild",
+      "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
+      "clipMethod": "Rare",
+      "clipCount": 2,
+      "tier": 4
+    },
+    {
+      "name": "Guardian of The Chimera",
+      "attack": "Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 2,
+      "tier": 5
+    },
+    {
+      "name": "Guardian of The Hydra",
+      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Jewellery",
+      "clipCount": 2,
+      "tier": 5
+    },
+    {
+      "name": "Guardian of The Minotaur",
+      "attack": "Life,Life,Armour,Armour,Armour,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Weapon",
+      "clipCount": 2,
+      "tier": 5
+    },
+    {
+      "name": "Guardian of The Pheonix",
+      "attack": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Shield",
+      "clipCount": 2,
+      "tier": 5
+    },
+    {
+      "name": "Izaro",
+      "attack": "Life,Life,Armour,Armour,Fire,Cold,Lightning,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 5
+    },
+    {
+      "name": "The Elder",
+      "attack": "Life,Life,Life,Life,Armour,Armour,Armour,Armour,Wild,Wild,Wild,Wild,",
+      "defence": "Physical,Physical,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 5
+    },
+    {
+      "name": "The Orion",
+      "attack": "Life,Life,Armour,Armour,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "clipMethod": "Broken",
+      "clipCount": 1,
+      "tier": 5
+    },
+    {
+      "name": "The Shaper",
+      "attack": "Life,Life,Life,Armour,Fire,Fire,Cold,Cold,Cold,Cold,Lightning,Lightning,Chaos,Chaos,Wild,Wild,",
+      "defence": "Physical,Physical,Physical,Physical,Fire,Fire,Cold,Cold,Lightning,Lightning,Chaos,Chaos,",
+      "clipMethod": "Rare",
+      "clipCount": 1,
+      "tier": 5
+    }
+  ]
+}

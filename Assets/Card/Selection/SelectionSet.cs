@@ -15,29 +15,31 @@ public class SelectionSet : MonoBehaviour
         }
         instance = this;
 
-
     }
     #endregion
     public List<SelectionContainer> selectionContainers = new List<SelectionContainer>();
-    // public void FindOpenContainerForType(Type type)
-    // {
-    //     SelectionContainer selectedContainer = selectionContainers.Find(cont => cont.type == type && cont.isUsed == false);
-    //     if (selectedContainer) { }
-    // }
-    // public void FindContainerForType(Type type)
-    // {
+    public SelectionContainer FindOpenContainerForType(Type type)
+    {
+        List<SelectionContainer> typedContainers = selectionContainers.FindAll(cont => cont.type == type && cont.isUsed == false);
+        foreach (SelectionContainer selCont in typedContainers)
+        {
+            if (!selCont.isUsed) { return selCont; }
+        }
+        return typedContainers[0];
+    }
+    public CardActionHandler GetCardByContainer(int selectContainerUID)
+    {
+        foreach (GameObject card in Hand.instance.hand)
+        {
+            CardActionHandler cardAH = card.GetComponent<CardActionHandler>();
+            if (cardAH.homeContainerID == selectContainerUID)
+            {
+                return cardAH;
+            }
+        }
+        return null;
+    }
 
-    // }
-    // private List<SelectionContainer> FindContainerByType(Type type, bool empty)
-    // {
-    //     if (empty)
-    //     {
-
-    //     }else{
-
-    //     }
-    //     return selectionContainers.FindAll(cont => cont.type == type);
-    // }
     public SelectionContainer GetContainerByID(int id)
     {
         return selectionContainers.Find(cont => cont.GetInstanceID() == id);

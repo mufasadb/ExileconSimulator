@@ -24,6 +24,23 @@ public class CardActionHandler : MonoBehaviour
             homeContainerID = 0;
         }
     }
+    public void AutoSelect()
+    {
+        if (SelectionSet.instance != null)
+        {
+            SelectionContainer selCont = SelectionSet.instance.FindOpenContainerForType(cardDisplay.card.type);
+            if (selCont.isUsed)
+            {
+                CardActionHandler cardToReplace = SelectionSet.instance.GetCardByContainer(selCont.GetInstanceID());
+                cardToReplace.SelfUnselect();
+            }
+            selCont.TryToSelect(cardDisplay);
+        }
+    }
+    private void SelfUnselect()
+    {
+        cardDisplay.DoUnselect();
+    }
     public void GoToHomeContainer()
     {
 

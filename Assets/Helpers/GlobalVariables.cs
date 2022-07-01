@@ -33,6 +33,7 @@ public class GlobalVariables : MonoBehaviour
     public SelectionState selectionState = SelectionState.InitialDeal;
     public float gameSpeed = 0.5f;
     public bool atFrontOfQueue = false;
+    public bool inCraftQueue = false;
 
     [Header("Containers")]
 

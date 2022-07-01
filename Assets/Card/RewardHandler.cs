@@ -34,10 +34,6 @@ public class RewardHandler : MonoBehaviour
                 Destroy(card);
             }
             GameEventManager.instance.StepToNextFight();
-            if (mapHandler.yetToClose) { 
-                mapHandler.CloseOff();
-                mapHandler.yetToClose = false;
-            }
         }
 
     }

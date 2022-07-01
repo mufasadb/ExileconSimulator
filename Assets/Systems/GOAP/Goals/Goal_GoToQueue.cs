@@ -18,7 +18,7 @@ public class Goal_GoToQueue : Goal_Base
     public override void OnTickGoal()
     {
         CurrentPriority = 0;
-        if(CurrentTarget == NerdAI.lastFaughtTarget) CurrentTarget = null;
+        if (CurrentTarget == NerdAI.lastFaughtTarget) CurrentTarget = null;
         for (int i = 0; i < Sensors.Targets.Count; i++)
         {
             if (CurrentTarget == Sensors.Targets[i]) { continue; }
@@ -37,6 +37,7 @@ public class Goal_GoToQueue : Goal_Base
                 }
             }
         }
+        if (CurrentTarget != null && CurrentTarget.tier != NerdAI.tier) CurrentTarget = null;
         if (CurrentTarget != null)
         {
             CurrentPriority = Mathf.RoundToInt(queuePriority - CurrentTarget.qMan.AllMembers.Count * qLengthDisinsentive);

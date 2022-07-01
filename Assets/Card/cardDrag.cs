@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
-public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPointerExitHandler, IEndDragHandler, IBeginDragHandler, IDropHandler
+[RequireComponent(typeof(CardActionHandler))]
+public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPointerExitHandler, IEndDragHandler, IBeginDragHandler, IDropHandler, IPointerClickHandler
 {
     private CardDisplay cardDisplay;
+    CardActionHandler cardActionHandler;
     CanvasGroup canvasGroup;
-
+    float doubleClickTracker;
+    public float doubleClickMinimum = 0.7f;
 
     private void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         cardDisplay = GetComponent<CardDisplay>();
+        cardActionHandler = GetComponent<CardActionHandler>();
+    }
+    private void Update()
+    {
+        if (doubleClickTracker > 0) doubleClickTracker -= Time.deltaTime;
+        if (doubleClickTracker < 0) doubleClickTracker = 0;
     }
     // Start is called before the first frame update
     public void OnDrag(PointerEventData eventData)
@@ -54,6 +62,22 @@ public class cardDrag : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
                     }
                 }
             }
+        }
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+        if (doubleClickTracker > 0)
+        {
+            if (cardDisplay.selected) { cardDisplay.DoUnselect(); }
+            else
+            {
+                cardActionHandler.AutoSelect();
+            }
+        }
+        else
+        {
+            doubleClickTracker = doubleClickMinimum;
         }
     }
     public void OnBeginDrag(PointerEventData eventData)

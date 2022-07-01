@@ -112,7 +112,10 @@ public class GameEventManager : MonoBehaviour
     public void BeginFightScreen()
     {
         // if (!isMapFight) { Debug.LogError("tried to initiate fight not in a map, but without a staff member (check fight handler initiate fight"); }
-        OpenUIItem(fastForwardMenu);
+        if (GlobalVariables.instance.selectionState != SelectionState.InMaps)
+        {
+            OpenUIItem(fastForwardMenu);
+        }
         OpenUIItem(fightUI);
         OpenUIItem(selectionUI);
         OpenUIItem(enemyUI);
@@ -126,7 +129,7 @@ public class GameEventManager : MonoBehaviour
         CloseHand();
         CloseUIItem(enemyUI);
         CloseUIItem(fastForwardMenu);
-        GlobalVariables.instance.preventMoving = false;
+        StartCoroutine(AllowMoving());
     }
     public void BeginRewardScreen()
     {
@@ -140,11 +143,12 @@ public class GameEventManager : MonoBehaviour
     }
     public void EndRewardScreen()
     {
-        EndFightScreen();
-        FightHandler.instance.handleFightEnd();
+        if (!craftUI.activeSelf)
+        {
+            EndFightScreen();
+            FightHandler.instance.handleFightEnd();
+        }
         CloseUIItem(selectionUI);
-        // CloseHand();
-        CloseUIItem(craftUI);
         CloseUIItem(rewardUI);
 
     }
@@ -161,7 +165,8 @@ public class GameEventManager : MonoBehaviour
         CloseHand();
         // CloseUIItem(selectionUI);
         CloseUIItem(mapUI);
-        GlobalVariables.instance.preventMoving = false;
+        // GlobalVariables.instance.preventMoving = false;
+        StartCoroutine(AllowMoving());
     }
     public void BeginCraftScreen()
     {
@@ -173,7 +178,8 @@ public class GameEventManager : MonoBehaviour
     public void EndCraftScreen()
     {
         CloseUIItem(craftUI);
-        GlobalVariables.instance.preventMoving = false;
+        StartCoroutine(AllowMoving());
+        // GlobalVariables.instance.preventMoving = false;
         GameEventManager.instance.NormalTime();
         QueueMember_Player queueMember_Player = GlobalVariables.instance.player.GetComponent<QueueMember_Player>();
         if (queueMember_Player.qMan != null) queueMember_Player.qMan.Deregister(queueMember_Player);
@@ -193,34 +199,23 @@ public class GameEventManager : MonoBehaviour
             CloseUIItem(craftUI);
             CloseUIItem(rewardUI);
             CloseUIItem(enemyUI);
+            CloseUIItem(mapUI);
             GlobalVariables.instance.preventMoving = false;
             FightHandler.instance.CancelFight();
         }
     }
     public void StepToNextFight()
     {
-        if (mapHandler.isInMap)
+        FightHandler.instance.handleFightEnd();
+        EndRewardScreen();
+        if (mapHandler.yetToClose)
         {
-            if (mapHandler.fightsRemaining > 0)
-            {
-                FightHandler.instance.handleFightEnd();
-                CloseUIItem(rewardUI);
-                OpenUIItem(selectionUI);
-                OpenUIItem(fightUI);
-                OpenUIItem(enemyUI);
-                mapHandler.NextFight();
-                CloseHand();
-            }
-            else
-            {
-                mapHandler.endMapInteraction();
-                EndRewardScreen();
-            }
+            mapHandler.CloseOff();
+            return;
         }
-        else
-        {
-            EndRewardScreen();
-        }
+        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
+            mapHandler.NextFight();
+
     }
     public void HideFastForward()
     {
@@ -285,6 +280,11 @@ public class GameEventManager : MonoBehaviour
                 handCooldown = 0.3f;
             }
         }
+    }
+    IEnumerator AllowMoving()
+    {
+        yield return new WaitForSeconds(0.1f);
+        GlobalVariables.instance.preventMoving = false;
     }
     public void CancelButton()
     {

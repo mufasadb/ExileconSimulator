@@ -136,16 +136,31 @@ public class QuestHandler : MonoBehaviour
     }
     void OpenTier5()
     {
-        questTier1Container.SetActive(true);
+        questTier1Container.SetActive(false);
         questTier5Container.SetActive(true);
     }
     public void MarkCraftQuestComplete(string carftingItem, string craftingCurrency)
     {
         foreach (var quest in quests)
         {
-            if (quest.craftWith == carftingItem) { quest.isComplete = true; CheckIfTiercomplete(); quest.TickTickBox(); }
-            if (quest.craftWith == craftingCurrency) { quest.isComplete = true; CheckIfTiercomplete(); quest.TickTickBox(); }
+            if (quest.craftWith == carftingItem)
+            {
+                quest.isComplete = true;
+                CheckIfTiercomplete();
+                StartCoroutine(TickBoxDelay(quest));
+            }
+            if (quest.craftWith == craftingCurrency)
+            {
+                quest.isComplete = true;
+                CheckIfTiercomplete();
+                StartCoroutine(TickBoxDelay(quest));
+            }
         }
+    }
+    IEnumerator TickBoxDelay(Quest quest)
+    {
+        yield return new WaitForSeconds(0.7f);
+        quest.TickTickBox();
     }
     public void MarkDefeatQuestcomplete(string enemyName)
     {
@@ -181,9 +196,14 @@ public class QuestHandler : MonoBehaviour
     {
         if (!bell)
         {
-            AudioManager.instance.Play("chime");
-            craftHandler.DisplayAcceptRewardButton(true);
             bell = true;
+            PlayChimeOnDelay();
         }
+    }
+    IEnumerator PlayChimeOnDelay()
+    {
+        yield return new WaitForSeconds(1.2f);
+        AudioManager.instance.Play("chime");
+        craftHandler.DisplayAcceptRewardButton(true);
     }
 }

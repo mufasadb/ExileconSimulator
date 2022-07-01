@@ -16,20 +16,6 @@ public static class ClipMethodResolver
             }
         }
         if (clipMethod == ClipMethod.All) { foreach (CardDisplay card in cardList) { DoClip(card, clipCount); } }
-        else if (clipMethod == ClipMethod.Jewellery)
-        {
-            foreach (CardDisplay card in cardList)
-            {
-                if (card.card.type == Type.Amulet || card.card.type == Type.Ring)
-                {
-                    DoClip(card, clipCount);
-                }
-                else
-                {
-                    DontClip(card);
-                }
-            }
-        }
         else
         {
             CardDisplay selectedCard = Comparer(cardList, clipMethod);
@@ -42,11 +28,7 @@ public static class ClipMethodResolver
     }
     private static void DontClip(CardDisplay card)
     {
-        if (GlobalVariables.instance.selectionState == SelectionState.InMaps)
-        {
-
-        }
-        else
+        if (GlobalVariables.instance.selectionState != SelectionState.InMaps)
         {
             card.DoUnselect();
         }
@@ -92,6 +74,16 @@ public static class ClipMethodResolver
                     foreach (CardDisplay card in cardList)
                     {
                         if (card.card.type == Type.Chest) { selectedCardDisplay = card; }
+                    }
+                    if (!cardFound) { selectedCardDisplay = cardList[Random.Range(0, cardList.Count)]; }
+                    break;
+                }
+            case ClipMethod.Jewellery:
+                {
+                    bool cardFound = false;
+                    foreach (CardDisplay card in cardList)
+                    {
+                        if (card.card.type == Type.Ring || card.card.type == Type.Amulet) { selectedCardDisplay = card; }
                     }
                     if (!cardFound) { selectedCardDisplay = cardList[Random.Range(0, cardList.Count)]; }
                     break;

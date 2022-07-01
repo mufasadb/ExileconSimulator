@@ -6,6 +6,7 @@ public class DisplayStaffStats : MonoBehaviour
 {
     public GameObject canvas;
     private Outline outline;
+    bool ShowingSelectedHighlight = false;
 
     float hideCooldown = 0;
     [SerializeField] float stayShownTime = 0.5f;
@@ -16,6 +17,20 @@ public class DisplayStaffStats : MonoBehaviour
         outline = GetComponentInChildren<Outline>();
         hide();
     }
+    public void Clicked()
+    {
+        outline.OutlineColor = Color.blue;
+        outline.OutlineWidth = 2f;
+        ShowingSelectedHighlight = true;
+        StartCoroutine(TurnOffHighlight());
+    }
+    IEnumerator TurnOffHighlight()
+    {
+        yield return new WaitForSeconds(0.5f);
+        outline.OutlineColor = Color.white;
+        outline.OutlineWidth = 1.5f;
+        ShowingSelectedHighlight = false;
+    }
     private void OnMouseEnter()
     {
         mouseOn = true;
@@ -25,9 +40,12 @@ public class DisplayStaffStats : MonoBehaviour
     private void OnMouseExit()
     {
         mouseOn = false;
-        outline.OutlineColor = Color.white;
-        outline.OutlineWidth = 1.5f;
         StartCoroutine(HideStats());
+        if (!ShowingSelectedHighlight)
+        {
+            outline.OutlineColor = Color.white;
+            outline.OutlineWidth = 1.5f;
+        }
     }
     // Update is called once per frame
     public void show()
@@ -42,8 +60,11 @@ public class DisplayStaffStats : MonoBehaviour
         }
 
         // outline.enabled = true;.
-        outline.OutlineColor = Color.red;
-        outline.OutlineWidth = 3;
+        if (!ShowingSelectedHighlight)
+        {
+            outline.OutlineColor = Color.red;
+            outline.OutlineWidth = 3;
+        }
 
     }
     public void hide()

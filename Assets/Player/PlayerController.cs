@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 [RequireComponent(typeof(PlayerMotor))]
+[RequireComponent(typeof(AudioButtonReference))]
 public class PlayerController : MonoBehaviour
 {
     Camera cam;
     public LayerMask movementMask;
     PlayerMotor motor;
     public Interactable focus;
+    public WalkArrow walkArrow;
+    AudioButtonReference audioRef;
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
         motor = GetComponent<PlayerMotor>();
+        audioRef = GetComponent<AudioButtonReference>();
     }
 
     // Update is called once per frame
@@ -35,6 +39,7 @@ public class PlayerController : MonoBehaviour
                     {
                         SetFocus(interactable);
                         GlobalVariables.instance.standingAtFrontOfQueue = false;
+                        audioRef.PlayInteractSound();
                         return;
                     }
                 }
@@ -55,6 +60,8 @@ public class PlayerController : MonoBehaviour
                         //move our player to what we hit
                         motor.MoveToPoint(hit.point);
                         removeFocus();
+                        walkArrow.TurnOnAtPoint(hit.point);
+                        audioRef.PlayWalkSound();
                         // stop focus an item
                     }
                 }

@@ -20,6 +20,7 @@ public class Fight : Interactable
         {
             clickCooldown = 0.05f;
             checkSelection();
+
         }
     }
     private void checkSelection()
@@ -40,8 +41,13 @@ public class Fight : Interactable
             GameObject player = GameObject.Find("Player");
             // player.AddComponent<QueueMember_Player>();
             player.GetComponent<QueueMember_Player>().RegisterSelf(qMan);
+            ShowHit();
         }
 
+    }
+    public override void ShowHit()
+    {
+        gameObject.GetComponent<DisplayStaffStats>().Clicked();
     }
     public override void Update()
     {
@@ -52,10 +58,10 @@ public class Fight : Interactable
     private bool UserHasFrags()
     {
         bool hasFrags = true;
-        if (Hand.instance.hand.Find(gameObject => gameObject.GetComponent<CardDisplay>().card.name == "Fragment of Hydra")) { } else { hasFrags = false; }
-        if (Hand.instance.hand.Find(gameObject => gameObject.GetComponent<CardDisplay>().card.name == "Fragment of Phoenix")) { } else { hasFrags = false; }
-        if (Hand.instance.hand.Find(gameObject => gameObject.GetComponent<CardDisplay>().card.name == "Fragment of Chimera")) { } else { hasFrags = false; }
-        if (Hand.instance.hand.Find(gameObject => gameObject.GetComponent<CardDisplay>().card.name == "Fragment of Minotaur")) { } else { hasFrags = false; }
+        if (Hand.instance.hand.Find(gameObject => gameObject.GetComponent<CardDisplay>().card.name == "Hydra Fragment")) { print("has hydra"); } else { hasFrags = false; }
+        if (Hand.instance.hand.Find(gameObject => gameObject.GetComponent<CardDisplay>().card.name == "Phoenix Fragment")) { print("has phoenix"); } else { hasFrags = false; }
+        if (Hand.instance.hand.Find(gameObject => gameObject.GetComponent<CardDisplay>().card.name == "Chimera Fragment")) { print("has chimera"); } else { hasFrags = false; }
+        if (Hand.instance.hand.Find(gameObject => gameObject.GetComponent<CardDisplay>().card.name == "Minotaur Fragment")) { print("has minotaur"); } else { hasFrags = false; }
         return hasFrags;
     }
 }

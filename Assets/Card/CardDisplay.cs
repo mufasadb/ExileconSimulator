@@ -159,7 +159,7 @@ public class CardDisplay : MonoBehaviour
             if (selected)
             {
                 baseImage.transform.localScale = new Vector3(1f, 1f, 1);
-                transform.SetAsLastSibling();
+                transform.SetSiblingIndex(sortedOrderIndex + 5);
             }
             else
             {
@@ -196,6 +196,7 @@ public class CardDisplay : MonoBehaviour
             {
                 baseImage.transform.localScale = new Vector3(3f, 3f, 1);
             }
+            transform.SetAsLastSibling();
         }
         else
         {

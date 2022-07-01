@@ -18,7 +18,7 @@ public class FightButtons : MonoBehaviour
         FightHandler.instance.CancelFight();
         GameEventManager.instance.NormalTime();
         QueueMember_Player queueMember_Player = GlobalVariables.instance.player.GetComponent<QueueMember_Player>();
-        if (queueMember_Player != null) queueMember_Player.qMan.Deregister(queueMember_Player);
+        if (queueMember_Player.qMan != null) queueMember_Player.qMan.Deregister(queueMember_Player);
     }
     public void Update()
     {

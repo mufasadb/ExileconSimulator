@@ -116,56 +116,38 @@
     },
     {
       "name": "Malachai",
-      "attack": "Wild,Wild,Wild,Wild,Wild",
+      "attack": "Wild,Wild,Wild,Wild,Wild,",
       "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild",
       "tier": 4
     },
     {
-      "name": "Guardian of The Chimera",
-      "attack": "Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Chaos,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "name": "Devourer",
+      "attack": "Wild,Wild,Life,Life,Armour,",
+      "defence": "Wild,Wild,Wild,Wild,Cold,Cold,",
+      "tier": 4
+    },
+    {
+      "name": "Pewterfang",
+      "attack": "Wild,Wild,Life,Life,Chaos,Chaos,",
+      "defence": "Wild,Wild,Wild,Wild,Physical,Physical,",
+      "tier": 4
+    },
+    {
+      "name": "Esh",
+      "attack": "Wild,Wild,Wild,Wild,Lightning,Lightning,",
+      "defence": "Wild,Wild,Wild,Wild,Physical,Physical,",
       "tier": 5
     },
     {
-      "name": "Guardian of The Hydra",
-      "attack": "Cold,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "name": "Tul",
+      "attack": "Wild,Wild,Wild,Wild,Life,Life,Armour,",
+      "defence": "Wild,Wild,Wild,Fire,Fire,Fire,",
       "tier": 5
     },
     {
-      "name": "Guardian of The Minotaur",
-      "attack": "Life,Life,Armour,Armour,Armour,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Physical,Physical,Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "tier": 5
-    },
-    {
-      "name": "Guardian of The Pheonix",
-      "attack": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Fire,Fire,Fire,Fire,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "tier": 5
-    },
-    {
-      "name": "The Shaper",
-      "attack": "Life,Life,Life,Armour,Fire,Fire,Cold,Cold,Cold,Cold,Lightning,Lightning,Chaos,Chaos,Wild,Wild,",
-      "defence": "Physical,Physical,Physical,Physical,Fire,Fire,Cold,Cold,Lightning,Lightning,Chaos,Chaos,",
-      "tier": 5
-    },
-    {
-      "name": "Izaro",
-      "attack": "Life,Life,Armour,Armour,Fire,Cold,Lightning,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Physical,Physical,Physical,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "tier": 5
-    },
-    {
-      "name": "The Elder",
-      "attack": "Life,Life,Life,Life,Armour,Armour,Armour,Armour,Wild,Wild,Wild,Wild,",
-      "defence": "Physical,Physical,Cold,Cold,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "tier": 5
-    },
-    {
-      "name": "The Orion",
-      "attack": "Life,Life,Armour,Armour,Chaos,Chaos,Wild,Wild,Wild,Wild,Wild,Wild,",
-      "defence": "Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,Wild,",
+      "name": "Aul",
+      "attack": "Wild,Wild,Life,Life,Life,Armour,Armour,Armour,",
+      "defence": "Wild,Wild,Wild,Wild,Physical,Physical,Physical,",
       "tier": 5
     }
   ]
